@@ -1,0 +1,11 @@
+<div class="class">
+    <button (click) = "onCardClick($event)">Click</button>
+    <div *ngIf="canShow">Estamos mostrando isso porque foi permitido</div>
+    <h2 *ngIf="name === 'Dayvson'; else nameNotFound">O nome é {{name}}</h2>
+    <ng-template #nameNotFound>
+        <div>
+            <h2>O nome não foi encontrado</h2>
+        </div>
+    </ng-template>
+</div>
+
