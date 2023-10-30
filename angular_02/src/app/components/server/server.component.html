@@ -1,0 +1,30 @@
+<div class="Small shadow p-3 mb-5 rounded text-primary">
+    <p>
+        {{ 'Server' }} with ID {{ serverId }} is
+        <span class="text-success">{{ getServerStatus() }}</span>
+    </p>
+    <button class="btn btn-warning m-3" (click)="changeState()">Change other button</button>
+    <button class="btn btn-primary" [disabled]="!allowNewServer">Add Server</button>
+    <p [innerText]="allowNewServer"></p>
+</div>
+
+<div class="Small shadow p-3 mb-5 rounded text-primary">
+    <p>Write a new server name: {{ newServerName }}</p>
+    <input 
+        type="text"
+        class="form-control"
+        (input)="onUpdateServerName($event)"
+    >
+</div>
+
+<div class="Small shadow p-3 mb-5 rounded text-primary">
+    <!-- Using two way databinding -->
+    <p>Write a new server name: {{ ServerName }}</p>
+    <input 
+        type="text"
+        class="form-control"
+        [(ngModel)]="ServerName"
+    >
+    <button (click)="AddServer()" class="btn btn-primary m-3">Add Server</button>
+    <span class="shadow p-3 rounded text-success m-3" *ngIf="Server">{{ Server }}</span>
+</div>

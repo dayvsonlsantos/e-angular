@@ -42,3 +42,13 @@ Then, we call it like this:
     <div class = "app-server"></div>
 
 But, anyway, ID does not work on Angular, neither pseudo selectors as hover for example. And usually, we use the component way: selector: 'app-server'
+
+## Databinding
+
+It's the communication between your component and the template (what users sees);
+
+Square Brackets [] -> Indicates to angular that you're using property binding. That we want to dynamically bind some property.
+
+## Passing and Using Data with Event Binding
+
+$event -> It's king of a reserved variable name, you can use in the template when using event binding. Because, it gives us access to the event data.

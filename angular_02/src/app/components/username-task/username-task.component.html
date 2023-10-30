@@ -1,0 +1,34 @@
+<div class="Small shadow p-3 mb-5 rounded text-primary">
+    <input 
+        type="text"
+        class="form-control"
+        (input)="updateUsername($event)"
+    >
+    <p class="shadown m-3 text-success">Your name is: {{username}}</p>
+    <button 
+        class="btn btn-danger" 
+        (click)="resetUsername()"
+        [disabled]="isDisabled"
+    >
+        Clear
+    </button>
+</div>
+
+<!-- Two way databinding -->
+
+<div class="Small shadow p-3 mb-5 rounded text-primary">
+    <input 
+        type="text"
+        class="form-control"
+        (input)="updateUsername2($event)"
+        [(ngModel)]="username2"
+    >
+    <p class="shadown m-3 text-success">Your name is: {{username2}}</p>
+    <button 
+        class="btn btn-danger" 
+        (click)="resetUsername2()"
+        [disabled]="isDisabled2"
+    >
+        Clear
+    </button>
+</div>
