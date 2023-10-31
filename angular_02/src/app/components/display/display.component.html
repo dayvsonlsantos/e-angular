@@ -1,0 +1,12 @@
+<div class="Small shadow p-3 mb-5 rounded text-primary d-flex flex-column">
+    <button class="btn btn-primary m-3" (click)="showPassword()">Display Details</button>
+    <span *ngIf="showPass === true">Secret Password = 'Tuna'</span>
+    <span 
+        *ngFor="let value of values; let i = index" 
+        class="d-flex flex-column m-3 p-3 rounded"
+        [ngClass]="{afterFive: i >= 4}"
+        [ngStyle]="{backgroundColor: value >= 5 ? 'blue' : ''}"
+    >
+        Attempt nº: {{ value }}
+    </span>
+</div>

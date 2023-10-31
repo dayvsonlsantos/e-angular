@@ -1,7 +1,12 @@
 <div class="Small shadow p-3 mb-5 rounded text-primary">
     <p>
         {{ 'Server' }} with ID {{ serverId }} is
-        <span class="text-success">{{ getServerStatus() }}</span>
+        <span 
+            [ngStyle]="{color: getColor()}" 
+            [ngClass]="{online: serverStatus === 'online'}"
+        >
+            {{ getServerStatus() }}
+        </span>
     </p>
     <button class="btn btn-warning m-3" (click)="changeState()">Change other button</button>
     <button class="btn btn-primary" [disabled]="!allowNewServer">Add Server</button>
@@ -27,4 +32,18 @@
     >
     <button (click)="AddServer()" class="btn btn-primary m-3">Add Server</button>
     <span class="shadow p-3 rounded text-success m-3" *ngIf="Server">{{ Server }}</span>
+</div>
+
+<div class="Small shadow p-3 mb-5 rounded text-primary">
+    <button class="btn btn-primary" (click)="onCreateServer()">Show message</button>
+    <p *ngIf="serverCreated; else noServer">Server was created, server name is {{ ServerName }}</p>
+    <ng-template #noServer>
+        <p>No server was created!</p>
+    </ng-template>
+</div>
+
+<div class="Small shadow p-3 mb-5 rounded text-primary">
+    <input type="text" class="form-control" [(ngModel)]="name">
+    <button class="btn btn-primary" (click)="addName()">Add User</button>
+    <app-success-alert *ngFor="let name of names"></app-success-alert>
 </div>

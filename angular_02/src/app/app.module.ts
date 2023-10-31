@@ -7,7 +7,8 @@ import { WarningAlertComponent } from './components/warning-alert/warning-alert.
 import { SuccessAlertComponent } from './components/success-alert/success-alert.component';
 import { ServerComponent } from './components/server/server.component';
 import { FormsModule } from '@angular/forms';
-import { UsernameTaskComponent } from './components/username-task/username-task.component'; //Needed to use two-way-databinding
+import { UsernameTaskComponent } from './components/username-task/username-task.component';
+import { DisplayComponent } from './components/display/display.component'; //Needed to use two-way-databinding
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { UsernameTaskComponent } from './components/username-task/username-task.
     WarningAlertComponent,
     SuccessAlertComponent,
     ServerComponent,
-    UsernameTaskComponent
+    UsernameTaskComponent,
+    DisplayComponent
   ],
   imports: [
     BrowserModule,

@@ -32,3 +32,20 @@
         Clear
     </button>
 </div>
+
+<div class="Small shadow p-3 mb-5 rounded text-primary">
+    <!-- Simple way -->
+    <input 
+        type="text"
+        class="form-control"
+        [(ngModel)]="username3"
+    >
+    <p class="shadown m-3 text-success">Your name is: {{username3}}</p>
+    <button 
+        class="btn btn-danger" 
+        (click)="username3 = ''"
+        [disabled]="username3 === ''"
+        >
+        Clear
+    </button>
+</div>

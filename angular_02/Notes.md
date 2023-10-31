@@ -51,4 +51,14 @@ Square Brackets [] -> Indicates to angular that you're using property binding. T
 
 ## Passing and Using Data with Event Binding
 
-$event -> It's king of a reserved variable name, you can use in the template when using event binding. Because, it gives us access to the event data.
+- $event -> It's king of a reserved variable name, you can use in the template when using event binding. Because, it gives us access to the event data.
+
+## Directives
+
+Directives are instruction in the DOM, example: ngIf
+
+Unlike structural directives as ngIf, attribute directives don't add or remove elements. They only change the element they were placed on.
+Example:
+    ngStyle -> Allow us to change the CSS style itself;
+    ngClass -> Allow us to dynamically add or remove the CSS classes;
+

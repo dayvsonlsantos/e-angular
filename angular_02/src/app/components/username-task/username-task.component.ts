@@ -41,4 +41,7 @@ export class UsernameTaskComponent {
     this.username2 = ''
     this.isDisabled2 = true;
   }
+
+  // Simple Way
+  username3 = ''
 }
