@@ -1,0 +1,13 @@
+<!-- user-choice.component.html -->
+<div class="d-flex flex-column w-25">
+    <span>Escolha as colunas</span>
+    <button *ngIf="!showChartOptions" (click)="setOption('doc_type')">Escolher opção doc_type</button>
+    <button *ngIf="!showChartOptions" (click)="setOption('quant')">Escolher opção quant</button>
+    <button *ngIf="selectedOptions >= 2" (click)="openChart()">Proximo</button>
+</div>
+<button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('pie')">Escolher opção pieChart</button>
+<button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('bar')">Escolher opção barChart</button>
+<button *ngIf="chartWasChosen" (click)="updateChart()">Atualizar</button>
+
+<app-pie-chart></app-pie-chart>
+<div app-bar-chart></div>

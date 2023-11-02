@@ -1,0 +1,20 @@
+{
+    "extracts": [
+        {
+            "doc_type": "balanco_patrimonial",
+            "quant": 897
+        },
+        {
+            "doc_type": "posicao_consolidada",
+            "quant": 735
+        },
+        {
+            "doc_type": "endividamento",
+            "quant": 728
+        },
+        {
+            "doc_type": "declaracao_ir",
+            "quant": 710
+        }
+    ]
+}
