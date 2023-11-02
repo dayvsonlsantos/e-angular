@@ -10,16 +10,16 @@ export class Chart01Component {
 
   selectedOptions: number = 0;
   userOptions: string[] = [];
-  FinaluserOptions: boolean = false;
-  showChartOptions:boolean = false;
-  chartWasChosen:boolean = false;
-  chartOption:number = 0;
+  FinaluserOptions: number = 1;
+  showChartOptions: boolean = false;
+  chartWasChosen: boolean = false;
+  chartOption: number = 0;
 
-  constructor(private chartDataService: ChartDataService) {}
+  constructor(private chartDataService: ChartDataService) { }
 
   @Output() userChoiceChanged = new EventEmitter<string[]>();
 
-  setOption(choice: string){
+  setOption(choice: string) {
     // Counts how many options are selected
     this.selectedOptions += 1;
     console.log(this.selectedOptions);
@@ -29,12 +29,12 @@ export class Chart01Component {
     console.log(this.userOptions);
   }
 
-  openChart(){
+  openChart() {
     // Opens chart options
     this.showChartOptions = true;
   }
 
-  setChart(choice: string){
+  setChart(choice: string) {
     //Adding chartOption to the array
     this.userOptions[this.selectedOptions] = (choice)
 
@@ -46,21 +46,14 @@ export class Chart01Component {
     // Updates & Change the chart option in the Array
     this.chartOption = this.userOptions.length - 1;
 
-    // console.log(this.chartOption)
+    if (this.userOptions[this.chartOption] === 'pie') {
+      this.FinaluserOptions = 0;
+    }
 
-    if (this.selectedOptions === 2){      
-      if(this.userOptions[this.chartOption] === 'pie'){
-        // console.log('uhu pie');
-      }
+    if (this.userOptions[this.chartOption] === 'bar') {
+      this.FinaluserOptions = 1;
     }
-    else {
-      if(this.userOptions[this.chartOption] === 'bar'){
-        // console.log('uhu bar');
-      }
-    }
-    this.FinaluserOptions = true;
-    // console.log(this.userOptions)
-    // console.log(this.userOptions[this.chartOption]);
+
     this.chartDataService.updateUserOptions(this.userOptions);;
   }
 }

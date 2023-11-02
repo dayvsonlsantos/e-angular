@@ -9,5 +9,7 @@
 <button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('bar')">Escolher opção barChart</button>
 <button *ngIf="chartWasChosen" (click)="updateChart()">Atualizar</button>
 
-<app-pie-chart></app-pie-chart>
-<div app-bar-chart></div>
+<div style="border: 1px solid red">
+    <app-pie-chart *ngIf="FinaluserOptions === 0"></app-pie-chart>
+    <div app-bar-chart *ngIf="FinaluserOptions === 1"></div>
+</div>

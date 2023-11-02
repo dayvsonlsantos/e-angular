@@ -1,6 +1,8 @@
+import { DataService } from 'src/app/services/data.service';
 import { Component, Input, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
 import { ChartDataService } from 'src/app/services/chart-data.service';
+import { Data } from 'src/app/models/data.model';
 
 @Component({
   selector: 'app-pie-chart',
@@ -10,15 +12,83 @@ import { ChartDataService } from 'src/app/services/chart-data.service';
 
 export class PieChartComponent implements OnInit {
 
-  constructor(private chartDataService: ChartDataService) {}
+  constructor(
+    private chartDataService: ChartDataService,
+    private dataService: DataService,
+  ) { }
 
-  chartOption:number = 0;
+  chartOption: number = 0;
+  data: Data[] = [];
 
   ngOnInit(): void {
     this.chartDataService.userOptions$.subscribe((userOptions) => {
-      this.chartOption = userOptions.length - 1;      
-      if(userOptions[this.chartOption] === 'pie'){
-        console.log('Dados recebidos no BarChartComponent:', userOptions[this.chartOption]);
+
+      // Chart chose by user
+      this.chartOption = userOptions.length - 1;
+
+      if (userOptions[this.chartOption] === 'pie') {
+
+
+        this.dataService.getAll().subscribe((data: Data[]) => {
+          this.data = data;
+          console.log(this.data);
+
+          // Mapear os valores do seu array de objetos para o formato esperado pelo ECharts
+          const mappedData = this.data.map(item => ({
+            value: item.quant,
+            name: item.doc_type
+          }));
+
+          type EChartsOption = echarts.EChartsOption;
+
+          var chartDom = document.getElementById('pieChart')!;
+          var myChart = echarts.init(chartDom);
+          var option: EChartsOption;
+
+          option = {
+            tooltip: {
+              trigger: 'item'
+            },
+            legend: {
+              top: '5%',
+              left: 'center'
+            },
+            series: [
+              {
+                name: 'Access From',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                  borderRadius: 10,
+                  borderColor: '#fff',
+                  borderWidth: 2
+                },
+                label: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  label: {
+                    show: true,
+                    fontSize: 40,
+                    fontWeight: 'bold'
+                  }
+                },
+                labelLine: {
+                  show: false
+                },
+                data: mappedData
+              }
+            ]
+          };
+
+          option && myChart.setOption(option);
+
+
+        })
+
+
       }
     });
   }
