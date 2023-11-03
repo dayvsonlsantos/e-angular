@@ -19,6 +19,9 @@ export class PieChartComponent implements OnInit {
 
   chartOption: number = 0;
   data: Data[] = [];
+  dataUserOptions: string[] = [];
+  valueProperty: string = '';
+  nameProperty: string = '';
 
   ngOnInit(): void {
     this.chartDataService.userOptions$.subscribe((userOptions) => {
@@ -26,17 +29,31 @@ export class PieChartComponent implements OnInit {
       // Chart chose by user
       this.chartOption = userOptions.length - 1;
 
-      if (userOptions[this.chartOption] === 'pie') {
+      // Remove o último item do array userOptions e atribui a this.dataUserOptions
+      this.dataUserOptions = userOptions.slice(0, -1);
+      console.log(this.dataUserOptions);
+      
 
+      if (userOptions[this.chartOption] === 'pie') {
 
         this.dataService.getAll().subscribe((data: Data[]) => {
           this.data = data;
-          console.log(this.data);
 
+          this.dataUserOptions.forEach((item: string) => {
+            if (item === 'quant') {
+              this.valueProperty = item;
+            } else {
+              this.nameProperty = item;
+            }
+          });
+
+          console.log(this.valueProperty);
+          console.log(this.nameProperty);
+          
           // Mapear os valores do seu array de objetos para o formato esperado pelo ECharts
           const mappedData = this.data.map(item => ({
-            value: item.quant,
-            name: item.doc_type
+            value: item[this.valueProperty],
+            name: item[this.nameProperty]
           }));
 
           type EChartsOption = echarts.EChartsOption;
