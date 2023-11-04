@@ -12,6 +12,9 @@ import { Data } from 'src/app/models/data.model';
 
 export class PieChartComponent implements OnInit {
 
+  @Input() cardProp!:string;
+  @Input() userOptions!:string[];
+
   constructor(
     private chartDataService: ChartDataService,
     private dataService: DataService,
@@ -24,17 +27,18 @@ export class PieChartComponent implements OnInit {
   nameProperty: string = '';
 
   ngOnInit(): void {
-    this.chartDataService.userOptions$.subscribe((userOptions) => {
+    console.log(this.cardProp);
+    // this.chartDataService.userOptions$.subscribe((userOptions) => {
 
       // Chart chose by user
-      this.chartOption = userOptions.length - 1;
+      this.chartOption = this.userOptions.length - 1;
 
       // Remove o último item do array userOptions e atribui a this.dataUserOptions
-      this.dataUserOptions = userOptions.slice(0, -1);
+      this.dataUserOptions = this.userOptions.slice(0, -1);
       console.log(this.dataUserOptions);
       
 
-      if (userOptions[this.chartOption] === 'pie') {
+      if (this.userOptions[this.chartOption] === 'pie') {
 
         this.dataService.getAll().subscribe((data: Data[]) => {
           this.data = data;
@@ -58,7 +62,7 @@ export class PieChartComponent implements OnInit {
 
           type EChartsOption = echarts.EChartsOption;
 
-          var chartDom = document.getElementById('pieChart')!;
+          var chartDom = document.getElementById(this.cardProp)!;
           var myChart = echarts.init(chartDom);
           var option: EChartsOption;
 
@@ -107,61 +111,6 @@ export class PieChartComponent implements OnInit {
 
 
       }
-    });
+    // });
   }
-
-  // ngOnInit(): void {
-  //   type EChartsOption = echarts.EChartsOption;
-
-  //   var chartDom = document.getElementById('pieChart')!;
-  //   var myChart = echarts.init(chartDom);
-  //   var option: EChartsOption;
-
-  //   option = {
-  //     tooltip: {
-  //       trigger: 'item'
-  //     },
-  //     legend: {
-  //       top: '5%',
-  //       left: 'center'
-  //     },
-  //     series: [
-  //       {
-  //         name: 'Access From',
-  //         type: 'pie',
-  //         radius: ['40%', '70%'],
-  //         avoidLabelOverlap: false,
-  //         itemStyle: {
-  //           borderRadius: 10,
-  //           borderColor: '#fff',
-  //           borderWidth: 2
-  //         },
-  //         label: {
-  //           show: false,
-  //           position: 'center'
-  //         },
-  //         emphasis: {
-  //           label: {
-  //             show: true,
-  //             fontSize: 40,
-  //             fontWeight: 'bold'
-  //           }
-  //         },
-  //         labelLine: {
-  //           show: false
-  //         },
-  //         data: [
-  //           { value: 1048, name: 'Search Engine' },
-  //           { value: 735, name: 'Direct' },
-  //           { value: 580, name: 'Email' },
-  //           { value: 484, name: 'Union Ads' },
-  //           { value: 300, name: 'Video Ads' }
-  //         ]
-  //       }
-  //     ]
-  //   };
-
-  //   option && myChart.setOption(option);
-  // }
-
 }

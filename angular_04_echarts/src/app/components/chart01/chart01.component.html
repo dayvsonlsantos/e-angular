@@ -10,6 +10,7 @@
 <button *ngIf="chartWasChosen" (click)="updateChart()">Atualizar</button>
 
 <div style="border: 1px solid red">
-    <app-pie-chart *ngIf="FinaluserOptions === 0"></app-pie-chart>
-    <div app-bar-chart *ngIf="FinaluserOptions === 1"></div>
+    oie {{cardProp}}
+    <app-pie-chart *ngIf="FinaluserOptions === 1" [cardProp]="cardProp" [userOptions]="userOptions"></app-pie-chart>
+    <app-bar-chart *ngIf="FinaluserOptions === 2" [cardProp]="cardProp" [userOptions]="userOptions"></app-bar-chart>
 </div>

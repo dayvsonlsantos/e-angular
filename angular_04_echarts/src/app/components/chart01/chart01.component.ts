@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ChartDataService } from '../../services/chart-data.service';
 
 @Component({
@@ -10,12 +10,14 @@ export class Chart01Component {
 
   selectedOptions: number = 0;
   userOptions: string[] = [];
-  FinaluserOptions: number = 1;
+  FinaluserOptions: number = 0;
   showChartOptions: boolean = false;
   chartWasChosen: boolean = false;
   chartOption: number = 0;
 
   constructor(private chartDataService: ChartDataService) { }
+
+  @Input() cardProp!: string;
 
   @Output() userChoiceChanged = new EventEmitter<string[]>();
 
@@ -47,13 +49,13 @@ export class Chart01Component {
     this.chartOption = this.userOptions.length - 1;
 
     if (this.userOptions[this.chartOption] === 'pie') {
-      this.FinaluserOptions = 0;
-    }
-
-    if (this.userOptions[this.chartOption] === 'bar') {
       this.FinaluserOptions = 1;
     }
 
-    this.chartDataService.updateUserOptions(this.userOptions);;
+    if (this.userOptions[this.chartOption] === 'bar') {
+      this.FinaluserOptions = 2;
+    }
+
+    // this.chartDataService.updateUserOptions(this.userOptions);;
   }
 }

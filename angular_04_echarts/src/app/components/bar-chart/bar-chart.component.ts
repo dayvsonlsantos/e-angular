@@ -5,14 +5,13 @@ import { DataService } from 'src/app/services/data.service';
 import { ChartDataService } from '../../services/chart-data.service';
 
 @Component({
-  selector: '[app-bar-chart]',
+  selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css']
 })
 export class BarChartComponent implements OnInit {
 
-  // @Input() userChoice: string[] = [];
-  
+  @Input() cardProp!: string;
 
   constructor(
     private chartDataService: ChartDataService,
@@ -25,18 +24,20 @@ export class BarChartComponent implements OnInit {
   valueProperty: string = '';
   nameProperty: string = '';
 
-  ngOnInit(): void {
-    this.chartDataService.userOptions$.subscribe((userOptions) => {
+  @Input() userOptions!:string [];
 
+  ngOnInit(): void {
+    // this.chartDataService.userOptions$.subscribe((userOptions) => {
+      
       // Chart chose by user
-      this.chartOption = userOptions.length - 1;
+      this.chartOption = this.userOptions.length - 1;
 
       // Remove o último item do array userOptions e atribui a this.dataUserOptions
-      this.dataUserOptions = userOptions.slice(0, -1);
+      this.dataUserOptions = this.userOptions.slice(0, -1);
       console.log(this.dataUserOptions);
       
 
-      if (userOptions[this.chartOption] === 'bar') {
+      if (this.userOptions[this.chartOption] === 'bar') {
 
         this.dataService.getAll().subscribe((data: Data[]) => {
           this.data = data;
@@ -60,7 +61,7 @@ export class BarChartComponent implements OnInit {
 
           type EChartsOption = echarts.EChartsOption;
 
-          var chartDom = document.getElementById('barChart')!;
+          var chartDom = document.getElementById(this.cardProp)!;
           var myChart = echarts.init(chartDom);
           var option: EChartsOption;
 
@@ -110,7 +111,7 @@ export class BarChartComponent implements OnInit {
       }
 
 
-    });
+    // });
   }
 }
 
