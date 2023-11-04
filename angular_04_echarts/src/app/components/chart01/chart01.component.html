@@ -1,10 +1,10 @@
 <!-- user-choice.component.html -->
 <div class="d-flex flex-column w-25">
     <span>Escolha as colunas</span>
-    <button *ngIf="!showChartOptions" (click)="setOption('doc_type')">
+    <button *ngIf="!showChartOptions" (click)="setOption('doc_type')" [ngStyle]="userOptions.includes('doc_type') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
         Escolher opção doc_type
     </button>
-    <button *ngIf="!showChartOptions" (click)="setOption('quant')">
+    <button *ngIf="!showChartOptions" (click)="setOption('quant')" [ngStyle]="userOptions.includes('quant') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
         Escolher opção quant
     </button>
     <button *ngIf="selectedOptions >= 2" (click)="openChart()">
