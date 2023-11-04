@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ChartDataService } from '../../services/chart-data.service';
 
 @Component({
   selector: 'app-chart01',
@@ -20,7 +19,7 @@ export class Chart01Component {
   //(en) Receives the chart chosen by the user.
   chartOption: string = '';
 
-  constructor(private chartDataService: ChartDataService) { }
+  constructor() { }
 
   //(en) Get the chart ID
   @Input() cardProp!: string;
