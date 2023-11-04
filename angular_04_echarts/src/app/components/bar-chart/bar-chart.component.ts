@@ -2,116 +2,119 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
 import { Data } from 'src/app/models/data.model';
 import { DataService } from 'src/app/services/data.service';
-import { ChartDataService } from '../../services/chart-data.service';
 
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css']
 })
+
 export class BarChartComponent implements OnInit {
 
+  // cardProp -> (en) Receives the chart ID.
+  // userOptions -> (en) Receives the options selected by the user
+  // chartOption -> (en) Receives the chart chosen by the user
+
   @Input() cardProp!: string;
+  @Input() userOptions!: string[];
+  @Input() chartOption!: string;
 
   constructor(
-    private chartDataService: ChartDataService,
+    //(en) Retrieves data from the database.
     private dataService: DataService,
   ) { }
 
-  chartOption: number = 0;
+  //(en) Receives data from the database.
   data: Data[] = [];
-  dataUserOptions: string[] = [];
+
+  //(en) Will receive the value of a user option.
   valueProperty: string = '';
   nameProperty: string = '';
 
-  @Input() userOptions!:string [];
-
   ngOnInit(): void {
-    // this.chartDataService.userOptions$.subscribe((userOptions) => {
-      
-      // Chart chose by user
-      this.chartOption = this.userOptions.length - 1;
 
-      // Remove o último item do array userOptions e atribui a this.dataUserOptions
-      this.dataUserOptions = this.userOptions.slice(0, -1);
-      console.log(this.dataUserOptions);
-      
+    //(en) Checks if the selected option on the chart is the same.
+    if (this.chartOption === 'bar') {
 
-      if (this.userOptions[this.chartOption] === 'bar') {
+      this.dataService.getAll().subscribe((data: Data[]) => {
 
-        this.dataService.getAll().subscribe((data: Data[]) => {
-          this.data = data;
+        //(en) Assigns the value coming from the dataService to the variable 'data'.
+        this.data = data;
 
-          this.dataUserOptions.forEach((item: string) => {
-            if (item === 'quant') {
-              this.valueProperty = item;
-            } else {
-              this.nameProperty = item;
+        // (en) Checks the possible user options and redirects to the correct assignment.
+        this.userOptions.forEach((item: string) => {
+          if (item === 'quant') {
+            this.valueProperty = item;
+          } else {
+            this.nameProperty = item;
+          }
+        });
+
+        //(en) Map the values from your array of objects to the format expected by ECharts.
+        const mappedData = this.data.map(item => ({
+          value: item[this.valueProperty],
+          name: item[this.nameProperty],
+        }));
+
+        //(en) Creating an alias (an alternative name) for the echarts.EChartsOption type.
+        type EChartsOption = echarts.EChartsOption;
+
+        //(en) Getting an HTML element from the DOM using the cardID (via this.cardProp), ensuring it's not null.
+        var chartDom = document.getElementById(this.cardProp)!;
+
+        //(en) Initializing an ECharts chart using the echarts instance.
+        var myChart = echarts.init(chartDom);
+
+        //(en) Creating a variable of type EChartsOption.
+        var option: EChartsOption;
+
+        //(en) Configuring the options for an ECharts chart.
+        option = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
             }
-          });
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
 
-          console.log(this.valueProperty);
-          console.log(this.nameProperty);
-          
-          // Mapear os valores do seu array de objetos para o formato esperado pelo ECharts
-          const mappedData = this.data.map(item => ({
-            value: item[this.valueProperty as keyof Data], // Acessa a propriedade dinamicamente
-            name: item[this.nameProperty as keyof Data], // Acessa a propriedade dinamicamente
-          }));
-
-          type EChartsOption = echarts.EChartsOption;
-
-          var chartDom = document.getElementById(this.cardProp)!;
-          var myChart = echarts.init(chartDom);
-          var option: EChartsOption;
-
-          option = {
-            tooltip: {
-              trigger: 'axis',
-              axisPointer: {
-                type: 'shadow'
+              //(en) Getting the values of the 'name' property from each object in the 'mappedData' array
+              data: mappedData.map(item => item.name),
+              axisTick: {
+                alignWithLabel: true
               }
-            },
-            grid: {
-              left: '3%',
-              right: '4%',
-              bottom: '3%',
-              containLabel: true
-            },
-            xAxis: [
-              {
-                type: 'category',
-                data: mappedData.map(item => item.name),
-                axisTick: {
-                  alignWithLabel: true
-                }
-              }
-            ],
-            yAxis: [
-              {
-                type: 'value'
-              }
-            ],
-            series: [
-              {
-                name: 'Direct',
-                type: 'bar',
-                barWidth: '60%',
-                data: mappedData.map(item => item.value)
-              }
-            ]
-          };
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          series: [
+            {
+              name: 'Direct',
+              type: 'bar',
+              barWidth: '60%',
 
-          option && myChart.setOption(option);
+              //(en) Getting the values of the 'value' property from each object in the 'mappedData' array
+              data: mappedData.map(item => item.value)
+            }
+          ]
+        };
 
-        }
-        )
-
-
+        //(en) Applying the specified chart configurations stored in the 'option' variable.
+        option && myChart.setOption(option);
       }
-
-
-    // });
+      )
+    }
   }
 }
 

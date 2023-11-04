@@ -1,16 +1,44 @@
 <!-- user-choice.component.html -->
 <div class="d-flex flex-column w-25">
     <span>Escolha as colunas</span>
-    <button *ngIf="!showChartOptions" (click)="setOption('doc_type')">Escolher opção doc_type</button>
-    <button *ngIf="!showChartOptions" (click)="setOption('quant')">Escolher opção quant</button>
-    <button *ngIf="selectedOptions >= 2" (click)="openChart()">Proximo</button>
+    <button *ngIf="!showChartOptions" (click)="setOption('doc_type')">
+        Escolher opção doc_type
+    </button>
+    <button *ngIf="!showChartOptions" (click)="setOption('quant')">
+        Escolher opção quant
+    </button>
+    <button *ngIf="selectedOptions >= 2" (click)="openChart()">
+        Proximo
+    </button>
 </div>
-<button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('pie')">Escolher opção pieChart</button>
-<button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('bar')">Escolher opção barChart</button>
-<button *ngIf="chartWasChosen" (click)="updateChart()">Atualizar</button>
+
+<button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('pie')">
+    Escolher opção pieChart
+</button>
+
+<button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('bar')">
+    Escolher opção barChart
+</button>
 
 <div style="border: 1px solid red">
-    oie {{cardProp}}
-    <app-pie-chart *ngIf="FinaluserOptions === 1" [cardProp]="cardProp" [userOptions]="userOptions"></app-pie-chart>
-    <app-bar-chart *ngIf="FinaluserOptions === 2" [cardProp]="cardProp" [userOptions]="userOptions"></app-bar-chart>
+    
+    <!-- Legend: 
+        cardProp -> (en) Send the chart ID
+        userOptions -> (en) Send the options selected by the user
+        chartOption -> (en) Send the chart chosen by the user
+    -->
+
+    <app-pie-chart 
+        *ngIf="chartOption === 'pie'" 
+        [cardProp]="cardProp"
+        [userOptions]="userOptions"
+        [chartOption]="chartOption">
+    </app-pie-chart>
+
+    <app-bar-chart 
+        *ngIf="chartOption === 'bar'"
+        [cardProp]="cardProp"
+        [userOptions]="userOptions"
+        [chartOption]="chartOption">
+    </app-bar-chart>
 </div>

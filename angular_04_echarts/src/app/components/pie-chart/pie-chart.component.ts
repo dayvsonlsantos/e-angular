@@ -1,8 +1,7 @@
-import { DataService } from 'src/app/services/data.service';
 import { Component, Input, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
-import { ChartDataService } from 'src/app/services/chart-data.service';
 import { Data } from 'src/app/models/data.model';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-pie-chart',
@@ -12,105 +11,107 @@ import { Data } from 'src/app/models/data.model';
 
 export class PieChartComponent implements OnInit {
 
-  @Input() cardProp!:string;
-  @Input() userOptions!:string[];
+  // cardProp -> (en) Receives the chart ID.
+  // userOptions -> (en) Receives the options selected by the user
+  // chartOption -> (en) Receives the chart chosen by the user
+
+  @Input() cardProp!: string;
+  @Input() userOptions!: string[];
+  @Input() chartOption!: string;
 
   constructor(
-    private chartDataService: ChartDataService,
+    //(en) Retrieves data from the database.
     private dataService: DataService,
   ) { }
 
-  chartOption: number = 0;
+  //(en) Receives data from the database.
   data: Data[] = [];
-  dataUserOptions: string[] = [];
+
+  //(en) Will receive the value of a user option.
   valueProperty: string = '';
   nameProperty: string = '';
 
   ngOnInit(): void {
-    console.log(this.cardProp);
-    // this.chartDataService.userOptions$.subscribe((userOptions) => {
 
-      // Chart chose by user
-      this.chartOption = this.userOptions.length - 1;
+    //(en) Checks if the selected option on the chart is the same.
+    if (this.chartOption === 'pie') {
 
-      // Remove o último item do array userOptions e atribui a this.dataUserOptions
-      this.dataUserOptions = this.userOptions.slice(0, -1);
-      console.log(this.dataUserOptions);
-      
+      this.dataService.getAll().subscribe((data: Data[]) => {
 
-      if (this.userOptions[this.chartOption] === 'pie') {
+        //(en) Assigns the value coming from the dataService to the variable 'data'.
+        this.data = data;
 
-        this.dataService.getAll().subscribe((data: Data[]) => {
-          this.data = data;
+        // (en) Checks the possible user options and redirects to the correct assignment.
+        this.userOptions.forEach((item: string) => {
+          if (item === 'quant') {
+            this.valueProperty = item;
+          } else {
+            this.nameProperty = item;
+          }
+        });
 
-          this.dataUserOptions.forEach((item: string) => {
-            if (item === 'quant') {
-              this.valueProperty = item;
-            } else {
-              this.nameProperty = item;
-            }
-          });
+        //(en) Map the values from your array of objects to the format expected by ECharts.
+        const mappedData = this.data.map(item => ({
+          value: item[this.valueProperty],
+          name: item[this.nameProperty]
+        }));
 
-          console.log(this.valueProperty);
-          console.log(this.nameProperty);
-          
-          // Mapear os valores do seu array de objetos para o formato esperado pelo ECharts
-          const mappedData = this.data.map(item => ({
-            value: item[this.valueProperty],
-            name: item[this.nameProperty]
-          }));
+        //(en) Creating an alias (an alternative name) for the echarts.EChartsOption type.
+        type EChartsOption = echarts.EChartsOption;
 
-          type EChartsOption = echarts.EChartsOption;
+        //(en) Getting an HTML element from the DOM using the cardID (via this.cardProp), ensuring it's not null.
+        var chartDom = document.getElementById(this.cardProp)!;
 
-          var chartDom = document.getElementById(this.cardProp)!;
-          var myChart = echarts.init(chartDom);
-          var option: EChartsOption;
+        //(en) Initializing an ECharts chart using the echarts instance.
+        var myChart = echarts.init(chartDom);
 
-          option = {
-            tooltip: {
-              trigger: 'item'
-            },
-            legend: {
-              top: '5%',
-              left: 'center'
-            },
-            series: [
-              {
-                name: 'Access From',
-                type: 'pie',
-                radius: ['40%', '70%'],
-                avoidLabelOverlap: false,
-                itemStyle: {
-                  borderRadius: 10,
-                  borderColor: '#fff',
-                  borderWidth: 2
-                },
+        //(en) Creating a variable of type EChartsOption.
+        var option: EChartsOption;
+
+        //(en) Configuring the options for an ECharts chart.
+        option = {
+          tooltip: {
+            trigger: 'item'
+          },
+          legend: {
+            top: '5%',
+            left: 'center'
+          },
+          series: [
+            {
+              name: 'Access From',
+              type: 'pie',
+              radius: ['40%', '70%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
                 label: {
-                  show: false,
-                  position: 'center'
-                },
-                emphasis: {
-                  label: {
-                    show: true,
-                    fontSize: 40,
-                    fontWeight: 'bold'
-                  }
-                },
-                labelLine: {
-                  show: false
-                },
-                data: mappedData
-              }
-            ]
-          };
+                  show: true,
+                  fontSize: 40,
+                  fontWeight: 'bold'
+                }
+              },
+              labelLine: {
+                show: false
+              },
 
-          option && myChart.setOption(option);
+              //(en) Getting the values of the properties (value and name) present in the 'mappedData' array.
+              data: mappedData
+            }
+          ]
+        };
 
-
-        })
-
-
-      }
-    // });
+        //(en) Applying the specified chart configurations stored in the 'option' variable.
+        option && myChart.setOption(option);
+      })
+    }
   }
 }

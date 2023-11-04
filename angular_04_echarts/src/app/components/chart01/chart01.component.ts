@@ -8,54 +8,42 @@ import { ChartDataService } from '../../services/chart-data.service';
 })
 export class Chart01Component {
 
+  //(en) Number of options selected by the user
   selectedOptions: number = 0;
+
+  //(en) Options selected by the user.
   userOptions: string[] = [];
-  FinaluserOptions: number = 0;
+
+  //(en) Display or hide chart options
   showChartOptions: boolean = false;
-  chartWasChosen: boolean = false;
-  chartOption: number = 0;
+
+  //(en) Receives the chart chosen by the user.
+  chartOption: string = '';
 
   constructor(private chartDataService: ChartDataService) { }
 
+  //(en) Get the chart ID
   @Input() cardProp!: string;
 
-  @Output() userChoiceChanged = new EventEmitter<string[]>();
-
+  //(en) Inserts user options (database columns)
   setOption(choice: string) {
-    // Counts how many options are selected
-    this.selectedOptions += 1;
-    console.log(this.selectedOptions);
 
-    // Adds the option into the Array userOptions
+    //(en) Counts how many options are selected
+    this.selectedOptions += 1;
+
+    //(en) Adds the option to the userOptions array
     this.userOptions.push(choice);
-    console.log(this.userOptions);
+
   }
 
   openChart() {
-    // Opens chart options
+    //(en) Opens chart options
     this.showChartOptions = true;
   }
 
+  //(en) Sets the chart chosen by the user.
   setChart(choice: string) {
-    //Adding chartOption to the array
-    this.userOptions[this.selectedOptions] = (choice)
-
-    // Updates that a chart as alredy been chosen
-    this.chartWasChosen = true;
+    this.chartOption = choice;
   }
 
-  updateChart() {
-    // Updates & Change the chart option in the Array
-    this.chartOption = this.userOptions.length - 1;
-
-    if (this.userOptions[this.chartOption] === 'pie') {
-      this.FinaluserOptions = 1;
-    }
-
-    if (this.userOptions[this.chartOption] === 'bar') {
-      this.FinaluserOptions = 2;
-    }
-
-    // this.chartDataService.updateUserOptions(this.userOptions);;
-  }
 }
