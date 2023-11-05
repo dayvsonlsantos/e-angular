@@ -1,4 +1,9 @@
 <!-- user-choice.component.html -->
+<div>
+    <button (click)="tableOption = 'users'">Users</button>
+    <button (click)="tableOption = 'extracts'">Extracts</button>
+</div>
+
 <div class="d-flex flex-column w-25">
     <span>Escolha as colunas</span>
     <button *ngIf="!showChartOptions" (click)="setOption('doc_type')" [ngStyle]="userOptions.includes('doc_type') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
@@ -32,13 +37,15 @@
         *ngIf="chartOption === 'pie'" 
         [cardProp]="cardProp"
         [userOptions]="userOptions"
-        [chartOption]="chartOption">
+        [chartOption]="chartOption"
+        [tableOption]="tableOption">
     </app-pie-chart>
 
     <app-bar-chart 
         *ngIf="chartOption === 'bar'"
         [cardProp]="cardProp"
         [userOptions]="userOptions"
-        [chartOption]="chartOption">
+        [chartOption]="chartOption"
+        [tableOption]="tableOption">
     </app-bar-chart>
 </div>

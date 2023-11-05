@@ -1,5 +1,15 @@
-export interface Data{
+export interface Extracts{
     [key: string]: any;
-    doc_type: string,
-    quant: number
+    id: number;
+    created_at: Date;
+    pages_process: number;
+    doc_type: string;
+    user_id: number;
 }
+
+export interface Users{
+    [key: string]: any;
+    id: number;
+    name: string;
+    segment: string;
+};

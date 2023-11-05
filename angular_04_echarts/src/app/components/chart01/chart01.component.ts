@@ -19,6 +19,9 @@ export class Chart01Component {
   //(en) Receives the chart chosen by the user.
   chartOption: string = '';
 
+  
+  tableOption: string = '';
+
   constructor() { }
 
   //(en) Get the chart ID
