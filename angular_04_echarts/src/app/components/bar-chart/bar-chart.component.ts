@@ -39,7 +39,7 @@ export class BarChartComponent implements OnInit {
 
     // (en) Checks the possible user options and redirects to the correct assignment.
     this.userOptions.forEach((item: string) => {
-      if (item === 'quant') {
+      if (item === 'Documentos processados') {
         this.valueProperty = item;
       } else {
         this.nameProperty = item;
@@ -110,13 +110,22 @@ export class BarChartComponent implements OnInit {
     option && myChart.setOption(option);
   }
 
+
+  option1: string = 'doc_type'
+  option2: string = 'doc_type'
+
+
   ngOnInit(): void {
 
     //(en) Checks if the selected option on the chart is the same.
     if (this.chartOption === 'bar') {
 
       if (this.tableOption === 'extracts') {
-        this.dataService.getAllExtracts().subscribe((dataExtracts: Extracts[]) => {
+        // this.dataService.getAllExtracts().subscribe((dataExtracts: Extracts[]) => {
+        //   console.log(dataExtracts)
+        //   this.teste(dataExtracts);
+        // });
+        this.dataService.getExtracts(this.option1, this.option2).subscribe((dataExtracts: Extracts[]) => {
           console.log(dataExtracts)
           this.teste(dataExtracts);
         });

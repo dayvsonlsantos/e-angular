@@ -41,7 +41,7 @@ export class PieChartComponent implements OnInit {
 
     // (en) Checks the possible user options and redirects to the correct assignment.
     this.userOptions.forEach((item: string) => {
-      if (item === 'quant') {
+      if (item === 'Documentos processados') {
         this.valueProperty = item;
       } else {
         this.nameProperty = item;
@@ -112,6 +112,9 @@ export class PieChartComponent implements OnInit {
 
   }
 
+  option1: string = 'doc_type'
+  option2: string = 'doc_type'
+
 
   ngOnInit(): void {
 
@@ -119,8 +122,12 @@ export class PieChartComponent implements OnInit {
     if (this.chartOption === 'pie') {
 
       if (this.tableOption === 'extracts') {
-        this.dataService.getAllExtracts().subscribe((dataExtracts: Extracts[]) => {
-          console.log('oiee')
+        // this.dataService.getAllExtracts().subscribe((dataExtracts: Extracts[]) => {
+        //   console.log('oiee')
+        //   console.log(dataExtracts)
+        //   this.teste(dataExtracts);
+        // });
+        this.dataService.getExtracts(this.option1, this.option2).subscribe((dataExtracts: Extracts[]) => {
           console.log(dataExtracts)
           this.teste(dataExtracts);
         });

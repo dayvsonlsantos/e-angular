@@ -6,11 +6,11 @@
 
 <div class="d-flex flex-column w-25">
     <span>Escolha as colunas</span>
-    <button *ngIf="!showChartOptions" (click)="setOption('doc_type')" [ngStyle]="userOptions.includes('doc_type') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
-        Escolher opção doc_type
+    <button *ngIf="!showChartOptions" (click)="setOption('Documentos')" [ngStyle]="userOptions.includes('doc_type') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
+        Escolher opção Documentos
     </button>
-    <button *ngIf="!showChartOptions" (click)="setOption('quant')" [ngStyle]="userOptions.includes('quant') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
-        Escolher opção quant
+    <button *ngIf="!showChartOptions" (click)="setOption('Documentos processados')" [ngStyle]="userOptions.includes('quant') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
+        Escolher opção Quantidade de Documentos Processados
     </button>
     <button *ngIf="selectedOptions >= 2" (click)="openChart()">
         Proximo
