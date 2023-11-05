@@ -17,6 +17,7 @@ export class BarChartComponent implements OnInit {
 
   @Input() cardProp!: string;
   @Input() userOptions!: string[];
+  @Input() userOptionsToDB!: string[];
   @Input() chartOption!: string;
   @Input() tableOption!: string;
 
@@ -110,12 +111,9 @@ export class BarChartComponent implements OnInit {
     option && myChart.setOption(option);
   }
 
-
-  option1: string = 'doc_type'
-  option2: string = 'doc_type'
-
-
   ngOnInit(): void {
+    console.log(this.userOptionsToDB);
+    
 
     //(en) Checks if the selected option on the chart is the same.
     if (this.chartOption === 'bar') {
@@ -125,7 +123,7 @@ export class BarChartComponent implements OnInit {
         //   console.log(dataExtracts)
         //   this.teste(dataExtracts);
         // });
-        this.dataService.getExtracts(this.option1, this.option2).subscribe((dataExtracts: Extracts[]) => {
+        this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataExtracts: Extracts[]) => {
           console.log(dataExtracts)
           this.teste(dataExtracts);
         });

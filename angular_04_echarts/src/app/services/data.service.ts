@@ -7,19 +7,27 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
 
+export class DataService {
+  
   private apiURLExtracts = `${environment.api}/extracts`
   private apiURLUsers = `${environment.api}/users`
 
+  // 
+  userOptionsToDbString:string = ''
+  
   constructor(private http: HttpClient) { }
 
   getAllExtracts(): Observable<Extracts[]>{
     return this.http.get<Extracts[]>(this.apiURLExtracts)
   }
 
-  getExtracts(opcao1: string, opcao2: string){
-    return this.http.get<any[]>(`${environment.api}/extracts?opcao1=${opcao1}&opcao2=${opcao2}`)
+  getExtracts(userOptionsToDB: string[]){
+    console.log(userOptionsToDB)
+    this.userOptionsToDbString = userOptionsToDB.join(',');
+    console.log(this.userOptionsToDbString)
+    
+    return this.http.get<any[]>(`${environment.api}/extracts?userOptions=${this.userOptionsToDbString}`)
   }
 
   getAllUsers(): Observable<Users[]>{

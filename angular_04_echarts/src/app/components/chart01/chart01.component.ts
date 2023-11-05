@@ -13,6 +13,9 @@ export class Chart01Component {
   //(en) Options selected by the user.
   userOptions: string[] = [];
 
+  //(en) Options selected by the user to send to the Database.
+  userOptionsToDB: string[] = []
+
   //(en) Display or hide chart options
   showChartOptions: boolean = false;
 
@@ -33,8 +36,19 @@ export class Chart01Component {
     //(en) Counts how many options are selected
     this.selectedOptions += 1;
 
+    if (choice == 'Documentos'){
+      //(en) Adds the option to the userOptionsToDB array
+      this.userOptionsToDB.push('doc_type')
+    }
+    if (choice == 'Documentos processados'){
+      this.userOptionsToDB.push('doc_type')
+    }
+
     //(en) Adds the option to the userOptions array
     this.userOptions.push(choice);
+
+    
+
 
   }
 

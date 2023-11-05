@@ -17,6 +17,7 @@ export class PieChartComponent implements OnInit {
 
   @Input() cardProp!: string;
   @Input() userOptions!: string[];
+  @Input() userOptionsToDB!: string[];
   @Input() chartOption!: string;
   @Input() tableOption!: string;
 
@@ -32,8 +33,6 @@ export class PieChartComponent implements OnInit {
   //(en) Will receive the value of a user option.
   valueProperty: string = '';
   nameProperty: string = '';
-
-  // 
 
   teste(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
@@ -112,10 +111,6 @@ export class PieChartComponent implements OnInit {
 
   }
 
-  option1: string = 'doc_type'
-  option2: string = 'doc_type'
-
-
   ngOnInit(): void {
 
     //(en) Checks if the selected option on the chart is the same.
@@ -127,7 +122,7 @@ export class PieChartComponent implements OnInit {
         //   console.log(dataExtracts)
         //   this.teste(dataExtracts);
         // });
-        this.dataService.getExtracts(this.option1, this.option2).subscribe((dataExtracts: Extracts[]) => {
+        this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataExtracts: Extracts[]) => {
           console.log(dataExtracts)
           this.teste(dataExtracts);
         });
