@@ -34,7 +34,7 @@ export class PieChartComponent implements OnInit {
   valueProperty: string = '';
   nameProperty: string = '';
 
-  teste(data: any[]) {
+  openChart(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
     data = data;
 
@@ -65,6 +65,15 @@ export class PieChartComponent implements OnInit {
     //(en) Creating a variable of type EChartsOption.
     var option: EChartsOption;
 
+    //(en) Listing the possible colors for the chart.
+    const colors = [
+      '#DB0185', '#BD0067', '#8C00D8', '#5c1c7c', '#350020',
+      '#FF00A5', '#9F0049', '#7900E4', '#8A2BE2', '#9e2984',
+      '#f9a5ff', '#81002B', '#9E33E7', '#4B0082', '#4B0082',
+      '#f463ff', '#63000D', '#FF67FF', '#483D8B', '#800080',
+      '#ee00ff', '#A600C0', '#D899EC', '#8B008B', '#6e007a',
+    ];
+
     //(en) Configuring the options for an ECharts chart.
     option = {
       tooltip: {
@@ -78,27 +87,29 @@ export class PieChartComponent implements OnInit {
         {
           name: 'Access From',
           type: 'pie',
-          radius: ['40%', '70%'],
+          radius: ['50%', '70%'],
           avoidLabelOverlap: false,
           itemStyle: {
-            borderRadius: 10,
+            borderRadius: 5,
             borderColor: '#fff',
             borderWidth: 2
           },
           label: {
             show: false,
+            formatter: '{b}\n\n{d}%', // {b} representa o nome, {d} representa a porcentagem
             position: 'center'
           },
           emphasis: {
             label: {
               show: true,
-              fontSize: 40,
-              fontWeight: 'bold'
+              fontSize: 20,
+              fontWeight: 'normal'
             }
           },
           labelLine: {
-            show: false
+            show: true
           },
+          color: colors,
 
           //(en) Getting the values of the properties (value and name) present in the 'mappedData' array.
           data: mappedData
@@ -124,14 +135,14 @@ export class PieChartComponent implements OnInit {
         // });
         this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataExtracts: Extracts[]) => {
           console.log(dataExtracts)
-          this.teste(dataExtracts);
+          this.openChart(dataExtracts);
         });
       }
       if (this.tableOption === 'users') {
         this.dataService.getAllUsers().subscribe((dataUsers: Users[]) => {
           console.log('oiee')
           console.log(dataUsers)
-          this.teste(dataUsers);
+          this.openChart(dataUsers);
         });
       }
 

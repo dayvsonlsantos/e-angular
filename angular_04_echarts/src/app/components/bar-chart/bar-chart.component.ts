@@ -34,7 +34,7 @@ export class BarChartComponent implements OnInit {
   valueProperty: string = '';
   nameProperty: string = '';
 
-  teste(data: any[]) {
+  openChart(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
     data = data;
 
@@ -71,11 +71,11 @@ export class BarChartComponent implements OnInit {
         trigger: 'axis',
         axisPointer: {
           type: 'shadow'
-        }
+        },
       },
       grid: {
-        left: '3%',
-        right: '4%',
+        left: '10%',
+        right: '10%',
         bottom: '3%',
         containLabel: true
       },
@@ -87,7 +87,12 @@ export class BarChartComponent implements OnInit {
           data: mappedData.map(item => item.name),
           axisTick: {
             alignWithLabel: true
-          }
+          },
+          axisLabel: {
+              fontSize: 12, // Tamanho da fonte para o rótulo do eixo X
+              inside: false,
+              rotate: 45,
+          },
         }
       ],
       yAxis: [
@@ -100,6 +105,14 @@ export class BarChartComponent implements OnInit {
           name: 'Direct',
           type: 'bar',
           barWidth: '60%',
+          label: {
+            show: true,
+            fontSize: 14, // Tamanho da fonte para as etiquetas da série
+            position: 'insideTop' // Exibe o rótulo dentro da barra
+          },
+          itemStyle: {  // Defina a cor das barras aqui
+            color: '#DB0185'  // Altere 'blue' para a cor desejada
+          },
 
           //(en) Getting the values of the 'value' property from each object in the 'mappedData' array
           data: mappedData.map(item => item.value)
@@ -113,7 +126,7 @@ export class BarChartComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.userOptionsToDB);
-    
+
 
     //(en) Checks if the selected option on the chart is the same.
     if (this.chartOption === 'bar') {
@@ -125,13 +138,13 @@ export class BarChartComponent implements OnInit {
         // });
         this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataExtracts: Extracts[]) => {
           console.log(dataExtracts)
-          this.teste(dataExtracts);
+          this.openChart(dataExtracts);
         });
       }
       if (this.tableOption === 'users') {
         this.dataService.getAllUsers().subscribe((dataUsers: Users[]) => {
           console.log(dataUsers)
-          this.teste(dataUsers);
+          this.openChart(dataUsers);
         });
       }
 
