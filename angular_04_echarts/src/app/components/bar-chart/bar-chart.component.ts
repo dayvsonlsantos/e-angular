@@ -102,7 +102,7 @@ export class BarChartComponent implements OnInit {
       ],
       series: [
         {
-          name: 'Direct',
+          name: 'Total',
           type: 'bar',
           barWidth: '60%',
           label: {

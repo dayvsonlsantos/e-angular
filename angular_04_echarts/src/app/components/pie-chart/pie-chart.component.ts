@@ -49,9 +49,19 @@ export class PieChartComponent implements OnInit {
 
     //(en) Map the values from your array of objects to the format expected by ECharts.
     const mappedData = data.map(item => ({
-      value: item[this.valueProperty],
+      value: parseInt(item[this.valueProperty]),
       name: item[this.nameProperty]
     }));
+
+    //(en) Calculate the total sum of values from the data array.
+    const totalSum = data.reduce((acc, item) => {
+      const itemValue = parseInt(item[this.valueProperty]);
+      if (!isNaN(itemValue)) {
+        return acc + itemValue;
+      } else {
+        return acc;
+      }
+    }, 0);
 
     //(en) Creating an alias (an alternative name) for the echarts.EChartsOption type.
     type EChartsOption = echarts.EChartsOption;
@@ -67,8 +77,8 @@ export class PieChartComponent implements OnInit {
 
     //(en) Listing the possible colors for the chart.
     const colors = [
-      '#DB0185', '#BD0067', '#8C00D8', '#5c1c7c', '#350020',
-      '#FF00A5', '#9F0049', '#7900E4', '#8A2BE2', '#9e2984',
+      '#DB0185', '#BD0067', '#8C00D8', '#5c1c7c', '#350020', '#504A4C',
+      '#FF00A5', '#9F0049', '#7900E4', '#8A2BE2', '#9e2984', '#A38474',
       '#f9a5ff', '#81002B', '#9E33E7', '#4B0082', '#4B0082',
       '#f463ff', '#63000D', '#FF67FF', '#483D8B', '#800080',
       '#ee00ff', '#A600C0', '#D899EC', '#8B008B', '#6e007a',
@@ -85,7 +95,7 @@ export class PieChartComponent implements OnInit {
       },
       series: [
         {
-          name: 'Access From',
+          name: 'Dados sobre',
           type: 'pie',
           radius: ['50%', '70%'],
           avoidLabelOverlap: false,
@@ -96,7 +106,7 @@ export class PieChartComponent implements OnInit {
           },
           label: {
             show: false,
-            formatter: '{b}\n\n{d}%', // {b} representa o nome, {d} representa a porcentagem
+            formatter: '{b}\n\n{d}% de ' + totalSum, // {b} representa o nome, {d} representa a porcentagem
             position: 'center'
           },
           emphasis: {
