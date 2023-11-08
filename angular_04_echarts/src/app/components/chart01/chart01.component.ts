@@ -115,6 +115,17 @@ export class Chart01Component implements OnInit {
 
   ngOnInit(): void {
     this.fetchColumns();
+
+    // Simulation: Retrieving user preferences from the database. 
+
+    // if(this.cardProp === 'card01'){
+
+    //   this.userOptions = ['Páginas Processadas','Segmento']
+
+    //   this.userOptionsToDB = ['pages_process','segment']
+
+    //   this.chartOption = 'pie';
+    // }
   }
 
 
