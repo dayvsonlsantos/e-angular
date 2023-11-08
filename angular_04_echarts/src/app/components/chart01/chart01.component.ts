@@ -133,13 +133,16 @@ export class Chart01Component implements OnInit {
   fetchColumns() {
     this.dataService.getColumns('extracts')
       .subscribe(data => {
-        this.ExtractsColumnsOption = data.map(item => item.column_name);
+        this.ExtractsColumnsOption = data
+          .filter(item => item.column_name !== 'id' && item.column_name !== 'user_id')
+          .map(item => item.column_name)
         this.ExtractsColumnsOption.push('doc_count')
       });
     this.dataService.getColumns('users')
       .subscribe(data => {
-        this.UsersColumnsOption = data.map(item => item.column_name);
-        this.UsersColumnsOption.push('doc_count')
+        this.UsersColumnsOption = data
+          .filter(item => item.column_name !== 'id')
+          .map(item => item.column_name)
       });
   }
 
