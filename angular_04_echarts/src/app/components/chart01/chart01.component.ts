@@ -146,6 +146,16 @@ export class Chart01Component implements OnInit {
       });
   }
 
+  resetData(){
+    this.selectedOptions = 0;
+    this.userOptions = [];
+    this.userOptionsToDB = [];
+    this.showChartOptions = false;
+    this.chartOption = '';
+    this.tableSelected = '';
+    this.tableData = [];
+  }
+
   ngOnInit(): void {
     this.fetchColumns();
     // console.log(this.tableData); // Isso será executado antes dos dados serem carregados

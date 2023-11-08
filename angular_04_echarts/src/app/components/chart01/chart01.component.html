@@ -6,6 +6,9 @@
         <ng-container *ngSwitchDefault>{{table}}</ng-container>
     </button>
 </div> -->
+<div>
+    <button (click)="resetData()">Limpar</button>
+</div>
 <div class="d-flex flex-column w-25">
     colunas
     <div *ngFor="let column of ExtractsColumnsOption">
