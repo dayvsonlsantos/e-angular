@@ -1,4 +1,4 @@
-import { Extracts, Users } from './../../models/data.model';
+import { Columns, Extracts, Users } from './../../models/data.model';
 import { Component, Input, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
 import { DataService } from 'src/app/services/data.service';
@@ -27,8 +27,7 @@ export class PieChartComponent implements OnInit {
   ) { }
 
   //(en) Receives data from the database.
-  dataExtracts: Extracts[] = [];
-  dataUsers: Users[] = [];
+  dataColumns: Columns[] = [];
 
   //(en) Will receive the value of a user option.
   valueProperty: string = '';
@@ -36,12 +35,11 @@ export class PieChartComponent implements OnInit {
 
   openChart(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
-    data = data;   
-    // console.log(data)
+    data = data;
 
     // (en) Checks the possible user options and redirects to the correct assignment.
     this.userOptions.forEach((item: string) => {
-      if (item === 'Documentos processados' || item === 'Páginas Processadas' ) {
+      if (item === 'Documentos processados' || item === 'Páginas Processadas') {
         this.valueProperty = item;
       } else {
         this.nameProperty = item;
@@ -53,12 +51,10 @@ export class PieChartComponent implements OnInit {
       value: item[this.valueProperty],
       name: item[this.nameProperty]
     }));
-    // console.log(mappedData)
 
     //(en) Calculate the total sum of values from the data array.
     const totalSum = data.reduce((acc, item) => {
       const itemValue = parseInt(item[this.valueProperty]);
-      // console.log("opa"+ itemValue)
       if (!isNaN(itemValue)) {
         return acc + itemValue;
       } else {
@@ -135,31 +131,16 @@ export class PieChartComponent implements OnInit {
 
   }
 
-  
+
   ngOnInit(): void {
-    
+
     //(en) Checks if the selected option on the chart is the same.
     if (this.chartOption === 'pie') {
 
-      // if (this.tableOption === 'extracts') {
-        // this.dataService.getAllExtracts().subscribe((dataExtracts: Extracts[]) => {
-        //   console.log('oiee')
-        //   console.log(dataExtracts)
-        //   this.teste(dataExtracts);
-        // });
-        
-        this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataExtracts: string[]) => {
-          console.log(dataExtracts)
-          this.openChart(dataExtracts);
-        });
-      // }
-      // if (this.tableOption === 'users') {
-      //   this.dataService.getAllUsers().subscribe((dataUsers: Users[]) => {
-      //     console.log('oiee')
-      //     console.log(dataUsers)
-      //     this.openChart(dataUsers);
-      //   });
-      // }
+      this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataColumns: string[]) => {
+        console.log(dataColumns)
+        this.openChart(dataColumns);
+      });
 
     }
   }

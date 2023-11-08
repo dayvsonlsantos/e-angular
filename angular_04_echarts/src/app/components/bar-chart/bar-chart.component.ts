@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
-import { Extracts, Users } from 'src/app/models/data.model';
+import { Columns, Extracts, Users } from 'src/app/models/data.model';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -27,8 +27,7 @@ export class BarChartComponent implements OnInit {
   ) { }
 
   //(en) Receives data from the database.
-  dataExtracts: Extracts[] = [];
-  dataUsers: Users[] = [];
+  dataColumns: Columns[] = [];
 
   //(en) Will receive the value of a user option.
   valueProperty: string = '';
@@ -40,7 +39,7 @@ export class BarChartComponent implements OnInit {
 
     // (en) Checks the possible user options and redirects to the correct assignment.
     this.userOptions.forEach((item: string) => {
-      if (item === 'Documentos processados') {
+      if (item === 'Documentos processados' || item === 'Páginas Processadas') {
         this.valueProperty = item;
       } else {
         this.nameProperty = item;
@@ -89,9 +88,9 @@ export class BarChartComponent implements OnInit {
             alignWithLabel: true
           },
           axisLabel: {
-              fontSize: 12, // Tamanho da fonte para o rótulo do eixo X
-              inside: false,
-              rotate: 45,
+            fontSize: 12, // Tamanho da fonte para o rótulo do eixo X
+            inside: false,
+            rotate: 45,
           },
         }
       ],
@@ -125,28 +124,14 @@ export class BarChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.userOptionsToDB);
-
-
+    
     //(en) Checks if the selected option on the chart is the same.
     if (this.chartOption === 'bar') {
 
-      if (this.tableOption === 'extracts') {
-        // this.dataService.getAllExtracts().subscribe((dataExtracts: Extracts[]) => {
-        //   console.log(dataExtracts)
-        //   this.teste(dataExtracts);
-        // });
-        this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataExtracts: Extracts[]) => {
-          console.log(dataExtracts)
-          this.openChart(dataExtracts);
-        });
-      }
-      if (this.tableOption === 'users') {
-        this.dataService.getAllUsers().subscribe((dataUsers: Users[]) => {
-          console.log(dataUsers)
-          this.openChart(dataUsers);
-        });
-      }
+      this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataColumns: string[]) => {
+        console.log(dataColumns)
+        this.openChart(dataColumns);
+      });
 
     }
   }
