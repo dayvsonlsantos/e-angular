@@ -25,13 +25,9 @@ export class Chart01Component implements OnInit {
   //(en) Receives the chart chosen by the user.
   chartOption: string = '';
 
-  tableSelected: string = '';
-
-  tableData: string[] = [];
-
   ExtractsColumnsOption: string[] = [];
   UsersColumnsOption: string[] = [];
-  
+
 
   //(en) Get the chart ID
   @Input() cardProp!: string;
@@ -80,16 +76,6 @@ export class Chart01Component implements OnInit {
         break;
     }
 
-    // if (choice == 'Documentos'){
-    //   //(en) Adds the option to the userOptionsToDB array
-    //   this.userOptionsToDB.push('doc_type')
-    // }
-    // if (choice == 'Documentos processados'){
-    //   this.userOptionsToDB.push('doc_type')
-    // }
-
-    //(en) Adds the option to the userOptions array
-
   }
 
   openChart() {
@@ -102,34 +88,7 @@ export class Chart01Component implements OnInit {
     this.chartOption = choice;
   }
 
-  // fetchTables() {
-  //   this.dataService.getTables()
-  //     .subscribe(data => {
-  //       this.tableData = data.map(item => item.table_name);
-  //       console.log(this.tableData); // Verifique os dados aqui
-  //     });
-  // }
-
-  // selectTableAndShowColumn(table: string) {
-  //   this.tableSelected = table;
-  //   this.fetchColumns()
-  // }
-
-  // fetchColumns() {
-  //   const extractsObservable = this.dataService.getColumns('extracts');
-  //   const usersObservable = this.dataService.getColumns('users');
-
-  //   zip([extractsObservable, usersObservable]).subscribe(results => {
-  //     const [extractsData, usersData] = results;
-
-  //     this.columnsOption = [
-  //       ...extractsData.map(item => item.column_name),
-  //       ...usersData.map(item => item.column_name), // Substitua pelo nome da coluna de usuários
-  //       'doc_count'
-  //     ];
-  //   });
-  // }
-
+  //(en) Retrieve the database columns.
   fetchColumns() {
     this.dataService.getColumns('extracts')
       .subscribe(data => {
@@ -146,19 +105,16 @@ export class Chart01Component implements OnInit {
       });
   }
 
-  resetData(){
+  resetData() {
     this.selectedOptions = 0;
     this.userOptions = [];
     this.userOptionsToDB = [];
     this.showChartOptions = false;
     this.chartOption = '';
-    this.tableSelected = '';
-    this.tableData = [];
   }
 
   ngOnInit(): void {
     this.fetchColumns();
-    // console.log(this.tableData); // Isso será executado antes dos dados serem carregados
   }
 
 
