@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-
+import { zip } from 'rxjs';
 @Component({
   selector: 'app-chart01',
   templateUrl: './chart01.component.html',
@@ -29,7 +29,9 @@ export class Chart01Component implements OnInit {
 
   tableData: string[] = [];
 
-  columnsOption: string[] = [];
+  ExtractsColumnsOption: string[] = [];
+  UsersColumnsOption: string[] = [];
+  
 
   //(en) Get the chart ID
   @Input() cardProp!: string;
@@ -46,7 +48,7 @@ export class Chart01Component implements OnInit {
         this.userOptionsToDB.push(choice);
         break;
       case 'name':
-        this.userOptions.push('Nome')
+        this.userOptions.push('Usuário')
         this.userOptionsToDB.push(choice);
         break;
       case 'segment':
@@ -100,31 +102,49 @@ export class Chart01Component implements OnInit {
     this.chartOption = choice;
   }
 
-  fetchTables() {
-    this.dataService.getTables()
+  // fetchTables() {
+  //   this.dataService.getTables()
+  //     .subscribe(data => {
+  //       this.tableData = data.map(item => item.table_name);
+  //       console.log(this.tableData); // Verifique os dados aqui
+  //     });
+  // }
+
+  // selectTableAndShowColumn(table: string) {
+  //   this.tableSelected = table;
+  //   this.fetchColumns()
+  // }
+
+  // fetchColumns() {
+  //   const extractsObservable = this.dataService.getColumns('extracts');
+  //   const usersObservable = this.dataService.getColumns('users');
+
+  //   zip([extractsObservable, usersObservable]).subscribe(results => {
+  //     const [extractsData, usersData] = results;
+
+  //     this.columnsOption = [
+  //       ...extractsData.map(item => item.column_name),
+  //       ...usersData.map(item => item.column_name), // Substitua pelo nome da coluna de usuários
+  //       'doc_count'
+  //     ];
+  //   });
+  // }
+
+  fetchColumns() {
+    this.dataService.getColumns('extracts')
       .subscribe(data => {
-        this.tableData = data.map(item => item.table_name);
-        console.log(this.tableData); // Verifique os dados aqui
+        this.ExtractsColumnsOption = data.map(item => item.column_name);
+        this.ExtractsColumnsOption.push('doc_count')
+      });
+    this.dataService.getColumns('users')
+      .subscribe(data => {
+        this.UsersColumnsOption = data.map(item => item.column_name);
+        this.UsersColumnsOption.push('doc_count')
       });
   }
 
-  selectTableAndShowColumn(table: string) {
-    this.tableSelected = table;
-    this.fetchColumns()
-  }
-
-  fetchColumns() {
-    if (this.tableSelected) {
-      this.dataService.getColumns(this.tableSelected)
-        .subscribe(data => {
-          this.columnsOption = data.map(item => item.column_name);
-          this.columnsOption.push('doc_count')
-        });
-    }
-  }
-
   ngOnInit(): void {
-    this.fetchTables();
+    this.fetchColumns();
     // console.log(this.tableData); // Isso será executado antes dos dados serem carregados
   }
 

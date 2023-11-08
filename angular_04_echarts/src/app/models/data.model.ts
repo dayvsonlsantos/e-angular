@@ -13,3 +13,14 @@ export interface Users{
     name: string;
     segment: string;
 };
+
+export interface Columns{
+    [key: string]: any;
+    id: number;
+    created_at: Date;
+    pages_process: number;
+    doc_type: string;
+    user_id: number;
+    name: string;
+    segment: string;
+}

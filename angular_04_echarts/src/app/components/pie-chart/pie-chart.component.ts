@@ -37,30 +37,28 @@ export class PieChartComponent implements OnInit {
   openChart(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
     data = data;   
+    // console.log(data)
 
     // (en) Checks the possible user options and redirects to the correct assignment.
-    this.userOptions.forEach((item: string) => {  
-      // Tipo de Documento
-      // if (this.userOptionsToDB[0] === this.userOptionsToDB[1]){
-      //   this.valueProperty = this.userOptionsToDB[0];
-      //   this.nameProperty = this.userOptionsToDB[1];
-      // }   
-      if (item === 'Documentos processados' || item === 'Páginas Processadas') {
+    this.userOptions.forEach((item: string) => {
+      if (item === 'Documentos processados' || item === 'Páginas Processadas' ) {
         this.valueProperty = item;
       } else {
         this.nameProperty = item;
-      }     
+      }
     });
 
     //(en) Map the values from your array of objects to the format expected by ECharts.
     const mappedData = data.map(item => ({
-      value: parseInt(item[this.valueProperty]),
+      value: item[this.valueProperty],
       name: item[this.nameProperty]
     }));
+    // console.log(mappedData)
 
     //(en) Calculate the total sum of values from the data array.
     const totalSum = data.reduce((acc, item) => {
       const itemValue = parseInt(item[this.valueProperty]);
+      // console.log("opa"+ itemValue)
       if (!isNaN(itemValue)) {
         return acc + itemValue;
       } else {
@@ -100,7 +98,7 @@ export class PieChartComponent implements OnInit {
       },
       series: [
         {
-          name: 'Dados sobre',
+          name: this.valueProperty,
           type: 'pie',
           radius: ['50%', '70%'],
           avoidLabelOverlap: false,
@@ -137,29 +135,31 @@ export class PieChartComponent implements OnInit {
 
   }
 
+  
   ngOnInit(): void {
-
+    
     //(en) Checks if the selected option on the chart is the same.
     if (this.chartOption === 'pie') {
 
-      if (this.tableOption === 'extracts') {
+      // if (this.tableOption === 'extracts') {
         // this.dataService.getAllExtracts().subscribe((dataExtracts: Extracts[]) => {
         //   console.log('oiee')
         //   console.log(dataExtracts)
         //   this.teste(dataExtracts);
         // });
-        this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataExtracts: Extracts[]) => {
+        
+        this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataExtracts: string[]) => {
           console.log(dataExtracts)
           this.openChart(dataExtracts);
         });
-      }
-      if (this.tableOption === 'users') {
-        this.dataService.getAllUsers().subscribe((dataUsers: Users[]) => {
-          console.log('oiee')
-          console.log(dataUsers)
-          this.openChart(dataUsers);
-        });
-      }
+      // }
+      // if (this.tableOption === 'users') {
+      //   this.dataService.getAllUsers().subscribe((dataUsers: Users[]) => {
+      //     console.log('oiee')
+      //     console.log(dataUsers)
+      //     this.openChart(dataUsers);
+      //   });
+      // }
 
     }
   }

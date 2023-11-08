@@ -1,24 +1,29 @@
 <!-- user-choice.component.html -->
-<div *ngFor="let table of tableData">
+<!-- <div *ngFor="let table of tableData">
     <button (click)="selectTableAndShowColumn(table)" [ngSwitch]="table">
         <ng-container *ngSwitchCase="'users'">Usuários</ng-container>
         <ng-container *ngSwitchCase="'extracts'">Extratos</ng-container>
         <ng-container *ngSwitchDefault>{{table}}</ng-container>
     </button>
-</div>
-<div *ngIf="(tableSelected != '')" class="d-flex flex-column w-25">
+</div> -->
+<div class="d-flex flex-column w-25">
     colunas
-    <div *ngFor="let column of columnsOption">
+    <div *ngFor="let column of ExtractsColumnsOption">
         <button (click)="setOption(column)" [ngSwitch]="column">
             <ng-container *ngSwitchCase="'id'">ID</ng-container>
-            <ng-container *ngSwitchCase="'name'">Nome</ng-container>
-            <ng-container *ngSwitchCase="'segment'">Segmento</ng-container>
             <ng-container *ngSwitchCase="'created_at'">Data de Criação</ng-container>
             <ng-container *ngSwitchCase="'pages_process'">Páginas Processadas</ng-container>
             <ng-container *ngSwitchCase="'doc_type'">Tipo de Documento</ng-container>
             <ng-container *ngSwitchCase="'user_id'">ID do Usuário</ng-container>
             <ng-container *ngSwitchCase="'doc_count'">Documentos Processados</ng-container>
-            <!-- <ng-container *ngSwitchCase="'doc_count'">Documentos processados</ng-container> -->
+            <ng-container *ngSwitchDefault>{{column}}</ng-container>
+        </button>
+    </div>
+    <div *ngFor="let column of UsersColumnsOption">
+        <button (click)="setOption(column)" [ngSwitch]="column">
+            <ng-container *ngSwitchCase="'id'">ID</ng-container>
+            <ng-container *ngSwitchCase="'name'">Usuário</ng-container>
+            <ng-container *ngSwitchCase="'segment'">Segmento</ng-container>
             <ng-container *ngSwitchDefault>{{column}}</ng-container>
         </button>
     </div>
