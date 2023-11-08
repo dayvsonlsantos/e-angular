@@ -1,21 +1,47 @@
 <!-- user-choice.component.html -->
-<div>
-    <button (click)="tableOption = 'users'">Users</button>
-    <button (click)="tableOption = 'extracts'">Extracts</button>
+<div *ngFor="let table of tableData">
+    <button (click)="selectTableAndShowColumn(table)" [ngSwitch]="table">
+        <ng-container *ngSwitchCase="'users'">Usuários</ng-container>
+        <ng-container *ngSwitchCase="'extracts'">Extratos</ng-container>
+        <ng-container *ngSwitchDefault>{{table}}</ng-container>
+    </button>
+</div>
+<div *ngIf="(tableSelected != '')" class="d-flex flex-column w-25">
+    colunas
+    <div *ngFor="let column of columnsOption">
+        <button (click)="setOption(column)" [ngSwitch]="column">
+            <ng-container *ngSwitchCase="'id'">ID</ng-container>
+            <ng-container *ngSwitchCase="'name'">Nome</ng-container>
+            <ng-container *ngSwitchCase="'segment'">Segmento</ng-container>
+            <ng-container *ngSwitchCase="'created_at'">Data de Criação</ng-container>
+            <ng-container *ngSwitchCase="'pages_process'">Páginas Processadas</ng-container>
+            <ng-container *ngSwitchCase="'doc_type'">Tipo de Documento</ng-container>
+            <ng-container *ngSwitchCase="'user_id'">ID do Usuário</ng-container>
+            <ng-container *ngSwitchCase="'doc_count'">Documentos Processados</ng-container>
+            <!-- <ng-container *ngSwitchCase="'doc_count'">Documentos processados</ng-container> -->
+            <ng-container *ngSwitchDefault>{{column}}</ng-container>
+        </button>
+    </div>
 </div>
 
-<div class="d-flex flex-column w-25">
+<button *ngIf="selectedOptions >= 2" (click)="openChart()">
+    Proximo
+</button>
+
+<!-- <div class="d-flex flex-column w-25">
     <span>Escolha as colunas</span>
-    <button *ngIf="!showChartOptions" (click)="setOption('Documentos')" [ngStyle]="userOptions.includes('doc_type') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
+    <button *ngIf="!showChartOptions" (click)="setOption('Documentos')"
+        [ngStyle]="userOptions.includes('doc_type') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
         Escolher opção Documentos
     </button>
-    <button *ngIf="!showChartOptions" (click)="setOption('Documentos processados')" [ngStyle]="userOptions.includes('quant') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
+    <button *ngIf="!showChartOptions" (click)="setOption('Documentos processados')"
+        [ngStyle]="userOptions.includes('quant') ? {'background-color': 'lightgray', 'pointer-events': 'none'} : {}">
         Escolher opção Quantidade de Documentos Processados
     </button>
     <button *ngIf="selectedOptions >= 2" (click)="openChart()">
         Proximo
     </button>
-</div>
+</div> -->
 
 <button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('pie')">
     Escolher opção pieChart
@@ -26,28 +52,18 @@
 </button>
 
 <div style="border: 1px solid red">
-    
+
     <!-- Legend: 
         cardProp -> (en) Send the chart ID
         userOptions -> (en) Send the options selected by the user
         chartOption -> (en) Send the chart chosen by the user
     -->
 
-    <app-pie-chart 
-        *ngIf="chartOption === 'pie'" 
-        [cardProp]="cardProp"
-        [userOptions]="userOptions"
-        [chartOption]="chartOption"
-        [tableOption]="tableOption"
-        [userOptionsToDB]="userOptionsToDB">
+    <app-pie-chart *ngIf="chartOption === 'pie'" [cardProp]="cardProp" [userOptions]="userOptions"
+        [chartOption]="chartOption" [tableOption]="tableSelected" [userOptionsToDB]="userOptionsToDB">
     </app-pie-chart>
 
-    <app-bar-chart 
-        *ngIf="chartOption === 'bar'"
-        [cardProp]="cardProp"
-        [userOptions]="userOptions"
-        [chartOption]="chartOption"
-        [tableOption]="tableOption"
-        [userOptionsToDB]="userOptionsToDB">
+    <app-bar-chart *ngIf="chartOption === 'bar'" [cardProp]="cardProp" [userOptions]="userOptions"
+        [chartOption]="chartOption" [tableOption]="tableSelected" [userOptionsToDB]="userOptionsToDB">
     </app-bar-chart>
 </div>

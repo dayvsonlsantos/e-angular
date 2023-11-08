@@ -15,6 +15,7 @@ export class DataService {
 
   // 
   userOptionsToDbString:string = ''
+  serv_tableSelected: string = ''
   
   constructor(private http: HttpClient) { }
 
@@ -28,6 +29,15 @@ export class DataService {
     console.log(this.userOptionsToDbString)
     
     return this.http.get<any[]>(`${environment.api}/extracts?userOptions=${this.userOptionsToDbString}`)
+  }
+
+  getTables(): Observable<any[]> {
+    return this.http.get<string[]>(`${environment.api}/extracts/getTables`)
+  }
+
+  getColumns(tableSelected: string){      
+    this.serv_tableSelected = tableSelected;
+    return this.http.get<any[]>(`${environment.api}/extracts/getColumns?tableSelected=${this.serv_tableSelected}`)
   }
 
   getAllUsers(): Observable<Users[]>{

@@ -36,15 +36,20 @@ export class PieChartComponent implements OnInit {
 
   openChart(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
-    data = data;
+    data = data;   
 
     // (en) Checks the possible user options and redirects to the correct assignment.
-    this.userOptions.forEach((item: string) => {
-      if (item === 'Documentos processados') {
+    this.userOptions.forEach((item: string) => {  
+      // Tipo de Documento
+      // if (this.userOptionsToDB[0] === this.userOptionsToDB[1]){
+      //   this.valueProperty = this.userOptionsToDB[0];
+      //   this.nameProperty = this.userOptionsToDB[1];
+      // }   
+      if (item === 'Documentos processados' || item === 'Páginas Processadas') {
         this.valueProperty = item;
       } else {
         this.nameProperty = item;
-      }
+      }     
     });
 
     //(en) Map the values from your array of objects to the format expected by ECharts.
