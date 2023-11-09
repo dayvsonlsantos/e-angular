@@ -6,35 +6,7 @@
         <ng-container *ngSwitchDefault>{{table}}</ng-container>
     </button>
 </div> -->
-<div>
-    <button (click)="resetData()">Limpar</button>
-</div>
-<div class="d-flex flex-column w-25">
-    colunas
-    <div *ngFor="let column of ExtractsColumnsOption">
-        <button (click)="setOption(column)" [ngSwitch]="column">
-            <ng-container *ngSwitchCase="'id'">ID</ng-container>
-            <ng-container *ngSwitchCase="'created_at'">Data de Criação</ng-container>
-            <ng-container *ngSwitchCase="'pages_process'">Páginas Processadas</ng-container>
-            <ng-container *ngSwitchCase="'doc_type'">Tipo de Documento</ng-container>
-            <ng-container *ngSwitchCase="'user_id'">ID do Usuário</ng-container>
-            <ng-container *ngSwitchCase="'doc_count'">Documentos Processados</ng-container>
-            <ng-container *ngSwitchDefault>{{column}}</ng-container>
-        </button>
-    </div>
-    <div *ngFor="let column of UsersColumnsOption">
-        <button (click)="setOption(column)" [ngSwitch]="column">
-            <ng-container *ngSwitchCase="'id'">ID</ng-container>
-            <ng-container *ngSwitchCase="'name'">Usuário</ng-container>
-            <ng-container *ngSwitchCase="'segment'">Segmento</ng-container>
-            <ng-container *ngSwitchDefault>{{column}}</ng-container>
-        </button>
-    </div>
-</div>
 
-<button *ngIf="selectedOptions >= 2" (click)="openChart()">
-    Proximo
-</button>
 
 <!-- <div class="d-flex flex-column w-25">
     <span>Escolha as colunas</span>
@@ -51,15 +23,48 @@
     </button>
 </div> -->
 
-<button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('pie')">
-    Escolher opção pieChart
-</button>
+<section class="my_chartOptions">
+    <div>
+        <button class="btn text-14 rounded rounded-lg bg-pink text-white p-2" (click)="resetData()">Limpar</button>
+    </div>
+    <div>
+        colunas
+        <div *ngFor="let column of ExtractsColumnsOption">
+            <button (click)="setOption(column)" class="btn text-14 rounded rounded-lg bg-pink text-white p-2 mb-2" [ngSwitch]="column">
+                <ng-container *ngSwitchCase="'id'">ID</ng-container>
+                <ng-container *ngSwitchCase="'created_at'">Data de Criação</ng-container>
+                <ng-container *ngSwitchCase="'pages_process'">Páginas Processadas</ng-container>
+                <ng-container *ngSwitchCase="'doc_type'">Tipo de Documento</ng-container>
+                <ng-container *ngSwitchCase="'user_id'">ID do Usuário</ng-container>
+                <ng-container *ngSwitchCase="'doc_count'">Documentos Processados</ng-container>
+                <ng-container *ngSwitchDefault>{{column}}</ng-container>
+            </button>
+        </div>
+        <div *ngFor="let column of UsersColumnsOption">
+            <button (click)="setOption(column)" class="btn text-14 rounded rounded-lg bg-pink text-white p-2 mb-2" [ngSwitch]="column">
+                <ng-container *ngSwitchCase="'id'">ID</ng-container>
+                <ng-container *ngSwitchCase="'name'">Usuário</ng-container>
+                <ng-container *ngSwitchCase="'segment'">Segmento</ng-container>
+                <ng-container *ngSwitchDefault>{{column}}</ng-container>
+            </button>
+        </div>
+    </div>
 
-<button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('bar')">
-    Escolher opção barChart
-</button>
+    <button *ngIf="selectedOptions >= 2" (click)="openChart()">
+        Proximo
+    </button>
 
-<div style="border: 1px solid red">
+    <button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('pie')">
+        Escolher opção pieChart
+    </button>
+
+    <button *ngIf="(showChartOptions) && (selectedOptions == 2)" (click)="setChart('bar')">
+        Escolher opção barChart
+    </button>
+</section>
+
+
+<div class="chartContainer">
 
     <!-- Legend: 
         cardProp -> (en) Send the chart ID

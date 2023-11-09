@@ -2,7 +2,7 @@
 
 /* Reset CSS */
 
-/*
+/* 
 
 
 html, body, div, span, applet, object, iframe,
@@ -48,6 +48,89 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+ */
+
+html, body {
+    margin: 0;
+    height: 100%;
+	width: 100%;
+}
+
+svg {
+    width: 30px;
+}
+
+/* Font */
+
+/* Size */
+.text-14{
+	font-size: 14px;
+}
+
+/* Color */
+.text-pink{
+	color: #DB0185;
+}
 
 
-*/
+
+/* Background */
+.bg-pink{
+	background: #DB0185;
+}
+
+
+
+
+/* Button */
+.btn:hover{
+	background: rgb(255, 214, 239);
+	color: #DB0185 !important;
+}
+
+
+
+/* Margin */
+
+/* Margin Left */
+.ms-17{
+	margin-left: 17rem;
+}
+
+/* Margin Top */
+.mt-6{
+	margin-top: 6rem;
+}
+
+
+/* Height e Width */
+.h-450{
+	height: 450px;
+}
+
+.h-90{
+	height: 90px;
+}
+
+.w-256{
+	width: 256px;
+}
+
+.w-60{
+	width: 60px;
+}
+
+
+
+/* Border */
+.border-dashed{
+	border-style: dashed;
+}
+
+.border-pink{
+	border: 1px dashed #DB0185;
+}
+
+.test{
+	border: 1px solid green;
+}

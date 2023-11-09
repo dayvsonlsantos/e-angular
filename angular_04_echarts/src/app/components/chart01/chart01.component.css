@@ -1,0 +1,28 @@
+*{
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+
+.chartContainer{
+    width: 100%;
+	height: 100%;
+	border: 1px solid blue;
+	border-radius: 35px;
+}
+
+.my_chartOptions{
+	position: absolute;
+}
+
+.button_complement{
+	background: rgba(219, 1, 133, 0.65);
+	border: none;
+	color: white;
+	padding: 0.5rem;
+	border-radius: 35px;
+	font-size: 12px;
+}
+
