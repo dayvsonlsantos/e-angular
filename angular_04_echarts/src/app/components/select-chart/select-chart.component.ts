@@ -13,10 +13,10 @@ export class Chart01Component implements OnInit {
   //(en) Number of options selected by the user
   selectedOptions: number = 0;
 
-  //(en) Options selected by the user.
+  //(en)Receives the User-selected options with formatted names.
   userOptions: string[] = [];
 
-  //(en) Options selected by the user to send to the Database.
+  //(en)Receives the Options selected by the user to send to the Database (Using the column names from the database).
   userOptionsToDB: string[] = []
 
   //(en) User-selected options.
@@ -28,9 +28,11 @@ export class Chart01Component implements OnInit {
   //(en) Receives the chart chosen by the user.
   chartOption: string = '';
 
+  //(en) Extracts the columns from the "extracs" and "Users" tables.
   ExtractsColumnsOption: string[] = [];
   UsersColumnsOption: string[] = [];
 
+  //(en) Array responsible for receiving user responses without any processing.
   setColumnOptions: boolean = false;
 
 
@@ -40,16 +42,29 @@ export class Chart01Component implements OnInit {
   //(en) Inserts user options (database columns)
   setOption(choice: string) {
 
-    //(en) Counts how many options are selected
+    //(en) Checks if the selected option has already been chosen; if so, removes.
     if (this.userSelectedOptions.includes(choice)) {
+      
+      //(en) Removing option
       this.userSelectedOptions = this.userSelectedOptions.filter(item => item !== choice);
+      
+      //(en) Decreases the count of selected options by 1.
       --this.selectedOptions;
+
+      //(en) Hides the charts.
       this.showChartOptions = false;
+
+      //(en) Deletes the selected chart option.
       this.chartOption = '';
+
+      //(en) Deletes userOptions and userOptionsToDB
       this.userOptions = [];
       this.userOptionsToDB = [];
     } else {
+      //(en) Counts how many options are selected
       this.selectedOptions += 1;
+
+      //(en) Since the selected option wasn't found in the array, it is added.
       switch (choice) {
         case 'id':
           this.userSelectedOptions.push(choice);
@@ -83,6 +98,8 @@ export class Chart01Component implements OnInit {
 
   }
 
+  //(en) Gets the options selected by the user, sending the 
+  //appropriate value to the userOptions and userOptionsToDB arrays.
   optionsSelectByUser() {
     this.userSelectedOptions.map((item) => {
 
@@ -127,10 +144,12 @@ export class Chart01Component implements OnInit {
     });
   }
 
+  //(en) Displays the options to the user.
   openColumnOptions() {
     this.setColumnOptions = true;
   }
 
+  //(en) Hides the options from the user.
   closeColumnOptions() {
     this.setColumnOptions = false;
   }
@@ -139,6 +158,8 @@ export class Chart01Component implements OnInit {
   openChart() {
     //(en) Opens chart options
     this.showChartOptions = true;
+
+    //(en) Executes the optionsSelectByUser function.
     this.optionsSelectByUser();
   }
 
@@ -165,6 +186,7 @@ export class Chart01Component implements OnInit {
       });
   }
 
+  //(en) Clears all data selected by the user.
   resetData() {
     this.selectedOptions = 0;
     this.userOptions = [];

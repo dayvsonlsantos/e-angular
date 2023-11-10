@@ -13,13 +13,13 @@ export class PieChartComponent implements OnInit {
 
   // cardID -> (en) Receives the chart ID.
   // userOptions -> (en) Receives the options selected by the user
+  // userOptions -> (en) Receives the options selected by the user to send to the Database (Using the column names from the database).
   // chartOption -> (en) Receives the chart chosen by the user
 
   @Input() cardID!: string;
   @Input() userOptions!: string[];
   @Input() userOptionsToDB!: string[];
   @Input() chartOption!: string;
-  @Input() tableOption!: string;
 
   constructor(
     //(en) Retrieves data from the database.
@@ -138,7 +138,6 @@ export class PieChartComponent implements OnInit {
     if (this.chartOption === 'pie') {
 
       this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataColumns: string[]) => {
-        console.log(dataColumns)
         this.openChart(dataColumns);
       });
 

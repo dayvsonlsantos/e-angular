@@ -14,12 +14,12 @@ export class BarChartComponent implements OnInit {
   // cardID -> (en) Receives the chart ID.
   // userOptions -> (en) Receives the options selected by the user
   // chartOption -> (en) Receives the chart chosen by the user
+  // chartOption -> (en) Receives the chart chosen by the user
 
   @Input() cardID!: string;
   @Input() userOptions!: string[];
   @Input() userOptionsToDB!: string[];
   @Input() chartOption!: string;
-  @Input() tableOption!: string;
 
   constructor(
     //(en) Retrieves data from the database.
@@ -129,7 +129,6 @@ export class BarChartComponent implements OnInit {
     if (this.chartOption === 'bar') {
 
       this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataColumns: string[]) => {
-        console.log(dataColumns)
         this.openChart(dataColumns);
       });
 
