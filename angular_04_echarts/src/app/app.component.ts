@@ -12,7 +12,7 @@ export class AppComponent {
   username = 'Fulano';
   profileType = 'Admin';
 
-  card01ID = 'card01'
-  card02ID = 'card02'
-  card03ID = 'card03'
+  card01 = 'card01'
+  card02 = 'card02'
+  card03 = 'card03'
 }

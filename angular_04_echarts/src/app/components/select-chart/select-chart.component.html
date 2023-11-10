@@ -67,17 +67,17 @@
 <div class="chartContainer">
 
     <!-- Legend: 
-        cardProp -> (en) Send the chart ID
+        cardID -> (en) Send the chart ID
         userOptions -> (en) Send the options selected by the user, for visualization
         userOptionsToDB -> (en) Send the options selected by the user, using the correct database names
         chartOption -> (en) Send the chart chosen by the user
     -->
 
-    <app-pie-chart *ngIf="chartOption === 'pie'" [cardProp]="cardProp" [userOptions]="userOptions"
+    <app-pie-chart *ngIf="chartOption === 'pie'" [cardID]="cardID" [userOptions]="userOptions"
         [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB">
     </app-pie-chart>
 
-    <app-bar-chart *ngIf="chartOption === 'bar'" [cardProp]="cardProp" [userOptions]="userOptions"
+    <app-bar-chart *ngIf="chartOption === 'bar'" [cardID]="cardID" [userOptions]="userOptions"
         [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB">
     </app-bar-chart>
 </div>

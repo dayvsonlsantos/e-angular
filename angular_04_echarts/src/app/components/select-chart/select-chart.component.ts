@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { zip } from 'rxjs';
 @Component({
-  selector: 'app-chart01',
-  templateUrl: './chart01.component.html',
-  styleUrls: ['./chart01.component.css']
+  selector: 'app-select-chart',
+  templateUrl: './select-chart.component.html',
+  styleUrls: ['./select-chart.component.css']
 })
 export class Chart01Component implements OnInit {
 
@@ -30,7 +30,7 @@ export class Chart01Component implements OnInit {
 
 
   //(en) Get the chart ID
-  @Input() cardProp!: string;
+  @Input() cardID!: string;
 
   //(en) Inserts user options (database columns)
   setOption(choice: string) {
@@ -118,7 +118,7 @@ export class Chart01Component implements OnInit {
 
     // Simulation: Retrieving user preferences from the database. 
 
-    // if(this.cardProp === 'card01'){
+    // if(this.cardID === 'card01'){
 
     //   this.userOptions = ['Páginas Processadas','Segmento']
 

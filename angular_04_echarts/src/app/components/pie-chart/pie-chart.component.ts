@@ -11,11 +11,11 @@ import { DataService } from 'src/app/services/data.service';
 
 export class PieChartComponent implements OnInit {
 
-  // cardProp -> (en) Receives the chart ID.
+  // cardID -> (en) Receives the chart ID.
   // userOptions -> (en) Receives the options selected by the user
   // chartOption -> (en) Receives the chart chosen by the user
 
-  @Input() cardProp!: string;
+  @Input() cardID!: string;
   @Input() userOptions!: string[];
   @Input() userOptionsToDB!: string[];
   @Input() chartOption!: string;
@@ -65,8 +65,8 @@ export class PieChartComponent implements OnInit {
     //(en) Creating an alias (an alternative name) for the echarts.EChartsOption type.
     type EChartsOption = echarts.EChartsOption;
 
-    //(en) Getting an HTML element from the DOM using the cardID (via this.cardProp), ensuring it's not null.
-    var chartDom = document.getElementById(this.cardProp)!;
+    //(en) Getting an HTML element from the DOM using the cardID (via this.cardID), ensuring it's not null.
+    var chartDom = document.getElementById(this.cardID)!;
 
     //(en) Initializing an ECharts chart using the echarts instance.
     var myChart = echarts.init(chartDom);
