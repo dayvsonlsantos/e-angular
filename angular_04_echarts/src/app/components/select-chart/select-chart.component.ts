@@ -28,6 +28,8 @@ export class Chart01Component implements OnInit {
   ExtractsColumnsOption: string[] = [];
   UsersColumnsOption: string[] = [];
 
+  setColumnOptions: boolean = false;
+
 
   //(en) Get the chart ID
   @Input() cardID!: string;
@@ -78,16 +80,26 @@ export class Chart01Component implements OnInit {
 
   }
 
+  openColumnOptions(){
+    this.setColumnOptions = true;
+  }
+
+  closeColumnOptions(){
+    this.setColumnOptions = false;
+  }
+
+
   openChart() {
     //(en) Opens chart options
     this.showChartOptions = true;
   }
 
   //(en) Sets the chart chosen by the user.
-  setChart(choice: string) {
-    this.chartOption = choice;
+  setChart(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
+    this.chartOption = value;
   }
-
+  
   //(en) Retrieve the database columns.
   fetchColumns() {
     this.dataService.getColumns('extracts')
@@ -124,7 +136,7 @@ export class Chart01Component implements OnInit {
 
     //   this.userOptionsToDB = ['pages_process','segment']
 
-    //   this.chartOption = 'pie';
+    //   this.chartOption = 'bar';
     // }
   }
 

@@ -54,6 +54,7 @@ html, body {
     margin: 0;
     height: 100%;
 	width: 100%;
+	color: #504A4C;
 }
 
 svg {
@@ -63,6 +64,10 @@ svg {
 /* Font */
 
 /* Size */
+.text-12{
+	font-size: 12px;
+}
+
 .text-14{
 	font-size: 14px;
 }
@@ -79,7 +84,13 @@ svg {
 	background: #DB0185;
 }
 
+.bg-gray{
+	background: #504A4C;
+}
 
+.bg-gray:hover{
+	background: #fff4f8 !important;
+}
 
 
 /* Button */
@@ -104,16 +115,24 @@ svg {
 
 
 /* Height e Width */
-.h-450{
-	height: 450px;
+.h-500{
+	height: 500px;
 }
 
 .h-90{
 	height: 90px;
 }
 
+.h-300{
+	height: 300px;
+}
+
 .w-256{
 	width: 256px;
+}
+
+.max-w-200{
+	max-width: 200px;
 }
 
 .w-60{
@@ -131,6 +150,30 @@ svg {
 	border: 1px dashed #DB0185;
 }
 
+
+/* Select */
+.select{
+	border: none;   
+	outline: none;
+}
+
+
+/* Cursor */
+.pointer{
+	cursor: pointer;
+}
+
+
+
+/* Backdrop ->  */
+
+.backdrop{
+	background: #504a4c97;
+}
+
+/* Teste */
 .test{
 	border: 1px solid green;
 }
+
+
