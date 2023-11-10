@@ -8,7 +8,8 @@
                 <section class="d-flex justify-content-center align-items-start flex-column gap-2">
                     <div *ngFor="let column of UsersColumnsOption" class="w-100">
                         <button (click)="setOption(column)"
-                            class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column">
+                            class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
+                            [ngClass]="{ 'bg-gray': userSelectedOptions.includes(column) }">
                             <ng-container *ngSwitchCase="'id'">ID</ng-container>
                             <ng-container *ngSwitchCase="'name'">Usuário</ng-container>
                             <ng-container *ngSwitchCase="'segment'">Segmento</ng-container>
@@ -17,7 +18,8 @@
                     </div>
                     <div *ngFor="let column of ExtractsColumnsOption" class="w-100">
                         <button (click)="setOption(column)"
-                            class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column">
+                            class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
+                            [ngClass]="{ 'bg-gray': userSelectedOptions.includes(column) }">
                             <ng-container *ngSwitchCase="'id'">ID</ng-container>
                             <ng-container *ngSwitchCase="'created_at'">Data de Criação</ng-container>
                             <ng-container *ngSwitchCase="'pages_process'">Páginas Processadas</ng-container>

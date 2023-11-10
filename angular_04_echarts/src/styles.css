@@ -85,7 +85,7 @@ svg {
 }
 
 .bg-gray{
-	background: #504A4C;
+	background: #504A4C !important;
 }
 
 .bg-gray:hover{
