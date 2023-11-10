@@ -25,3 +25,20 @@
 .my-sidebar ul li .icon{
     width: 1.8rem;
 }
+
+
+/* Select Menu Option */
+
+.menu-option-selected{
+	background: rgb(255, 214, 239);
+	color: #504a4ce7 !important;
+}
+
+.menu-option-selected svg{
+    fill: #504a4ce7;
+}
+
+.menu-option-selected .stroke svg path{
+    stroke: #504a4ce7;
+}
+

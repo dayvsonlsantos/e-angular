@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/page/dashboard/dashboard.component';
+import { FavoriteComponent } from './components/page/favorite/favorite.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { DashboardComponent } from './components/page/dashboard/dashboard.compon
     Chart01Component,
     SidebarComponent,
     NavbarComponent,
-    DashboardComponent
+    DashboardComponent,
+    FavoriteComponent
   ],
   imports: [
     BrowserModule,

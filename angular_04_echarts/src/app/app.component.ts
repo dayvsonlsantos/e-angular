@@ -8,6 +8,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'angular_04_echarts';
 
+  menuOptionValue: string = 'favorite';
+
+  receivesMenuOption(value: string){
+    this.menuOptionValue = value;
+  }
+
   profile_picture = '../assets/profilePicture.png';
   username = 'Fulano';
   profileType = 'Admin';

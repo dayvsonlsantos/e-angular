@@ -7,9 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 export class DashboardComponent {
   
-  //(en) Receives the IDs for each chart.
-  @Input() card01!:string;
-  @Input() card02!:string;
-  @Input() card03!:string;
-  
 }

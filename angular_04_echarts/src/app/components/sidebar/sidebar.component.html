@@ -2,7 +2,9 @@
     <section
         class="w-100 bg-pink rounded rounded-lg p-2 text-white d-flex justify-content-center align-items-center flex-column h-700px">
         <ul class="mt-4 list-unstyled m-0 h-75">
-            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2">
+            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2"
+                (click)="sendMenuOption('dashboard')"
+                [ngClass]="{'menu-option-selected' : menuOptionValue === 'dashboard'}">
                 <div class="icon stroke">
                     <svg fill="#ffffff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="dashboard"
                         class="icon glyph">
@@ -18,7 +20,9 @@
                 </div>
                 Dashboard
             </li>
-            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2">
+            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2"
+                (click)="sendMenuOption('favorite')"
+                [ngClass]="{'menu-option-selected' : menuOptionValue === 'favorite'}">
                 <div class="icon">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -35,7 +39,9 @@
                 </div>
                 Favoritos
             </li>
-            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2">
+            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2"
+                (click)="sendMenuOption('users')"
+                [ngClass]="{'menu-option-selected' : menuOptionValue === 'users'}">
                 <div class="icon stroke">
                     <svg width="24" height="24" viewBox="0 0 518 684" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -48,7 +54,9 @@
                 </div>
                 Usuários
             </li>
-            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2">
+            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2"
+                (click)="sendMenuOption('setting')"
+                [ngClass]="{'menu-option-selected' : menuOptionValue === 'setting'}">
                 <div class="icon stroke">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -68,7 +76,8 @@
             </li>
         </ul>
         <div class="h-25 w-100 d-flex justify-content-center align-items-center">
-            <button class="btn text-white d-flex justify-content-center align-items-center col-6 gap-2">
+            <button class="btn text-white d-flex justify-content-center align-items-center col-6 gap-2"
+                (click)="sendMenuOption('logout')">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

@@ -1,7 +1,8 @@
 <section class="d-flex flex-column px-3">
     <app-navbar [username]="username" [profileType]="profileType" [profile_picture]="profile_picture"></app-navbar>
-    <app-sidebar></app-sidebar>
+    <app-sidebar (menuOption)="receivesMenuOption($event)"></app-sidebar>
     <article class="p-1 w-75 ms-17 mt-6">
-        <app-dashboard [card01]="card01" [card02]="card02" [card03]="card03"></app-dashboard>
+        <app-dashboard *ngIf="menuOptionValue === 'dashboard'"></app-dashboard>
+        <app-favorite *ngIf="menuOptionValue === 'favorite'" [card01]="card01" [card02]="card02" [card03]="card03"></app-favorite>
     </article>
 </section>
