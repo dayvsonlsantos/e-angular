@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
-import { Columns, Extracts, Users } from 'src/app/models/data.model';
+import { Columns } from 'src/app/models/data.model';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -33,6 +33,10 @@ export class BarChartComponent implements OnInit {
   valueProperty: string = '';
   nameProperty: string = '';
 
+  ngAfterViewInit() {
+    this.openChart(this.dataColumns);
+  }
+
   openChart(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
     data = data;
@@ -52,20 +56,14 @@ export class BarChartComponent implements OnInit {
       name: item[this.nameProperty],
     }));
 
-    //(en) Creating an alias (an alternative name) for the echarts.EChartsOption type.
-    type EChartsOption = echarts.EChartsOption;
-
     //(en) Getting an HTML element from the DOM using the cardID (via this.cardID), ensuring it's not null.
     var chartDom = document.getElementById(this.cardID)!;
 
     //(en) Initializing an ECharts chart using the echarts instance.
     var myChart = echarts.init(chartDom);
 
-    //(en) Creating a variable of type EChartsOption.
-    var option: EChartsOption;
-
     //(en) Configuring the options for an ECharts chart.
-    option = {
+    var option = {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -120,11 +118,15 @@ export class BarChartComponent implements OnInit {
     };
 
     //(en) Applying the specified chart configurations stored in the 'option' variable.
-    option && myChart.setOption(option);
+    myChart.setOption(option);
+
+    window.addEventListener('resize', function () {
+      myChart.resize();
+    })
   }
 
   ngOnInit(): void {
-    
+
     //(en) Checks if the selected option on the chart is the same.
     if (this.chartOption === 'bar') {
 

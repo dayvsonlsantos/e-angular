@@ -62,17 +62,11 @@ export class PieChartComponent implements OnInit {
       }
     }, 0);
 
-    //(en) Creating an alias (an alternative name) for the echarts.EChartsOption type.
-    type EChartsOption = echarts.EChartsOption;
-
     //(en) Getting an HTML element from the DOM using the cardID (via this.cardID), ensuring it's not null.
     var chartDom = document.getElementById(this.cardID)!;
 
     //(en) Initializing an ECharts chart using the echarts instance.
     var myChart = echarts.init(chartDom);
-
-    //(en) Creating a variable of type EChartsOption.
-    var option: EChartsOption;
 
     //(en) Listing the possible colors for the chart.
     const colors = [
@@ -84,7 +78,7 @@ export class PieChartComponent implements OnInit {
     ];
 
     //(en) Configuring the options for an ECharts chart.
-    option = {
+    var option = {
       tooltip: {
         trigger: 'item'
       },
@@ -127,7 +121,11 @@ export class PieChartComponent implements OnInit {
     };
 
     //(en) Applying the specified chart configurations stored in the 'option' variable.
-    option && myChart.setOption(option);
+    myChart.setOption(option);
+
+    window.addEventListener('resize', function () {
+      myChart.resize();
+    })
 
   }
 

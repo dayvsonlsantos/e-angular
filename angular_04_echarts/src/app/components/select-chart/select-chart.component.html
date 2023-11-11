@@ -70,7 +70,7 @@
             <button class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                 (click)="openColumnOptions()">Editar</button>
         </div>
-        <section class="d-flex align-items-center justify-content-center w-100 h-100">
+        <section class="">
             <app-pie-chart *ngIf="chartOption === 'pie'" [cardID]="cardID" [userOptions]="userOptions"
                 [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB">
             </app-pie-chart>
