@@ -21,4 +21,9 @@ export class AppComponent {
   card01 = 'card01'
   card02 = 'card02'
   card03 = 'card03'
+  card04 = 'card04'
+  card05 = 'card05'
+  card06 = 'card06'
+  card07 = 'card07'
+  card08 = 'card08'
 }

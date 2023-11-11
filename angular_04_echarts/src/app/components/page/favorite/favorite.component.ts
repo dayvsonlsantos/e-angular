@@ -11,5 +11,10 @@ export class FavoriteComponent {
   @Input() card01!: string;
   @Input() card02!: string;
   @Input() card03!: string;
+  @Input() card04!: string;
+  @Input() card05!: string;
+  @Input() card06!: string;
+  @Input() card07!: string;
+  @Input() card08!: string;
 
 }
