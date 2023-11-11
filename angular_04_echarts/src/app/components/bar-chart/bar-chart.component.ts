@@ -33,10 +33,6 @@ export class BarChartComponent implements OnInit {
   valueProperty: string = '';
   nameProperty: string = '';
 
-  ngAfterViewInit() {
-    this.openChart(this.dataColumns);
-  }
-
   openChart(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
     data = data;
