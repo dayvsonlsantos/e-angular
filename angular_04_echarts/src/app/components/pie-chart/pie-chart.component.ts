@@ -79,11 +79,21 @@ export class PieChartComponent implements OnInit {
 
     //(en) Configuring the options for an ECharts chart.
     var option = {
+      title: {
+        text: 'Relação entre: ' + this.userOptions.join(', '),
+        textStyle: {
+          fontSize: 14,
+          fontWeight: 'normal',
+          color: '#504A4C'
+        },
+        left: 'center', // Posição do título
+        top: '2%',
+      },
       tooltip: {
         trigger: 'item'
       },
       legend: {
-        top: '5%',
+        top: '8%',
         left: 'center'
       },
       series: [
