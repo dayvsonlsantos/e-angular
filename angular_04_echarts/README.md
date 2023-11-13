@@ -2,6 +2,36 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.7.
 
+## Adjustments
+
+Change the API URL in src/environments/environment.ts and also in src/environments/environment.prod.ts to that of the backend.
+
+## Docker
+
+```bash
+# Set up the Dockerfile requirements.
+$ make file
+
+# Bring up/start the docker-compose
+$ make up
+
+# Stop the docker-compose
+$ make stop
+
+# To stop the container, its volumes, and anything related to it.
+# Remove the image created by the docker-compose."
+$ make kill
+
+# Run make stop and make kill.
+$ make down
+
+# Run make stop and make kill, then restart the docker-compose.
+$ make remake
+
+# Stop and restart the docker-compose
+$ make edit
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
