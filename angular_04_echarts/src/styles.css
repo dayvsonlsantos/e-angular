@@ -171,9 +171,16 @@ svg {
 	background: #504a4c97;
 }
 
+.mat-icon{
+	color: #DB0185;
+}
+
 /* Teste */
 .test{
 	border: 1px solid green;
 }
 
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

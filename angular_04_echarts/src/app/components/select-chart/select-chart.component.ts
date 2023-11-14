@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { zip } from 'rxjs';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @Component({
   selector: 'app-select-chart',
   templateUrl: './select-chart.component.html',
@@ -26,7 +28,7 @@ export class Chart01Component implements OnInit {
   showChartOptions: boolean = false;
 
   //(en) Receives the chart chosen by the user.
-  chartOption: string = '';
+  chartOption: string = 'empty';
 
   //(en) Extracts the columns from the "extracs" and "Users" tables.
   ExtractsColumnsOption: string[] = [];
@@ -34,6 +36,20 @@ export class Chart01Component implements OnInit {
 
   //(en) Array responsible for receiving user responses without any processing.
   setColumnOptions: boolean = false;
+
+  //(en) Shows and hides the filter button.
+  isFilter: boolean = false;
+
+  //(en) startDate and endDate receive the values of the initial and final dates from the filter. 
+  startDate: string = '';
+  endDate: string = '';
+
+  //(en) Receives the start date and end date data from the date filter.
+  filterData: string[] = [];
+
+  //(en) Created only to receive the value of chartOption during 
+  //toggleFilter, allowing the updating of chart data.
+  changeChartToFilter: string = '';
 
 
   //(en) Get the chart ID
@@ -44,18 +60,15 @@ export class Chart01Component implements OnInit {
 
     //(en) Checks if the selected option has already been chosen; if so, removes.
     if (this.userSelectedOptions.includes(choice)) {
-      
+
       //(en) Removing option
       this.userSelectedOptions = this.userSelectedOptions.filter(item => item !== choice);
-      
+
       //(en) Decreases the count of selected options by 1.
       --this.selectedOptions;
 
       //(en) Hides the charts.
       this.showChartOptions = false;
-
-      //(en) Deletes the selected chart option.
-      this.chartOption = '';
 
       //(en) Deletes userOptions and userOptionsToDB
       this.userOptions = [];
@@ -152,6 +165,41 @@ export class Chart01Component implements OnInit {
   //(en) Hides the options from the user.
   closeColumnOptions() {
     this.setColumnOptions = false;
+    
+    //(en) Closes filter options
+    this.isFilter = false;
+  }
+
+
+  async addFilter(): Promise<void> {
+
+    if (this.startDate != '' && this.endDate != '') {
+      this.filterData.push(this.startDate);
+      this.filterData.push(this.endDate);
+    } else {
+      this.cleanFilter();
+    }
+
+    //(en) changeChartToFilter receives the value of chartOption
+    this.changeChartToFilter = this.chartOption;
+
+    //(en) chartOption has its value changed to the empty chart.
+    this.chartOption = 'loading';
+
+    // Adicionando um atraso
+    await this.delay(1000);
+
+    //(en) chartOption receives its previous value, set by the user or retrieved from the database.
+    this.chartOption = this.changeChartToFilter;
+
+    //(en) closes filter option
+    this.isFilter = false;
+  }
+
+  cleanFilter() {
+    this.startDate = '';
+    this.endDate = '';
+    this.filterData = [];
   }
 
 
@@ -164,9 +212,26 @@ export class Chart01Component implements OnInit {
   }
 
   //(en) Sets the chart chosen by the user.
-  setChart(event: Event): void {
+  async setChart(event: Event): Promise<void> {
     const value = (event.target as HTMLSelectElement).value;
+    
+    //(en) chartOption has its value changed to the empty chart.
+    this.chartOption = 'loading';
+
+    // Adicionando um atraso
+    await this.delay(1000);
+
+    //(en) chartOption receives its previous value, set by the user.
     this.chartOption = value;
+  }
+
+  // (en) The delay function is asynchronous and creates a pause in 
+  // the code using await and setTimeout, returning a Promise that is 
+  // resolved after the specified time in milliseconds. This approach 
+  // allows introducing delays in asynchronous operations in Angular 
+  // without blocking the code execution.
+  private async delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   //(en) Retrieve the database columns.
@@ -194,6 +259,9 @@ export class Chart01Component implements OnInit {
     this.showChartOptions = false;
     this.chartOption = '';
     this.userSelectedOptions = [];
+    this.startDate = '';
+    this.endDate = '';
+    this.filterData = [];
   }
 
   ngOnInit(): void {
@@ -201,11 +269,11 @@ export class Chart01Component implements OnInit {
 
     // Simulation: Retrieving user preferences from the database. 
 
-    if(this.cardID === 'card01'){
+    if (this.cardID === 'card01') {
 
-      this.userOptions = ['Páginas Processadas','Segmento']
+      this.userOptions = ['Páginas Processadas', 'Segmento']
 
-      this.userOptionsToDB = ['pages_process','segment']
+      this.userOptionsToDB = ['pages_process', 'segment']
 
       this.chartOption = 'bar';
     }

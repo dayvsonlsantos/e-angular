@@ -9,38 +9,41 @@ import { environment } from 'src/environments/environment';
 })
 
 export class DataService {
-  
+
   private apiURLExtracts = `${environment.api}/extracts`
   private apiURLUsers = `${environment.api}/users`
 
   // 
-  userOptionsToDbString:string = ''
+  userOptionsToDbString: string = ''
+  filterDataString: string = ''
   serv_tableSelected: string = ''
-  
+
   constructor(private http: HttpClient) { }
 
-  getAllExtracts(): Observable<Extracts[]>{
+  getAllExtracts(): Observable<Extracts[]> {
     return this.http.get<Extracts[]>(this.apiURLExtracts)
   }
 
-  getExtracts(userOptionsToDB: string[]){
-    console.log(userOptionsToDB)
+  getExtracts(userOptionsToDB: string[], filterData: string[]) {
+    console.log(userOptionsToDB, filterData)
+
     this.userOptionsToDbString = userOptionsToDB.join(',');
+    this.filterDataString = filterData.join(',');
     console.log(this.userOptionsToDbString)
-    
-    return this.http.get<any[]>(`${environment.api}/extracts?userOptions=${this.userOptionsToDbString}`)
+
+    return this.http.get<any[]>(`${environment.api}/extracts?userOptions=${this.userOptionsToDbString}&filterData=${this.filterDataString}`)
   }
 
   getTables(): Observable<any[]> {
     return this.http.get<string[]>(`${environment.api}/extracts/getTables`)
   }
 
-  getColumns(tableSelected: string){      
+  getColumns(tableSelected: string) {
     this.serv_tableSelected = tableSelected;
     return this.http.get<any[]>(`${environment.api}/extracts/getColumns?tableSelected=${this.serv_tableSelected}`)
   }
 
-  getAllUsers(): Observable<Users[]>{
+  getAllUsers(): Observable<Users[]> {
     return this.http.get<Users[]>(this.apiURLUsers)
   }
 }

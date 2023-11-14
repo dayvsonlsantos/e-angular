@@ -20,6 +20,7 @@ export class BarChartComponent implements OnInit {
   @Input() userOptions!: string[];
   @Input() userOptionsToDB!: string[];
   @Input() chartOption!: string;
+  @Input() filterData!: string[];
 
   constructor(
     //(en) Retrieves data from the database.
@@ -136,7 +137,7 @@ export class BarChartComponent implements OnInit {
     //(en) Checks if the selected option on the chart is the same.
     if (this.chartOption === 'bar') {
 
-      this.dataService.getExtracts(this.userOptionsToDB).subscribe((dataColumns: string[]) => {
+      this.dataService.getExtracts(this.userOptionsToDB, this.filterData).subscribe((dataColumns: string[]) => {
         this.openChart(dataColumns);
       });
 

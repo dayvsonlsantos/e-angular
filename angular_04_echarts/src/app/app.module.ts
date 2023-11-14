@@ -11,6 +11,14 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/page/dashboard/dashboard.component';
 import { FavoriteComponent } from './components/page/favorite/favorite.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
+import { EmptyChartComponent } from './components/empty-chart/empty-chart.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 @NgModule({
@@ -22,14 +30,22 @@ import { FavoriteComponent } from './components/page/favorite/favorite.component
     SidebarComponent,
     NavbarComponent,
     DashboardComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    EmptyChartComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    FormsModule,
+    CommonModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

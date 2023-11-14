@@ -2,7 +2,7 @@
 
     <!-- (en) Columns options -->
     <article *ngIf="setColumnOptions" class="z-1 m-0 h-100 position-absolute w-100 row">
-        <div class="col-9 backdrop w-75">
+        <div *ngIf="!isFilter" class="col-9 backdrop w-75">
             <h1 class="block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione as colunas</h1>
             <div class="w-50 max-w-200 h-300 overflow-y-auto mx-4 py-2">
                 <section class="d-flex justify-content-center align-items-start flex-column gap-2">
@@ -47,10 +47,36 @@
                 </select>
             </div>
         </div>
+        <div *ngIf="isFilter" class="col-9 backdrop w-75">
+            <h1 class="block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o período</h1>
+            <div class="h-300 mx-4 py-2 d-flex align-items-end flex-column filterContent">
+                <mat-form-field class="w-100">
+                    <mat-label class="text-pink">Insira um período</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+                        <input matEndDate placeholder="End date" [(ngModel)]="endDate">
+                    </mat-date-range-input>
+                    <mat-hint class="text-white small">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker touchUi #picker></mat-date-range-picker>
+                </mat-form-field>
+                <span class="my-2 small text-white">
+                    Salve para atualizar os dados :)
+                </span>
+                <div class="d-flex filterButtons">
+                    <button *ngIf="isFilter" class="btn text-14 rounded rounded-lg bg-gray text-white p-2"
+                        (click)="cleanFilter()">Limpar Filtro</button>
+                    <button *ngIf="isFilter" class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
+                        (click)="addFilter()">Salvar</button>
+                </div>
+            </div>
+        </div>
         <div class="backdrop col p-2 gap-2 d-flex align-items-end justify-content-start flex-column">
-            <button class="btn text-14 rounded rounded-lg bg-pink text-white p-2" (click)="resetData()">Limpar</button>
+            <button *ngIf="!isFilter" class="btn text-14 rounded rounded-lg bg-pink text-white p-2" (click)="resetData()">Limpar</button>
             <button class="btn text-14 rounded rounded-lg bg-gray text-white p-2"
                 (click)="closeColumnOptions()">Fechar</button>
+            <button *ngIf="!isFilter" class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
+                (click)="isFilter = !isFilter">Filtro</button>
         </div>
     </article>
 
@@ -70,13 +96,15 @@
             <button class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                 (click)="openColumnOptions()">Editar</button>
         </div>
-        <section class="">
+        <section>
             <app-pie-chart *ngIf="chartOption === 'pie'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB">
+                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterData]="filterData">
             </app-pie-chart>
             <app-bar-chart *ngIf="chartOption === 'bar'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB">
+                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterData]="filterData">
             </app-bar-chart>
+            <app-empty-chart *ngIf="chartOption === 'empty'"></app-empty-chart>
+            <app-loading *ngIf="chartOption === 'loading'"></app-loading>
         </section>
     </article>
 </div>
