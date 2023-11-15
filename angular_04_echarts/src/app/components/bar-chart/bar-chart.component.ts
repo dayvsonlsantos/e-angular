@@ -37,9 +37,19 @@ export class BarChartComponent implements OnInit {
   //(en) Display the chart title.
   showChartTitle: string = ''
 
+  //(en) Determines whether the filtered chart has data or not.
+  isDataUsingFilter: boolean = true;
+
   openChart(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
     data = data;
+
+    //(en) Checks if the values returned from the data are equal to 0, with isDataUsingFilter set to false.
+    if (data.length === 0) {
+      this.isDataUsingFilter = false;
+    } else {
+      this.isDataUsingFilter = true;
+    }
 
     // (en) Checks the possible user options and redirects to the correct assignment.
     this.userOptions.forEach((item: string) => {
@@ -129,7 +139,10 @@ export class BarChartComponent implements OnInit {
     //(en) Applying the specified chart configurations stored in the 'option' variable.
     myChart.setOption(option);
 
-    this.showChartTitle = 'Relação entre: ' + this.userOptions.join(', ');
+    //(en) If there is a value in 'isDataUsingFilter', showChartTitle will receive the title.
+    if (this.isDataUsingFilter) {
+      this.showChartTitle = 'Relação entre: ' + this.userOptions.join(', ');
+    } //(en) Otherwise, it won't have a value and will remain empty.
 
     window.addEventListener('resize', function () {
       myChart.resize();

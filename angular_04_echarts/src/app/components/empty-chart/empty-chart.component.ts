@@ -7,4 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class EmptyChartComponent {
     @Input() cardID!: string;
+
+    @Input() title: string = '';
+    @Input() text: string = '';
 }

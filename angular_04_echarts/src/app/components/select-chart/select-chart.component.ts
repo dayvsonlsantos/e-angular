@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 @Component({
@@ -10,7 +10,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class Chart01Component implements OnInit {
 
-  constructor(private dataService: DataService) { }
+  constructor(
+    private dataService: DataService,
+    private dateAdapter: DateAdapter<Date>
+  ) { }
 
   //(en) Number of options selected by the user
   selectedOptions: number = 0;
@@ -59,13 +62,13 @@ export class Chart01Component implements OnInit {
   setOption(choice: string) {
 
     //After receiving data from the database, selectedOptions remains empty. To avoid bugs, I reset the values.
-    if (this.selectedOptions === 0){
+    if (this.selectedOptions === 0) {
       this.userOptions = []
 
       this.userOptionsToDB = []
 
       this.userSelectedOptions = [];
-      
+
       this.selectedOptions = 0;
     }
 
@@ -176,7 +179,7 @@ export class Chart01Component implements OnInit {
   //(en) Hides the options from the user.
   closeColumnOptions() {
     this.setColumnOptions = false;
-    
+
     //(en) Closes filter options
     this.isFilter = false;
   }
@@ -185,8 +188,8 @@ export class Chart01Component implements OnInit {
   async addFilter(): Promise<void> {
 
     if (this.startDate != '' && this.endDate != '') {
-      this.filterData.push(this.startDate);
-      this.filterData.push(this.endDate);
+      this.filterData[0] = this.startDate;
+      this.filterData[1] = this.endDate;
     } else {
       this.cleanFilter();
     }
@@ -225,7 +228,7 @@ export class Chart01Component implements OnInit {
   //(en) Sets the chart chosen by the user.
   async setChart(event: Event): Promise<void> {
     const value = (event.target as HTMLSelectElement).value;
-    
+
     //(en) chartOption has its value changed to the empty chart.
     this.chartOption = 'loading';
 
@@ -268,7 +271,7 @@ export class Chart01Component implements OnInit {
     this.userOptions = [];
     this.userOptionsToDB = [];
     this.showChartOptions = false;
-    this.chartOption = '';
+    this.chartOption = 'empty';
     this.userSelectedOptions = [];
     this.startDate = '';
     this.endDate = '';
@@ -277,6 +280,8 @@ export class Chart01Component implements OnInit {
 
   ngOnInit(): void {
     this.fetchColumns();
+
+    this.dateAdapter.setLocale('pt-BR');
 
     // Simulation: Retrieving user preferences from the database. 
 
