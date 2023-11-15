@@ -34,6 +34,9 @@ export class PieChartComponent implements OnInit {
   valueProperty: string = '';
   nameProperty: string = '';
 
+  //(en) Display the chart title.
+  showChartTitle: string = ''
+
   openChart(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
     data = data;
@@ -81,7 +84,6 @@ export class PieChartComponent implements OnInit {
     //(en) Configuring the options for an ECharts chart.
     var option = {
       title: {
-        text: 'Relação entre: ' + this.userOptions.join(', '),
         textStyle: {
           fontSize: 14,
           fontWeight: 'normal',
@@ -134,6 +136,8 @@ export class PieChartComponent implements OnInit {
     //(en) Applying the specified chart configurations stored in the 'option' variable.
     myChart.setOption(option);
 
+    this.showChartTitle = 'Relação entre: ' + this.userOptions.join(', ');
+
     window.addEventListener('resize', function () {
       myChart.resize();
     })
@@ -146,9 +150,13 @@ export class PieChartComponent implements OnInit {
     //(en) Checks if the selected option on the chart is the same.
     if (this.chartOption === 'pie') {
 
-      this.dataService.getExtracts(this.userOptionsToDB, this.filterData).subscribe((dataColumns: string[]) => {
-        this.openChart(dataColumns);
-      });
+      try{
+        this.dataService.getExtracts(this.userOptionsToDB, this.filterData).subscribe((dataColumns: string[]) => {
+          this.openChart(dataColumns);
+        });
+      }catch{
+        this.chartOption = 'loading'
+      }
 
     }
   }

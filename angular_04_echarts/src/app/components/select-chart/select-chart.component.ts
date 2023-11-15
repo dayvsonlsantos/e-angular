@@ -58,6 +58,17 @@ export class Chart01Component implements OnInit {
   //(en) Inserts user options (database columns)
   setOption(choice: string) {
 
+    //After receiving data from the database, selectedOptions remains empty. To avoid bugs, I reset the values.
+    if (this.selectedOptions === 0){
+      this.userOptions = []
+
+      this.userOptionsToDB = []
+
+      this.userSelectedOptions = [];
+      
+      this.selectedOptions = 0;
+    }
+
     //(en) Checks if the selected option has already been chosen; if so, removes.
     if (this.userSelectedOptions.includes(choice)) {
 
@@ -276,6 +287,7 @@ export class Chart01Component implements OnInit {
       this.userOptionsToDB = ['pages_process', 'segment']
 
       this.chartOption = 'bar';
+
     }
   }
 

@@ -1,1 +1,3 @@
-<div id="{{cardID}}" class="chart"></div>
+<p *ngIf="showChartTitle != ''" class="h-55 w-100 d-flex justify-content-center align-items-center small p-2 position-absolute"><span class="w-75 text-center">{{showChartTitle}}</span></p>
+<div id="{{cardID}}" class="chart" *ngIf="dataColumns != []"></div>
+<app-loading *ngIf="dataColumns === []"></app-loading>
