@@ -44,6 +44,7 @@
                     <option value="" disabled selected>Selecione um gráfico</option>
                     <option value="pie">Pizza</option>
                     <option value="bar">Barras</option>
+                    <option value="horizontal-bar">Barras Horizontais</option>
                     <option value="line">Linha</option>
                     <option value="area">Área</option>
                     <option value="scatter">Dispersão</option>
@@ -115,6 +116,9 @@
             <app-scatter-chart *ngIf="chartOption === 'scatter'" [cardID]="cardID" [userOptions]="userOptions"
                 [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterData]="filterData">
             </app-scatter-chart>
+            <app-horizontal-bar-chart *ngIf="chartOption === 'horizontal-bar'" [cardID]="cardID" [userOptions]="userOptions"
+                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterData]="filterData">
+            </app-horizontal-bar-chart>
             <app-empty-chart *ngIf="chartOption === 'empty'"></app-empty-chart>
             <app-loading *ngIf="chartOption === 'loading'"></app-loading>
         </section>

@@ -22,6 +22,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { AreaChartComponent } from './components/area-chart/area-chart.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
+import { HorizontalBarChartComponent } from './components/horizontal-bar-chart/horizontal-bar-chart.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.
     LoadingComponent,
     LineChartComponent,
     AreaChartComponent,
-    ScatterChartComponent
+    ScatterChartComponent,
+    HorizontalBarChartComponent
   ],
   imports: [
     BrowserModule,
