@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { EmptyChartComponent } from './components/empty-chart/empty-chart.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { LoadingComponent } from './components/loading/loading.component';
     DashboardComponent,
     FavoriteComponent,
     EmptyChartComponent,
-    LoadingComponent
+    LoadingComponent,
+    LineChartComponent
   ],
   imports: [
     BrowserModule,

@@ -44,6 +44,7 @@
                     <option value="" disabled selected>Selecione um gráfico</option>
                     <option value="pie">Pizza</option>
                     <option value="bar">Barras</option>
+                    <option value="line">Linha</option>
                 </select>
             </div>
         </div>
@@ -103,6 +104,9 @@
             <app-bar-chart *ngIf="chartOption === 'bar'" [cardID]="cardID" [userOptions]="userOptions"
                 [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterData]="filterData">
             </app-bar-chart>
+            <app-line-chart *ngIf="chartOption === 'line'" [cardID]="cardID" [userOptions]="userOptions"
+                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterData]="filterData">
+            </app-line-chart>
             <app-empty-chart *ngIf="chartOption === 'empty'"></app-empty-chart>
             <app-loading *ngIf="chartOption === 'loading'"></app-loading>
         </section>
