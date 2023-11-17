@@ -18,7 +18,8 @@ export class HorizontalBarChartComponent implements OnInit {
   @Input() userOptions!: string[];
   @Input() userOptionsToDB!: string[];
   @Input() chartOption!: string;
-  @Input() filterData!: string[];
+  @Input() filterDate!: string[];
+  @Input() filterUserOptions!: string[];
 
   constructor(
     //(en) Retrieves data from the database.
@@ -145,7 +146,7 @@ export class HorizontalBarChartComponent implements OnInit {
     if (this.chartOption === 'horizontal-bar') {
 
       try {
-        this.dataService.getExtracts(this.userOptionsToDB, this.filterData).subscribe((dataColumns: string[]) => {
+        this.dataService.getExtracts(this.userOptionsToDB, this.filterDate, this.filterUserOptions).subscribe((dataColumns: string[]) => {
           this.openChart(dataColumns);
         });
       } catch {

@@ -34,6 +34,10 @@
 	color: #504a4ce7 !important;
 }
 
+.menu-option-selected:hover{
+    color: #DB0185 !important;
+}
+
 .menu-option-selected svg{
     fill: #504a4ce7;
 }
@@ -41,4 +45,6 @@
 .menu-option-selected .stroke svg path{
     stroke: #504a4ce7;
 }
+
+
 

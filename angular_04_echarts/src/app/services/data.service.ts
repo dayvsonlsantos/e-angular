@@ -15,8 +15,9 @@ export class DataService {
 
   // 
   userOptionsToDbString: string = ''
-  filterDataString: string = ''
+  filterDateString: string = ''
   serv_tableSelected: string = ''
+  filterUserOptionsString: string = ''
 
   constructor(private http: HttpClient) { }
 
@@ -24,14 +25,15 @@ export class DataService {
     return this.http.get<Extracts[]>(this.apiURLExtracts)
   }
 
-  getExtracts(userOptionsToDB: string[], filterData: string[]) {
-    console.log(userOptionsToDB, filterData)
+  getExtracts(userOptionsToDB: string[], filterDate: string[], filterUserOptions: string[]) {
+    console.log(userOptionsToDB, filterDate, filterUserOptions)
 
     this.userOptionsToDbString = userOptionsToDB.join(',');
-    this.filterDataString = filterData.join(',');
+    this.filterDateString = filterDate.join(',');
+    this.filterUserOptionsString = filterUserOptions.join(',')
     console.log(this.userOptionsToDbString)
 
-    return this.http.get<any[]>(`${environment.api}/extracts?userOptions=${this.userOptionsToDbString}&filterData=${this.filterDataString}`)
+    return this.http.get<any[]>(`${environment.api}/extracts?userOptions=${this.userOptionsToDbString}&filterDate=${this.filterDateString}&filterUserOptions=${this.filterUserOptionsString}`)
   }
 
   getTables(): Observable<any[]> {

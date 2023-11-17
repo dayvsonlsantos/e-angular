@@ -48,12 +48,21 @@ export class Chart01Component implements OnInit {
   endDate: string = '';
 
   //(en) Receives the start date and end date data from the date filter.
-  filterData: string[] = [];
+  filterDate: string[] = [];
 
   //(en) Created only to receive the value of chartOption during 
   //toggleFilter, allowing the updating of chart data.
   changeChartToFilter: string = '';
 
+  //(en) Receives the user's option, either count, sum, or avg.
+  //(en) The count is already executed when necessary for those where the value of this aggregate is ''.
+  aggregate: string = '';
+
+  //(en) Receives the user's option from the filter
+  filterUserOptions: string[] = [];
+
+  //(en) Receives the time grouping for some queries with the created_at column.
+  timeGrouping: string = 'month'
 
   //(en) Get the chart ID
   @Input() cardID!: string;
@@ -70,6 +79,12 @@ export class Chart01Component implements OnInit {
       this.userSelectedOptions = [];
 
       this.selectedOptions = 0;
+
+      this.aggregate = '';
+
+      this.filterUserOptions = [];
+
+      this.timeGrouping = 'month'
     }
 
     //(en) Checks if the selected option has already been chosen; if so, removes.
@@ -107,6 +122,7 @@ export class Chart01Component implements OnInit {
           break;
         case 'pages_process':
           this.userSelectedOptions.push(choice);
+          this.aggregate = 'sum';
           break;
         case 'doc_type':
           this.userSelectedOptions.push(choice);
@@ -161,7 +177,7 @@ export class Chart01Component implements OnInit {
           break;
         case 'doc_count':
           this.userOptions.push('Documentos processados')
-          this.userOptionsToDB.push('doc_type');
+          this.userOptionsToDB.push(item);
           break;
         default:
           this.userOptionsToDB.push(item)
@@ -188,11 +204,13 @@ export class Chart01Component implements OnInit {
   async addFilter(): Promise<void> {
 
     if (this.startDate != '' && this.endDate != '') {
-      this.filterData[0] = this.startDate;
-      this.filterData[1] = this.endDate;
+      this.filterDate[0] = this.startDate;
+      this.filterDate[1] = this.endDate;
     } else {
-      this.cleanFilter();
+      this.cleanDataFilter();
     }
+
+    this.filterUserOptions[0] = this.aggregate;
 
     //(en) changeChartToFilter receives the value of chartOption
     this.changeChartToFilter = this.chartOption;
@@ -213,7 +231,16 @@ export class Chart01Component implements OnInit {
   cleanFilter() {
     this.startDate = '';
     this.endDate = '';
-    this.filterData = [];
+    this.filterDate = [];
+    this.filterUserOptions = [];
+    this.aggregate = '';
+    this.filterUserOptions = [];
+  }
+
+  cleanDataFilter() {
+    this.startDate = '';
+    this.endDate = '';
+    this.filterDate = [];
   }
 
 
@@ -275,7 +302,16 @@ export class Chart01Component implements OnInit {
     this.userSelectedOptions = [];
     this.startDate = '';
     this.endDate = '';
-    this.filterData = [];
+    this.filterDate = [];
+    this.timeGrouping = 'month'
+  }
+
+  setAggregate(value: string) {
+    if (this.aggregate === value) {
+      this.aggregate = '';
+    } else {
+      this.aggregate = value;
+    }
   }
 
   ngOnInit(): void {

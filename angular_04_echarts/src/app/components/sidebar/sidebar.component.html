@@ -2,7 +2,7 @@
     <section
         class="w-100 bg-pink rounded rounded-lg p-2 text-white d-flex justify-content-center align-items-center flex-column h-700px">
         <ul class="mt-4 list-unstyled m-0 h-75">
-            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2"
+            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2 mb-1"
                 (click)="sendMenuOption('dashboard')"
                 [ngClass]="{'menu-option-selected' : menuOptionValue === 'dashboard'}">
                 <div class="icon stroke">
@@ -20,7 +20,7 @@
                 </div>
                 Dashboard
             </li>
-            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2"
+            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2 mb-1"
                 (click)="sendMenuOption('favorite')"
                 [ngClass]="{'menu-option-selected' : menuOptionValue === 'favorite'}">
                 <div class="icon">
@@ -39,7 +39,7 @@
                 </div>
                 Favoritos
             </li>
-            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2"
+            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2 mb-1"
                 (click)="sendMenuOption('users')"
                 [ngClass]="{'menu-option-selected' : menuOptionValue === 'users'}">
                 <div class="icon stroke">
@@ -54,7 +54,7 @@
                 </div>
                 Usuários
             </li>
-            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2"
+            <li class="btn text-white p-3 d-flex align-items-center justify-content-start flex-row gap-2 mb-1"
                 (click)="sendMenuOption('setting')"
                 [ngClass]="{'menu-option-selected' : menuOptionValue === 'setting'}">
                 <div class="icon stroke">
