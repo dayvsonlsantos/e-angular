@@ -21,6 +21,7 @@ export class SelectChartComponent implements OnInit {
   currentDate = this.getCurrentDate.toISOString();
 
   userOptions: UserOptions = {
+    cardValueID: '',
     chartType: 'empty', //(en) Receives the chart chosen by the user.
     selectedOptions: [], //(en)Receives the Options selected by the user
     startDate: '2014-01-01T00:00:00.000Z', //(en) startDate receive the value of the initial date from the filter. 
@@ -52,6 +53,11 @@ export class SelectChartComponent implements OnInit {
   //(en) Get the chart ID
   @Input() cardID!: string;
 
+  //(en) Get the chart Class
+  @Input() cardClass!: string;
+
+  //(en) Recives the Chart Data
+  @Input() chartValues!: UserOptions;
 
 
 
@@ -126,7 +132,7 @@ export class SelectChartComponent implements OnInit {
     //(en) changes Date from 'Fri Mar 10 2000 00:00:00 GMT-0300' to '2023-11-19T00:00:46.614Z'
     this.userOptions.startDate = (new Date(this.userOptions.startDate).toISOString());
     this.userOptions.endDate = (new Date(this.userOptions.endDate).toISOString());
-  
+
     //(en) Created only to receive the value of chartOption during 
     //toggleFilter, allowing the updating of chart data.
     let changeChartToFilter: string = this.userOptions.chartType;;
@@ -144,20 +150,20 @@ export class SelectChartComponent implements OnInit {
     this.isFilter = false;
   }
 
-  
+
   cleanDataFilter() {
     this.userOptions.startDate = '2000-01-01T00:00:00.000Z';
     this.userOptions.endDate = this.currentDate;
   }
-  
+
   cleanFilter() {
     this.cleanDataFilter();
-    if (this.userOptions.selectedOptions.includes('pages_process')){
+    if (this.userOptions.selectedOptions.includes('pages_process')) {
       this.userOptions.aggregate = 'sum';
     } else {
       this.userOptions.aggregate = '';
     }
-    
+
     this.userOptions.timeGrouping = 'month';
   }
 
@@ -165,7 +171,7 @@ export class SelectChartComponent implements OnInit {
   openChart() {
     //(en) Opens chart options
     this.showChartOptions = true;
-  
+
   }
 
   //(en) Sets the chart chosen by the user.
@@ -211,6 +217,7 @@ export class SelectChartComponent implements OnInit {
   //(en) Clears all data selected by the user.
   resetData() {
     this.userOptions = {
+      cardValueID: this.cardID,
       chartType: 'empty',
       selectedOptions: [],
       startDate: '2014-01-01T00:00:00.000Z',
@@ -230,12 +237,36 @@ export class SelectChartComponent implements OnInit {
     }
   }
 
+  saveToDatabase(){
+    console.log(this.userOptions)
+  }
+
   ngOnInit(): void {
     this.fetchColumns();
 
+    //(en) Assigns the value of the ID
+    this.userOptions.cardValueID = this.cardID;
+
+    //(en) Sets the calendar language to Portuguese (Brazilian) in Angular
     this.dateAdapter.setLocale('pt-BR');
 
     // Simulation: Retrieving user preferences from the database. 
+
+    if ((this.chartValues.chartType != '') && (this.chartValues.selectedOptions.length != 0)) {
+      if (this.cardID === this.chartValues.cardValueID) {
+        this.userOptions.selectedOptions = this.chartValues.selectedOptions;
+
+        this.userOptions.chartType = this.chartValues.chartType;
+
+        this.selectedOptions = this.chartValues.selectedOptions.length;
+
+        if (this.chartValues.selectedOptions.includes('pages_process')) {
+          this.userOptions.aggregate = 'sum'
+        } else {
+          this.userOptions.aggregate = ''
+        }
+      }
+    }
 
     if (this.cardID === 'card01') {
 
@@ -245,7 +276,7 @@ export class SelectChartComponent implements OnInit {
 
       this.selectedOptions = this.userOptions.selectedOptions.length;
 
-      if (this.userOptions.selectedOptions.includes('pages_process')){
+      if (this.userOptions.selectedOptions.includes('pages_process')) {
         this.userOptions.aggregate = 'sum'
       } else {
         this.userOptions.aggregate = ''

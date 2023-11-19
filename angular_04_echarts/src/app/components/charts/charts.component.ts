@@ -18,6 +18,7 @@ export class ChartsComponent implements OnInit {
   @Input() cardID!: string;
   @Input() userOptions!: UserOptions;
   @Input() chartOption!: string;
+  @Input() chartClass!: string;
 
   constructor(
     //(en) Retrieves data from the database.

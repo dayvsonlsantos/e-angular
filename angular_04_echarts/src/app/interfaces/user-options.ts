@@ -1,4 +1,5 @@
 export interface UserOptions {
+    cardValueID: string,
     chartType: string,
     selectedOptions: string[],
     startDate: string,

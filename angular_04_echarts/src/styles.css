@@ -99,6 +99,10 @@ svg {
 	color: #DB0185 !important;
 }
 
+.btn-save-to-db{
+	background: rgb(255, 214, 239);
+	color: #DB0185 !important;
+}
 
 
 /* Margin */
@@ -188,6 +192,18 @@ svg {
 	border: 1px solid green;
 }
 
+
+.chart-md{
+    height:500px;
+}
+
+.chart-sm{
+    height:400px;
+}
+
+.chart-xs{
+    height: 100px;
+}
 
 
 html, body { height: 100%; }

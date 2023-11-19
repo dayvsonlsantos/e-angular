@@ -7,7 +7,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class SidebarComponent {
   @Output() menuOption = new EventEmitter<string>();
-  menuOptionValue:string = 'favorite'
+  menuOptionValue:string = 'dashboard'
 
   sendMenuOption(value: string){
     this.menuOption.emit(value);

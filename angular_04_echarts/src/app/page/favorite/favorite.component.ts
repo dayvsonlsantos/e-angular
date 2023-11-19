@@ -8,13 +8,13 @@ import { Component, Input } from '@angular/core';
 export class FavoriteComponent {
 
   //(en) Receives the IDs for each chart.
-  @Input() card01!: string;
-  @Input() card02!: string;
-  @Input() card03!: string;
-  @Input() card04!: string;
-  @Input() card05!: string;
-  @Input() card06!: string;
-  @Input() card07!: string;
-  @Input() card08!: string;
+  card01 = 'favorite-01'
+  card02 = 'favorite-02'
+  card03 = 'favorite-03'
+  card04 = 'favorite-04'
+  card05 = 'favorite-05'
+  card06 = 'favorite-06'
+  card07 = 'favorite-07'
+  card08 = 'favorite-08'
 
 }

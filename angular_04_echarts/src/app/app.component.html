@@ -4,15 +4,7 @@
     <article class="p-1 ms-17 mt-6">
         <app-dashboard *ngIf="menuOptionValue === 'dashboard'"></app-dashboard>
         <app-favorite 
-        *ngIf="menuOptionValue === 'favorite'" 
-        [card01]="card01" 
-        [card02]="card02" 
-        [card03]="card03"
-        [card04]="card04"
-        [card05]="card05"
-        [card06]="card06"
-        [card07]="card07"
-        [card08]="card08"
+        *ngIf="menuOptionValue === 'favorite'"
         ></app-favorite>
     </article>
 </section>

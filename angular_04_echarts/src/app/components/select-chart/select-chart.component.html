@@ -66,10 +66,12 @@
                         <mat-date-range-picker touchUi #picker></mat-date-range-picker>
                     </mat-form-field>
                 </div>
-                <div *ngIf="!userOptions.selectedOptions.includes('doc_count')" class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
+                <div *ngIf="!userOptions.selectedOptions.includes('doc_count')"
+                    class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
                     <span class="my-2 text-white">Selecione uma Agregação</span>
                     <div class="d-flex flex-row align-items-center justify-content-center gap-2">
-                        <button *ngIf="isFilter && !userOptions.selectedOptions.includes('pages_process')" [ngClass]="{ 'bg-gray': userOptions.aggregate === '' }"
+                        <button *ngIf="isFilter && !userOptions.selectedOptions.includes('pages_process')"
+                            [ngClass]="{ 'bg-gray': userOptions.aggregate === '' }"
                             class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                             (click)="setAggregate('')">Contar</button>
                         <button *ngIf="isFilter" [ngClass]="{ 'bg-gray': userOptions.aggregate === 'sum' }"
@@ -80,15 +82,16 @@
                             (click)="setAggregate('avg')">Média</button>
                     </div>
                 </div>
-                <div class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2" 
-                *ngIf="isFilter && userOptions.selectedOptions.includes('created_at') && (userOptions.selectedOptions.includes('doc_count') || userOptions.selectedOptions.includes('pages_process'))">
+                <div class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2"
+                    *ngIf="isFilter && userOptions.selectedOptions.includes('created_at') && (userOptions.selectedOptions.includes('doc_count') || userOptions.selectedOptions.includes('pages_process'))">
                     <span class="my-2 text-white">Selecione uma opção</span>
                     <div class="d-flex flex-row align-items-center justify-content-center gap-2">
                         <button [ngClass]="{ 'bg-gray': timeGrouping === 'month' }"
                             class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
-                            (click)="setAggregate('')">Mês</button>
+                            (click)="timeGrouping = 'month'">Mês</button>
                         <button *ngIf="isFilter" [ngClass]="{ 'bg-gray': timeGrouping === 'year' }"
-                            class="btn text-14 rounded rounded-lg bg-pink text-white p-2">
+                            class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
+                            (click)="timeGrouping = 'year'">Ano
                         </button>
                     </div>
                 </div>
@@ -126,17 +129,20 @@
     <!-- (en) Calling the user-chosen graph -->
 
     <article class="position-relative w-100 h-100">
-        <div *ngIf="!setColumnOptions"
-            class="z-1 position-absolute w-100 d-flex align-items-center justify-content-end p-2">
+        <div *ngIf="!setColumnOptions && !cardID.startsWith('dashboard')"
+            class="z-1 position-absolute w-100 d-flex align-items-end justify-content-end p-2 gap-2 flex-column">
+            <button class="btn btn-save-to-db text-14 rounded rounded-lg p-2"
+                (click)="saveToDatabase()">Salvar</button>
             <button class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                 (click)="showOptions()">Editar</button>
         </div>
         <section>
-            <app-charts *ngIf="(userOptions.chartType != 'empty') && (userOptions.chartType != 'loading')" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="userOptions.chartType">
+            <app-charts *ngIf="(userOptions.chartType != 'empty') && (userOptions.chartType != 'loading')"
+                [cardID]="cardID" [userOptions]="userOptions" [chartOption]="userOptions.chartType"
+                [chartClass]="cardClass || 'chart-md'">
             </app-charts>
-            <app-isEmpty *ngIf="userOptions.chartType === 'empty'"></app-isEmpty>
-            <app-loading *ngIf="userOptions.chartType === 'loading'"></app-loading>
+            <app-isEmpty *ngIf="userOptions.chartType === 'empty' && !cardID.startsWith('dashboard')"></app-isEmpty>
+            <app-loading *ngIf="userOptions.chartType === 'loading' && !cardID.startsWith('dashboard')"></app-loading>
         </section>
     </article>
 </div>
