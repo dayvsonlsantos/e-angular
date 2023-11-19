@@ -3,6 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { UserOptions } from 'src/app/interfaces/user-options';
 @Component({
   selector: 'app-select-chart',
   templateUrl: './select-chart.component.html',
@@ -15,23 +16,25 @@ export class Chart01Component implements OnInit {
     private dateAdapter: DateAdapter<Date>
   ) { }
 
+  getCurrentDate = new Date();
+
+  currentDate = this.getCurrentDate.toISOString();
+
+  userOptions: UserOptions = {
+    chartType: 'empty', //(en) Receives the chart chosen by the user.
+    selectedOptions: [], //(en)Receives the Options selected by the user
+    startDate: '2014-01-01T00:00:00.000Z', //(en) startDate receive the value of the initial date from the filter. 
+    endDate: this.currentDate, //(en) endDate receive the value of the final date from the filter. 
+    aggregate: '', //(en) Receives the user's option, either count, sum, or avg.
+    //(en) The count is already executed when necessary for those where the value of this aggregate is ''.
+    timeGrouping: 'month'
+  };
+
   //(en) Number of options selected by the user
-  selectedOptions: number = 0;
-
-  //(en)Receives the User-selected options with formatted names.
-  userOptions: string[] = [];
-
-  //(en)Receives the Options selected by the user to send to the Database (Using the column names from the database).
-  userOptionsToDB: string[] = []
-
-  //(en) User-selected options.
-  userSelectedOptions: string[] = []
+  selectedOptions: number = this.userOptions.selectedOptions.length;
 
   //(en) Display or hide chart options
   showChartOptions: boolean = false;
-
-  //(en) Receives the chart chosen by the user.
-  chartOption: string = 'empty';
 
   //(en) Extracts the columns from the "extracs" and "Users" tables.
   ExtractsColumnsOption: string[] = [];
@@ -43,55 +46,23 @@ export class Chart01Component implements OnInit {
   //(en) Shows and hides the filter button.
   isFilter: boolean = false;
 
-  //(en) startDate and endDate receive the values of the initial and final dates from the filter. 
-  startDate: string = '';
-  endDate: string = '';
-
-  //(en) Receives the start date and end date data from the date filter.
-  filterDate: string[] = [];
-
-  //(en) Created only to receive the value of chartOption during 
-  //toggleFilter, allowing the updating of chart data.
-  changeChartToFilter: string = '';
-
-  //(en) Receives the user's option, either count, sum, or avg.
-  //(en) The count is already executed when necessary for those where the value of this aggregate is ''.
-  aggregate: string = '';
-
-  //(en) Receives the user's option from the filter
-  filterUserOptions: string[] = [];
-
   //(en) Receives the time grouping for some queries with the created_at column.
   timeGrouping: string = 'month'
 
   //(en) Get the chart ID
   @Input() cardID!: string;
 
+
+
+
   //(en) Inserts user options (database columns)
   setOption(choice: string) {
 
-    //After receiving data from the database, selectedOptions remains empty. To avoid bugs, I reset the values.
-    if (this.selectedOptions === 0) {
-      this.userOptions = []
-
-      this.userOptionsToDB = []
-
-      this.userSelectedOptions = [];
-
-      this.selectedOptions = 0;
-
-      this.aggregate = '';
-
-      this.filterUserOptions = [];
-
-      this.timeGrouping = 'month'
-    }
-
     //(en) Checks if the selected option has already been chosen; if so, removes.
-    if (this.userSelectedOptions.includes(choice)) {
+    if (this.userOptions.selectedOptions.includes(choice)) {
 
       //(en) Removing option
-      this.userSelectedOptions = this.userSelectedOptions.filter(item => item !== choice);
+      this.userOptions.selectedOptions = this.userOptions.selectedOptions.filter(item => item !== choice);
 
       //(en) Decreases the count of selected options by 1.
       --this.selectedOptions;
@@ -99,9 +70,6 @@ export class Chart01Component implements OnInit {
       //(en) Hides the charts.
       this.showChartOptions = false;
 
-      //(en) Deletes userOptions and userOptionsToDB
-      this.userOptions = [];
-      this.userOptionsToDB = [];
     } else {
       //(en) Counts how many options are selected
       this.selectedOptions += 1;
@@ -109,147 +77,90 @@ export class Chart01Component implements OnInit {
       //(en) Since the selected option wasn't found in the array, it is added.
       switch (choice) {
         case 'id':
-          this.userSelectedOptions.push(choice);
+          this.userOptions.selectedOptions.push(choice);
           break;
         case 'name':
-          this.userSelectedOptions.push(choice);
+          this.userOptions.selectedOptions.push(choice);
           break;
         case 'segment':
-          this.userSelectedOptions.push(choice);
+          this.userOptions.selectedOptions.push(choice);
           break;
         case 'created_at':
-          this.userSelectedOptions.push(choice);
+          this.userOptions.selectedOptions.push(choice);
           break;
         case 'pages_process':
-          this.userSelectedOptions.push(choice);
-          this.aggregate = 'sum';
+          this.userOptions.selectedOptions.push(choice);
+          this.userOptions.aggregate = 'sum';
           break;
         case 'doc_type':
-          this.userSelectedOptions.push(choice);
+          this.userOptions.selectedOptions.push(choice);
           break;
         case 'user_id':
-          this.userSelectedOptions.push(choice);
+          this.userOptions.selectedOptions.push(choice);
           break;
         case 'doc_count':
-          this.userSelectedOptions.push(choice);
+          this.userOptions.selectedOptions.push(choice);
+          this.userOptions.aggregate = '';
           break;
         default:
-          this.userSelectedOptions.push(choice)
+          this.userOptions.selectedOptions.push(choice)
           break;
       }
     }
 
   }
 
-  //(en) Gets the options selected by the user, sending the 
-  //appropriate value to the userOptions and userOptionsToDB arrays.
-  optionsSelectByUser() {
-    this.userSelectedOptions.map((item) => {
-
-      switch (item) {
-        case 'id':
-          this.userOptions.push('ID')
-          this.userOptionsToDB.push(item);
-          break;
-        case 'name':
-          this.userOptions.push('Usuário')
-          this.userOptionsToDB.push(item);
-          break;
-        case 'segment':
-          this.userOptions.push('Segmento')
-          this.userOptionsToDB.push(item);
-          break;
-        case 'created_at':
-          this.userOptions.push('Data de Criação')
-          this.userOptionsToDB.push(item);
-          break;
-        case 'pages_process':
-          this.userOptions.push('Páginas Processadas')
-          this.userOptionsToDB.push(item);
-          break;
-        case 'doc_type':
-          this.userOptions.push('Tipo de Documento')
-          this.userOptionsToDB.push(item);
-          break;
-        case 'user_id':
-          this.userOptions.push('ID do Usuário')
-          this.userOptionsToDB.push(item);
-          break;
-        case 'doc_count':
-          this.userOptions.push('Documentos processados')
-          this.userOptionsToDB.push(item);
-          break;
-        default:
-          this.userOptionsToDB.push(item)
-          break;
-      }
-
-    });
-  }
-
-  //(en) Displays the options to the user.
-  openColumnOptions() {
-    this.setColumnOptions = true;
-  }
-
-  //(en) Hides the options from the user.
-  closeColumnOptions() {
-    this.setColumnOptions = false;
+  //(en) Displays and hides the options to the user.
+  showOptions() {
+    this.setColumnOptions = !this.setColumnOptions;
 
     //(en) Closes filter options
     this.isFilter = false;
+
   }
+
 
 
   async addFilter(): Promise<void> {
 
-    if (this.startDate != '' && this.endDate != '') {
-      this.filterDate[0] = this.startDate;
-      this.filterDate[1] = this.endDate;
-    } else {
-      this.cleanDataFilter();
-    }
+    //(en) changes Date from 'Fri Mar 10 2000 00:00:00 GMT-0300' to '2023-11-19T00:00:46.614Z'
+    this.userOptions.startDate = (new Date(this.userOptions.startDate).toISOString());
+    this.userOptions.endDate = (new Date(this.userOptions.endDate).toISOString());
+  
+    //(en) Created only to receive the value of chartOption during 
+    //toggleFilter, allowing the updating of chart data.
+    let changeChartToFilter: string = this.userOptions.chartType;;
 
-    this.filterUserOptions[0] = this.aggregate;
-
-    //(en) changeChartToFilter receives the value of chartOption
-    this.changeChartToFilter = this.chartOption;
-
-    //(en) chartOption has its value changed to the empty chart.
-    this.chartOption = 'loading';
+    //(en) chartOption has its value changed to the loading chart.
+    this.userOptions.chartType = 'loading';
 
     // Adicionando um atraso
     await this.delay(1000);
 
     //(en) chartOption receives its previous value, set by the user or retrieved from the database.
-    this.chartOption = this.changeChartToFilter;
+    this.userOptions.chartType = changeChartToFilter;
 
     //(en) closes filter option
     this.isFilter = false;
   }
 
-  cleanFilter() {
-    this.startDate = '';
-    this.endDate = '';
-    this.filterDate = [];
-    this.filterUserOptions = [];
-    this.aggregate = '';
-    this.filterUserOptions = [];
-  }
-
+  
   cleanDataFilter() {
-    this.startDate = '';
-    this.endDate = '';
-    this.filterDate = [];
+    this.userOptions.startDate = '';
+    this.userOptions.endDate = '';
+  }
+  
+  cleanFilter() {
+    this.cleanDataFilter();
+    this.userOptions.aggregate = '';
+    this.userOptions.timeGrouping = '';
   }
 
 
   openChart() {
     //(en) Opens chart options
     this.showChartOptions = true;
-
-    //(en) Executes the optionsSelectByUser function.
-    this.optionsSelectByUser();
+  
   }
 
   //(en) Sets the chart chosen by the user.
@@ -257,13 +168,13 @@ export class Chart01Component implements OnInit {
     const value = (event.target as HTMLSelectElement).value;
 
     //(en) chartOption has its value changed to the empty chart.
-    this.chartOption = 'loading';
+    this.userOptions.chartType = 'loading';
 
     // Adicionando um atraso
     await this.delay(1000);
 
     //(en) chartOption receives its previous value, set by the user.
-    this.chartOption = value;
+    this.userOptions.chartType = value;
   }
 
   // (en) The delay function is asynchronous and creates a pause in 
@@ -294,23 +205,23 @@ export class Chart01Component implements OnInit {
 
   //(en) Clears all data selected by the user.
   resetData() {
+    this.userOptions = {
+      chartType: 'empty',
+      selectedOptions: [],
+      startDate: '2000-01-01T00:00:00.000Z',
+      endDate: this.currentDate,
+      aggregate: '',
+      timeGrouping: 'month'
+    };
     this.selectedOptions = 0;
-    this.userOptions = [];
-    this.userOptionsToDB = [];
     this.showChartOptions = false;
-    this.chartOption = 'empty';
-    this.userSelectedOptions = [];
-    this.startDate = '';
-    this.endDate = '';
-    this.filterDate = [];
-    this.timeGrouping = 'month'
   }
 
   setAggregate(value: string) {
-    if (this.aggregate === value) {
-      this.aggregate = '';
+    if (this.userOptions.aggregate === value) {
+      this.userOptions.aggregate = '';
     } else {
-      this.aggregate = value;
+      this.userOptions.aggregate = value;
     }
   }
 
@@ -323,11 +234,17 @@ export class Chart01Component implements OnInit {
 
     if (this.cardID === 'card01') {
 
-      this.userOptions = ['Páginas Processadas', 'Segmento']
+      this.userOptions.selectedOptions = ['pages_process', 'segment']
 
-      this.userOptionsToDB = ['pages_process', 'segment']
+      this.userOptions.chartType = 'bar';
 
-      this.chartOption = 'bar';
+      this.selectedOptions = this.userOptions.selectedOptions.length;
+
+      if (this.userOptions.selectedOptions.includes('pages_process')){
+        this.userOptions.aggregate = 'sum'
+      } else {
+        this.userOptions.aggregate = ''
+      }
 
     }
   }

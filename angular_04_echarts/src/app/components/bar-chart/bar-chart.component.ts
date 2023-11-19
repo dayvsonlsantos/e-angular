@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
+import { UserOptions } from 'src/app/interfaces/user-options';
 import { Columns } from 'src/app/models/data.model';
 import { DataService } from 'src/app/services/data.service';
 
@@ -17,11 +18,8 @@ export class BarChartComponent implements OnInit {
   // chartOption -> (en) Receives the chart chosen by the user
 
   @Input() cardID!: string;
-  @Input() userOptions!: string[];
-  @Input() userOptionsToDB!: string[];
+  @Input() userOptions!: UserOptions;
   @Input() chartOption!: string;
-  @Input() filterDate!: string[];
-  @Input() filterUserOptions!: string[];
 
   constructor(
     //(en) Retrieves data from the database.
@@ -29,7 +27,7 @@ export class BarChartComponent implements OnInit {
   ) { }
 
   //(en) Receives data from the database.
-  dataColumns: Columns[] = [];
+  dataColumns: string[] = [];
 
   //(en) Will receive the value of a user option.
   valueProperty: string = '';
@@ -39,31 +37,36 @@ export class BarChartComponent implements OnInit {
   showChartTitle: string = ''
 
   //(en) Determines whether the filtered chart has data or not.
-  isDataUsingFilter: boolean = true;
+  isData: boolean = true;
 
   openChart(data: any[]) {
     //(en) Assigns the value coming from the dataService to the variable 'data'.
     data = data;
 
-    //(en) Checks if the values returned from the data are equal to 0, with isDataUsingFilter set to false.
+    //(en) Checks if the values returned from the data are equal to 0, with isData set to false.
     if (data.length === 0) {
-      this.isDataUsingFilter = false;
+      this.isData = false;
     } else {
-      this.isDataUsingFilter = true;
+      this.isData = true;
     }
 
     // (en) Checks the possible user options and redirects to the correct assignment.
-    this.userOptions.forEach((item: string) => {
-      if (item === 'Documentos processados' || item === 'Páginas Processadas') {
-        this.valueProperty = item;
-      } else {
-        this.nameProperty = item;
-      }
+    data.forEach((item: { [key: string]: string }) => {
+      // Itera sobre as chaves do objeto.
+      Object.keys(item).forEach(key => {
+
+        if (key === 'Documentos processados' || key === 'Páginas Processadas') {
+          this.valueProperty = key; 
+        } else {
+          this.nameProperty = key;
+        }
+      });
     });
+
 
     //(en) Map the values from your array of objects to the format expected by ECharts.
     const mappedData = data.map(item => ({
-      value: item[this.valueProperty],
+      value: Number(item[this.valueProperty]), // Certifique-se de converter para número, se necessário.
       name: item[this.nameProperty],
     }));
 
@@ -140,9 +143,9 @@ export class BarChartComponent implements OnInit {
     //(en) Applying the specified chart configurations stored in the 'option' variable.
     myChart.setOption(option);
 
-    //(en) If there is a value in 'isDataUsingFilter', showChartTitle will receive the title.
-    if (this.isDataUsingFilter) {
-      this.showChartTitle = 'Relação entre: ' + this.userOptions.join(', ');
+    //(en) If there is a value in 'isData', showChartTitle will receive the title.
+    if (this.isData) {
+      this.showChartTitle = 'Relação entre: ' + Object.keys(data[0]).join(', ');
     } //(en) Otherwise, it won't have a value and will remain empty.
 
     window.addEventListener('resize', function () {
@@ -155,9 +158,10 @@ export class BarChartComponent implements OnInit {
     //(en) Checks if the selected option on the chart is the same.
     if (this.chartOption === 'bar') {
 
-      this.dataService.getExtracts(this.userOptionsToDB, this.filterDate, this.filterUserOptions).subscribe((dataColumns: string[]) => {
+      // Adicionar await, para enquanto isso this.chartOption === 'loading'
+
+      this.dataService.getData(this.userOptions).subscribe((dataColumns: string[]) => {
         this.openChart(dataColumns);
-        console.log(dataColumns)
       });
 
     }

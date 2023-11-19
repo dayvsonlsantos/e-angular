@@ -9,7 +9,7 @@
                     <div *ngFor="let column of UsersColumnsOption" class="w-100">
                         <button (click)="setOption(column)"
                             class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
-                            [ngClass]="{ 'bg-gray': userSelectedOptions.includes(column) }">
+                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
                             <ng-container *ngSwitchCase="'id'">ID</ng-container>
                             <ng-container *ngSwitchCase="'name'">Usuário</ng-container>
                             <ng-container *ngSwitchCase="'segment'">Segmento</ng-container>
@@ -19,7 +19,7 @@
                     <div *ngFor="let column of ExtractsColumnsOption" class="w-100">
                         <button (click)="setOption(column)"
                             class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
-                            [ngClass]="{ 'bg-gray': userSelectedOptions.includes(column) }">
+                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
                             <ng-container *ngSwitchCase="'id'">ID</ng-container>
                             <ng-container *ngSwitchCase="'created_at'">Data de Criação</ng-container>
                             <ng-container *ngSwitchCase="'pages_process'">Páginas Processadas</ng-container>
@@ -58,30 +58,30 @@
                     <mat-form-field class="w-75">
                         <mat-label class="text-pink">Insira um período</mat-label>
                         <mat-date-range-input [rangePicker]="picker">
-                            <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
-                            <input matEndDate placeholder="End date" [(ngModel)]="endDate">
+                            <input matStartDate placeholder="Start date" [(ngModel)]="userOptions.startDate">
+                            <input matEndDate placeholder="End date" [(ngModel)]="userOptions.endDate">
                         </mat-date-range-input>
                         <mat-hint class="text-white small">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-date-range-picker touchUi #picker></mat-date-range-picker>
                     </mat-form-field>
                 </div>
-                <div class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
+                <div *ngIf="!userOptions.selectedOptions.includes('doc_count')" class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
                     <span class="my-2 text-white">Selecione uma Agregação</span>
                     <div class="d-flex flex-row align-items-center justify-content-center gap-2">
-                        <button *ngIf="isFilter && !userSelectedOptions.includes('pages_process')" [ngClass]="{ 'bg-gray': aggregate === '' }"
+                        <button *ngIf="isFilter && !userOptions.selectedOptions.includes('pages_process')" [ngClass]="{ 'bg-gray': userOptions.aggregate === '' }"
                             class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                             (click)="setAggregate('')">Contar</button>
-                        <button *ngIf="isFilter && !userSelectedOptions.includes('doc_count')" [ngClass]="{ 'bg-gray': aggregate === 'sum' }"
+                        <button *ngIf="isFilter" [ngClass]="{ 'bg-gray': userOptions.aggregate === 'sum' }"
                             class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                             (click)="setAggregate('sum')">Somar</button>
-                        <button *ngIf="isFilter" [ngClass]="{ 'bg-gray': aggregate === 'avg' }"
+                        <button *ngIf="isFilter" [ngClass]="{ 'bg-gray': userOptions.aggregate === 'avg' }"
                             class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                             (click)="setAggregate('avg')">Média</button>
                     </div>
                 </div>
                 <div class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2" 
-                *ngIf="isFilter && userSelectedOptions.includes('created_at') && (userSelectedOptions.includes('doc_count') || userSelectedOptions.includes('pages_process'))">
+                *ngIf="isFilter && userOptions.selectedOptions.includes('created_at') && (userOptions.selectedOptions.includes('doc_count') || userOptions.selectedOptions.includes('pages_process'))">
                     <span class="my-2 text-white">Selecione uma opção</span>
                     <div class="d-flex flex-row align-items-center justify-content-center gap-2">
                         <button [ngClass]="{ 'bg-gray': timeGrouping === 'month' }"
@@ -109,7 +109,7 @@
             <button *ngIf="!isFilter" class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                 (click)="resetData()">Limpar</button>
             <button class="btn text-14 rounded rounded-lg bg-gray text-white p-2"
-                (click)="closeColumnOptions()">Fechar</button>
+                (click)="showOptions()">Fechar</button>
             <button *ngIf="!isFilter" class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                 (click)="isFilter = !isFilter">Filtro</button>
         </div>
@@ -129,35 +129,34 @@
         <div *ngIf="!setColumnOptions"
             class="z-1 position-absolute w-100 d-flex align-items-center justify-content-end p-2">
             <button class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
-                (click)="openColumnOptions()">Editar</button>
+                (click)="showOptions()">Editar</button>
         </div>
         <section>
-            <app-pie-chart *ngIf="chartOption === 'pie'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterDate]="filterDate"
+            <!-- <app-pie-chart *ngIf="chartOption === 'pie'" [cardID]="cardID" [userOptions]="userOptions"
+                [chartOption]="chartOption"  [filterDate]="filterDate"
                 [filterUserOptions]="filterUserOptions">
-            </app-pie-chart>
-            <app-bar-chart *ngIf="chartOption === 'bar'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterDate]="filterDate"
-                [filterUserOptions]="filterUserOptions">
+            </app-pie-chart> -->
+            <app-bar-chart *ngIf="userOptions.chartType === 'bar'" [cardID]="cardID" [userOptions]="userOptions"
+                [chartOption]="userOptions.chartType">
             </app-bar-chart>
-            <app-line-chart *ngIf="chartOption === 'line'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterDate]="filterDate"
+            <!-- <app-line-chart *ngIf="chartOption === 'line'" [cardID]="cardID" [userOptions]="userOptions"
+                [chartOption]="chartOption" [filterDate]="filterDate"
                 [filterUserOptions]="filterUserOptions">
             </app-line-chart>
             <app-area-chart *ngIf="chartOption === 'area'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterDate]="filterDate"
+                [chartOption]="chartOption" [filterDate]="filterDate"
                 [filterUserOptions]="filterUserOptions">
             </app-area-chart>
             <app-scatter-chart *ngIf="chartOption === 'scatter'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB" [filterDate]="filterDate"
+                [chartOption]="chartOption" [filterDate]="filterDate"
                 [filterUserOptions]="filterUserOptions">
             </app-scatter-chart>
             <app-horizontal-bar-chart *ngIf="chartOption === 'horizontal-bar'" [cardID]="cardID"
-                [userOptions]="userOptions" [chartOption]="chartOption" [userOptionsToDB]="userOptionsToDB"
+                [userOptions]="userOptions" [chartOption]="chartOption"
                 [filterDate]="filterDate" [filterUserOptions]="filterUserOptions">
-            </app-horizontal-bar-chart>
-            <app-empty-chart *ngIf="chartOption === 'empty'"></app-empty-chart>
-            <app-loading *ngIf="chartOption === 'loading'"></app-loading>
+            </app-horizontal-bar-chart> -->
+            <app-empty-chart *ngIf="userOptions.chartType === 'empty'"></app-empty-chart>
+            <app-loading *ngIf="userOptions.chartType === 'loading'"></app-loading>
         </section>
     </article>
 </div>
