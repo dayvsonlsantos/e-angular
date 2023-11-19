@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -9,7 +9,7 @@ import { UserOptions } from 'src/app/interfaces/user-options';
   templateUrl: './select-chart.component.html',
   styleUrls: ['./select-chart.component.css']
 })
-export class Chart01Component implements OnInit {
+export class SelectChartComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
@@ -99,8 +99,8 @@ export class Chart01Component implements OnInit {
           this.userOptions.selectedOptions.push(choice);
           break;
         case 'doc_count':
-          this.userOptions.selectedOptions.push(choice);
           this.userOptions.aggregate = '';
+          this.userOptions.selectedOptions.push(choice);
           break;
         default:
           this.userOptions.selectedOptions.push(choice)
@@ -146,14 +146,19 @@ export class Chart01Component implements OnInit {
 
   
   cleanDataFilter() {
-    this.userOptions.startDate = '';
-    this.userOptions.endDate = '';
+    this.userOptions.startDate = '2000-01-01T00:00:00.000Z';
+    this.userOptions.endDate = this.currentDate;
   }
   
   cleanFilter() {
     this.cleanDataFilter();
-    this.userOptions.aggregate = '';
-    this.userOptions.timeGrouping = '';
+    if (this.userOptions.selectedOptions.includes('pages_process')){
+      this.userOptions.aggregate = 'sum';
+    } else {
+      this.userOptions.aggregate = '';
+    }
+    
+    this.userOptions.timeGrouping = 'month';
   }
 
 
@@ -208,7 +213,7 @@ export class Chart01Component implements OnInit {
     this.userOptions = {
       chartType: 'empty',
       selectedOptions: [],
-      startDate: '2000-01-01T00:00:00.000Z',
+      startDate: '2014-01-01T00:00:00.000Z',
       endDate: this.currentDate,
       aggregate: '',
       timeGrouping: 'month'

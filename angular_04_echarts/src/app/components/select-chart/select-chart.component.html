@@ -132,30 +132,10 @@
                 (click)="showOptions()">Editar</button>
         </div>
         <section>
-            <!-- <app-pie-chart *ngIf="chartOption === 'pie'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption"  [filterDate]="filterDate"
-                [filterUserOptions]="filterUserOptions">
-            </app-pie-chart> -->
-            <app-bar-chart *ngIf="userOptions.chartType === 'bar'" [cardID]="cardID" [userOptions]="userOptions"
+            <app-charts *ngIf="(userOptions.chartType != 'empty') && (userOptions.chartType != 'loading')" [cardID]="cardID" [userOptions]="userOptions"
                 [chartOption]="userOptions.chartType">
-            </app-bar-chart>
-            <!-- <app-line-chart *ngIf="chartOption === 'line'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption" [filterDate]="filterDate"
-                [filterUserOptions]="filterUserOptions">
-            </app-line-chart>
-            <app-area-chart *ngIf="chartOption === 'area'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption" [filterDate]="filterDate"
-                [filterUserOptions]="filterUserOptions">
-            </app-area-chart>
-            <app-scatter-chart *ngIf="chartOption === 'scatter'" [cardID]="cardID" [userOptions]="userOptions"
-                [chartOption]="chartOption" [filterDate]="filterDate"
-                [filterUserOptions]="filterUserOptions">
-            </app-scatter-chart>
-            <app-horizontal-bar-chart *ngIf="chartOption === 'horizontal-bar'" [cardID]="cardID"
-                [userOptions]="userOptions" [chartOption]="chartOption"
-                [filterDate]="filterDate" [filterUserOptions]="filterUserOptions">
-            </app-horizontal-bar-chart> -->
-            <app-empty-chart *ngIf="userOptions.chartType === 'empty'"></app-empty-chart>
+            </app-charts>
+            <app-isEmpty *ngIf="userOptions.chartType === 'empty'"></app-isEmpty>
             <app-loading *ngIf="userOptions.chartType === 'loading'"></app-loading>
         </section>
     </article>
