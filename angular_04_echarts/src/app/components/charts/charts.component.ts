@@ -40,6 +40,20 @@ export class ChartsComponent implements OnInit {
   //(en) Determines whether the filtered chart has data or not.
   isData: boolean = true;
 
+  //(en) Receives the unique value to be displayed
+  uniqueValue: string = '';
+
+  //(en) Filters used
+  stringFiltersUsed: string = '';
+
+  getCurrentDate = new Date();
+
+  currentDate = (new Date(this.getCurrentDate.getFullYear(), this.getCurrentDate.getMonth(), this.getCurrentDate.getDate())).toISOString();
+  
+  currentDateFormated = (`${this.currentDate.substring(0, 4)}-${this.currentDate.substring(5, 7)}-${this.currentDate.substring(8, 10)}`)
+
+  // userEndDate = (`${this.userOptions.endDate.substring(0, 4)}-${this.userOptions.endDate.substring(5, 7)}-${this.userOptions.endDate.substring(8, 10)}`)
+
   openChart(data: any[]) {
     //(en) Checks if the values returned from the data are equal to 0, with isData set to false.
     if (data.length === 0) {
@@ -342,13 +356,19 @@ export class ChartsComponent implements OnInit {
           ]
         };
         break;
+      case 'uniqueValue':
+        this.uniqueValue = (mappedData.map(item => item.value)).toString();
+        if (this.userOptions.selectedOptions.includes('only_doc_count')) {
+          this.showChartTitle = 'Total de Documentos'
+        }
+        break;
     }
 
     //(en) Applying the specified chart configurations stored in the 'option' variable.
     myChart.setOption(option);
 
     //(en) If there is a value in 'isData', showChartTitle will receive the title.
-    if (this.isData) {
+    if ((this.isData) && (this.userOptions.chartType != 'uniqueValue')) {
       this.showChartTitle = 'Relação entre: ' + Object.keys(data[0]).join(', ');
     } //(en) Otherwise, it won't have a value and will remain empty.
 
@@ -361,6 +381,26 @@ export class ChartsComponent implements OnInit {
 
     this.dataService.getData(this.userOptions).subscribe((dataColumns: string[]) => {
       this.openChart(dataColumns);
+
+      let filtersUsed: string[] = [];
+      if (this.userOptions.aggregate != '') {
+        filtersUsed.push('Agregação');
+      }
+      if (this.userOptions.startDate != '2014-01-01T00:00:00.000Z') {
+        filtersUsed.push('Data Inicial');
+      }
+      // if (this.userEndDate != this.currentDateFormated) {
+      //   filtersUsed.push('Data Final');
+      // }
+      if (this.userOptions.timeGrouping != 'month') {
+        filtersUsed.push('Agrupamento de Tempo');
+      }
+
+      console.log(this.userOptions.endDate)
+      console.log(this.currentDate)
+
+      this.stringFiltersUsed = filtersUsed.join(',')
+
     });
 
   }

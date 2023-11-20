@@ -38,8 +38,9 @@ export class SelectChartComponent implements OnInit {
   showChartOptions: boolean = false;
 
   //(en) Extracts the columns from the "extracs" and "Users" tables.
-  ExtractsColumnsOption: string[] = [];
-  UsersColumnsOption: string[] = [];
+  extractsColumnsOption: string[] = [];
+  usersColumnsOption: string[] = [];
+  readyQueries: string[] = [];
 
   //(en) Array responsible for receiving user responses without any processing.
   setColumnOptions: boolean = false;
@@ -105,6 +106,10 @@ export class SelectChartComponent implements OnInit {
           this.userOptions.selectedOptions.push(choice);
           break;
         case 'doc_count':
+          this.userOptions.aggregate = '';
+          this.userOptions.selectedOptions.push(choice);
+          break;
+        case 'only_doc_count':
           this.userOptions.aggregate = '';
           this.userOptions.selectedOptions.push(choice);
           break;
@@ -201,17 +206,18 @@ export class SelectChartComponent implements OnInit {
   fetchColumns() {
     this.dataService.getColumns('extracts')
       .subscribe(data => {
-        this.ExtractsColumnsOption = data
+        this.extractsColumnsOption = data
           .filter(item => item.column_name !== 'id' && item.column_name !== 'user_id')
           .map(item => item.column_name)
-        this.ExtractsColumnsOption.push('doc_count')
+        this.extractsColumnsOption.push('doc_count')
       });
     this.dataService.getColumns('users')
       .subscribe(data => {
-        this.UsersColumnsOption = data
+        this.usersColumnsOption = data
           .filter(item => item.column_name !== 'id')
           .map(item => item.column_name)
       });
+    this.readyQueries = ['only_doc_count']
   }
 
   //(en) Clears all data selected by the user.
@@ -237,7 +243,7 @@ export class SelectChartComponent implements OnInit {
     }
   }
 
-  saveToDatabase(){
+  saveToDatabase() {
     console.log(this.userOptions)
   }
 

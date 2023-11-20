@@ -20,6 +20,16 @@ export class DashboardComponent {
 
   currentDate = this.getCurrentDate.toISOString();
 
+  dashboard01Data: UserOptions = {
+    cardValueID: 'dashboard-01',
+    chartType: 'uniqueValue',
+    selectedOptions: ['only_doc_count'],
+    startDate: '2014-01-01T00:00:00.000Z',
+    endDate: this.currentDate,
+    aggregate: '',
+    timeGrouping: 'month'
+  }
+
   dashboard05Data: UserOptions = {
     cardValueID: 'dashboard-05',
     chartType: 'bar',
