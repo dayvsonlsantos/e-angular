@@ -42,6 +42,9 @@ export class SelectChartComponent implements OnInit {
   extractsColumnsOption: string[] = [];
   usersColumnsOption: string[] = [];
   readyQueries: string[] = [];
+  usersFromDB: string[] = [];
+  segmentsFromDB: string[] = [];
+  docTypesFromDB: string[] = [];
 
   //(en) Array responsible for receiving user responses without any processing.
   setColumnOptions: boolean = false;
@@ -254,6 +257,25 @@ export class SelectChartComponent implements OnInit {
           .map(item => item.column_name)
       });
     this.readyQueries = ['only_doc_count', 'only_pages_process', 'most_analyzed_doc', 'doc_most_analyzed_pages', 'user_most_analyzed_doc', 'segment_most_analyzed_doc', 'user_most_analyzed_pages', 'segment_most_analyzed_pages']
+
+    this.dataService.getUsers()
+      .subscribe(data => {
+        this.usersFromDB = data
+          .map(item => item.column_name);
+      });
+
+    this.dataService.getSegments()
+      .subscribe(data => {
+        this.segmentsFromDB = data
+          .map(item => item.column_name);
+      });
+
+    this.dataService.getDocTypes()
+      .subscribe(data => {
+        this.docTypesFromDB = data.map(item => item.column_name);
+        console.log('opa', this.docTypesFromDB);
+      });
+
   }
 
   //(en) Clears all data selected by the user.

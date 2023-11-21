@@ -43,4 +43,17 @@ export class DataService {
     return this.http.get<any[]>(`${environment.api}/data/getColumns?tableOption=${this.setTable}`)
   }
 
+  getUsers(): Observable<any[]>{
+    return this.http.get<string[]>(`${environment.api}/data/getUsers`)
+  }
+
+  getSegments(): Observable<any[]>{
+    return this.http.get<string[]>(`${environment.api}/data/getSegments`)
+  }
+
+  getDocTypes(): Observable<any[]>{
+    console.log (this.http.get<string[]>(`${environment.api}/data/getDocTypes`))
+    return this.http.get<string[]>(`${environment.api}/data/getDocTypes`)
+  }
+
 }
