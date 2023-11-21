@@ -204,7 +204,7 @@
             <div 
                 *ngIf="filterNumber === 1"
                 class="h-300 w-100 py-2 d-flex align-items-start justify-content-center flex-column">
-                <div class="w-75 d-flex flex-column filterContent test">
+                <div class="w-75 d-flex flex-column filterContent">
                     <h1 class="w-100 block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o período</h1>
                     <mat-form-field class="w-100">
                         <mat-label class="text-pink">Insira um período</mat-label>
@@ -218,7 +218,7 @@
                     </mat-form-field>
                 </div>
                 <div *ngIf="(!userOptions.selectedOptions.includes('doc_count') && !userOptions.selectedOptions.includes('only_doc_count'))"
-                    class="test w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
+                    class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
                     <span class="my-2 text-white">Selecione uma Agregação</span>
                     <div class="d-flex flex-row align-items-center justify-content-center gap-2">
                         <button
@@ -254,9 +254,9 @@
                 class="w-75 d-flex align-items-center justify-content-center flex-column">
                 <h1 class="w-100 text-center block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o usuário</h1>
                 <div *ngFor="let user of usersFromDB" class="max-h-300 w-75 overflow-y-auto d-flex align-items-start justify-content-center flex-column">
-                    <button (click)="userOptions.specificFilter = 'u.name = \'' + user + '\''"
+                    <button (click)="setSpecificFilter('lower(u.name) = ' + removeItemStyle(user))"
                             class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2 mb-2"
-                            [ngSwitch]="user" [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'u.name = \'' + user + '\'' }">
+                            [ngSwitch]="user" [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'lower(u.name) = ' + removeItemStyle(user)}">
                         <ng-container *ngSwitchDefault>{{user}}</ng-container>
                     </button>
                 </div>
@@ -267,9 +267,9 @@
                 class="w-75 d-flex align-items-center justify-content-center flex-column">
                 <h1 class="w-100 text-center block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o Segmento</h1>
                 <div *ngFor="let segment of segmentsFromDB" class="max-h-300 w-75 overflow-y-auto d-flex align-items-start justify-content-center flex-column">
-                    <button (click)="userOptions.specificFilter = 'u.segment = \'' + segment + '\''"
+                    <button (click)="setSpecificFilter('lower(u.segment) = ' + removeItemStyle(segment))"
                             class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2 mb-2"
-                            [ngSwitch]="segment" [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'u.segment = \'' + segment + '\'' }">
+                            [ngSwitch]="segment" [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'lower(u.segment) = ' + removeItemStyle(segment)}">
                         <ng-container *ngSwitchDefault>{{segment}}</ng-container>
                     </button>
                 </div>
@@ -281,9 +281,9 @@
                 <h1 class="w-100 text-center block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o Tipo de Documento</h1>
                 <div class="w-100 h-200 overflow-y-auto d-flex align-items-center justify-content-top flex-column">
                     <div *ngFor="let doc of docTypesFromDB" class="w-75 d-flex align-items-start justify-content-center flex-column">
-                        <button (click)="userOptions.specificFilter = 'e.doc_type = \'' + doc + '\''"
+                        <button (click)="setSpecificFilter('lower(e.doc_type) = ' + this.removeItemStyle(doc))"
                                 class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2 mb-2"
-                                [ngSwitch]="doc" [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'u.segment = \'' + doc + '\'' }">
+                                [ngSwitch]="doc" [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'lower(e.doc_type) = ' + removeItemStyle(doc)}">
                             <ng-container *ngSwitchDefault>{{doc}}</ng-container>
                         </button>
                     </div>
@@ -308,7 +308,7 @@
                 </ul>
             </aside>
 
-            <div class="test w-75 py-2 d-flex align-items-start justify-content-center flex-column">
+            <div class="w-75 py-2 d-flex align-items-start justify-content-center flex-column">
                 <span class="my-2 small w-100 text-white text-center">
                     Salve para atualizar os dados :)
                 </span>

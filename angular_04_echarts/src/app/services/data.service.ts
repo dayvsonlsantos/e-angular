@@ -17,7 +17,6 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   getData(userOptions: UserOptions) {
-    console.log(userOptions)
 
     const params = {
       cardValueID: userOptions.cardValueID,
@@ -52,7 +51,6 @@ export class DataService {
   }
 
   getDocTypes(): Observable<any[]>{
-    console.log (this.http.get<string[]>(`${environment.api}/data/getDocTypes`))
     return this.http.get<string[]>(`${environment.api}/data/getDocTypes`)
   }
 

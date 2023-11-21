@@ -29,7 +29,7 @@ export class SelectChartComponent implements OnInit {
     aggregate: '', //(en) Receives the user's option, either count, sum, or avg.
     //(en) The count is already executed when necessary for those where the value of this aggregate is ''.
     timeGrouping: 'month',
-    specificFilter: "u.name 'IS NOT NULL'",
+    specificFilter: 'u.name IS NOT NULL',
   };
 
   //(en) Number of options selected by the user
@@ -209,6 +209,8 @@ export class SelectChartComponent implements OnInit {
     }
 
     this.userOptions.timeGrouping = 'month';
+
+    this.userOptions.specificFilter = 'u.name IS NOT NULL';
   }
 
 
@@ -273,7 +275,6 @@ export class SelectChartComponent implements OnInit {
     this.dataService.getDocTypes()
       .subscribe(data => {
         this.docTypesFromDB = data.map(item => item.column_name);
-        console.log('opa', this.docTypesFromDB);
       });
 
   }
@@ -288,7 +289,7 @@ export class SelectChartComponent implements OnInit {
       endDate: this.currentDate,
       aggregate: '',
       timeGrouping: 'month',
-      specificFilter: "u.name 'IS NOT NULL'",
+      specificFilter: 'u.name IS NOT NULL',
     };
     this.selectedOptions = 0;
     this.showChartOptions = false;
@@ -306,6 +307,49 @@ export class SelectChartComponent implements OnInit {
     console.log(this.userOptions)
   }
 
+  removeItemStyle(item: string): string {
+    let result: string = '';
+    switch (item) {
+      case 'Posição Consolidada':
+        result = 'POSICAO_CONSOLIDADA';
+        break;
+      case 'Fatura de Energia':
+        result = 'FATURA_ENERGIA';
+        break;
+      case 'Declaração de Imposto de Renda':
+        result = 'DECLARACAO_IR';
+        break;
+      case 'Comprovante de Residência':
+        result = 'COMPROVANTE_RESIDENCIA';
+        break;
+      case 'Balanço Patrimonial':
+        result = 'BALANCO_PATRIMONIAL';
+        break;
+      case 'Contrato Social':
+        result = 'CONTRATO_SOCIAL'
+        break;
+      case 'Capa Serasa':
+        result = 'CAPA_SERASA'
+        break;
+      case 'Imobiliária':
+        result = 'imobiliaria';
+        break;
+      default:
+        result = item
+        break;
+    }
+    return 'lower(\'' + result + '\')';
+  }
+
+  
+  setSpecificFilter(specificFilterOption: string){
+    if (this.userOptions.specificFilter === specificFilterOption) {
+      this.userOptions.specificFilter = 'u.name IS NOT NULL';
+    } else {
+      this.userOptions.specificFilter = specificFilterOption
+    }
+  }
+
   ngOnInit(): void {
     this.fetchColumns();
 
@@ -318,7 +362,6 @@ export class SelectChartComponent implements OnInit {
     // Simulation: Retrieving user preferences from the database. 
 
     if ((this.chartValues.chartType != '') && (this.chartValues.selectedOptions.length != 0)) {
-      console.log(this.chartValues)
       if (this.cardID === this.chartValues.cardValueID) {
         this.userOptions.selectedOptions = this.chartValues.selectedOptions;
 

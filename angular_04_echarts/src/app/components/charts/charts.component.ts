@@ -353,7 +353,6 @@ export class ChartsComponent implements OnInit {
         };
         break;
       case 'uniqueValue':
-        console.log(this.uniqueValue)
         if (this.userOptions.selectedOptions.includes('only_doc_count')) {
           this.uniqueValue = (mappedData.map(item => item.value)).toString();
           this.showChartTitle = 'Total de Documentos Analisados'
@@ -406,40 +405,6 @@ export class ChartsComponent implements OnInit {
 
     this.dataService.getData(this.userOptions).subscribe((dataColumns: string[]) => {
       this.openChart(dataColumns);
-
-      // let filtersUsed: string[] = [];
-      // console.log(this.userOptions.startDate)
-      // if (this.userOptions.aggregate === 'avg') {
-      //   filtersUsed.push('Agregação');
-      // } else {
-      //   filtersUsed = filtersUsed.filter(item => item !== 'Agregação');
-      // }
-      // if (this.userOptions.startDate != '2014-01-01') {
-      //   filtersUsed.push('Data Inicial');
-      // } else {
-      //   filtersUsed = filtersUsed.filter(item => item !== 'Data Inicial');
-      // }
-      // if (this.userOptions.endDate != this.currentDate) {
-      //   filtersUsed.push('Data Final');
-      // } else {
-      //   filtersUsed = filtersUsed.filter(item => item !== 'Data Final');
-      // }
-      // if (this.userOptions.timeGrouping != 'month') {
-      //   filtersUsed.push('Agrupamento de Tempo');
-      // } else {
-      //   filtersUsed = filtersUsed.filter(item => item !== 'Agrupamento de Tempo');
-      // }
-
-      
-
-      // if (this.userOptions.aggregate === '' && this.userOptions.startDate === '2014-01-01' && this.userOptions.endDate === this.currentDate && this.userOptions.timeGrouping === 'month'){
-      //   this.stringFiltersUsed = ''
-      // } else {
-      //   this.stringFiltersUsed = filtersUsed.join(',')
-      // }
-
-      // console.log(filtersUsed)
-      // console.log(this.stringFiltersUsed)
 
     });
 
