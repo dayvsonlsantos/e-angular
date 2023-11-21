@@ -201,10 +201,12 @@
             </div>
         </div>
         <div *ngIf="isFilter" class="col-9 backdrop w-75">
-            <h1 class="w-100 block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o período</h1>
-            <div class="h-300 w-100 py-2 d-flex align-items-start justify-content-center flex-column">
-                <div class="w-100 d-flex flex-column filterContent">
-                    <mat-form-field class="w-75">
+            <div 
+                *ngIf="filterNumber === 1"
+                class="h-300 w-100 py-2 d-flex align-items-start justify-content-center flex-column">
+                <div class="w-75 d-flex flex-column filterContent test">
+                    <h1 class="w-100 block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o período</h1>
+                    <mat-form-field class="w-100">
                         <mat-label class="text-pink">Insira um período</mat-label>
                         <mat-date-range-input [rangePicker]="picker">
                             <input matStartDate placeholder="Start date" [(ngModel)]="userOptions.startDate">
@@ -216,7 +218,7 @@
                     </mat-form-field>
                 </div>
                 <div *ngIf="(!userOptions.selectedOptions.includes('doc_count') && !userOptions.selectedOptions.includes('only_doc_count'))"
-                    class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
+                    class="test w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
                     <span class="my-2 text-white">Selecione uma Agregação</span>
                     <div class="d-flex flex-row align-items-center justify-content-center gap-2">
                         <button
@@ -245,16 +247,35 @@
                         </button>
                     </div>
                 </div>
-                <div class="h-300 mx-4 py-2 d-flex align-items-center flex-column">
-                    <span class="my-2 small w-75 text-white text-center">
-                        Salve para atualizar os dados :)
-                    </span>
-                    <div class="d-flex filterButtons">
-                        <button *ngIf="isFilter" class="btn text-14 rounded rounded-lg bg-gray text-white p-2"
-                            (click)="cleanFilter()">Limpar Filtro</button>
-                        <button *ngIf="isFilter" class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
-                            (click)="addFilter()">Salvar</button>
-                    </div>
+            </div>
+
+            <div
+                *ngIf="filterNumber === 2"
+                class="h-300 w-100 py-2 d-flex align-items-start justify-content-center flex-column">
+                oi
+            </div>
+
+            <aside class="mt-2 w-75">
+                <ul class="p-0 w-100 d-flex align-items-start justify-content-center gap-2">
+                    <li 
+                        class="btn bg-pink text-white" (click)="filterNumber = 1" [ngClass]="{ 'bg-gray': filterNumber === 1 }">
+                        <span>1</span>
+                    </li>
+                    <li class="btn bg-pink text-white" (click)="filterNumber = 2" [ngClass]="{ 'bg-gray': filterNumber === 2 }">
+                        <span>2</span>
+                    </li>
+                </ul>
+            </aside>
+
+            <div class="test w-75 py-2 d-flex align-items-start justify-content-center flex-column">
+                <span class="my-2 small w-100 text-white text-center">
+                    Salve para atualizar os dados :)
+                </span>
+                <div class="d-flex align-items-end justify-content-center filterButtons w-100">
+                    <button *ngIf="isFilter" class="btn text-14 rounded rounded-lg bg-gray text-white p-2"
+                        (click)="cleanFilter()">Limpar Filtro</button>
+                    <button *ngIf="isFilter" class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
+                        (click)="addFilter()">Salvar</button>
                 </div>
             </div>
         </div>

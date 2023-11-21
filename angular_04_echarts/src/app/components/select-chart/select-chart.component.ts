@@ -53,7 +53,10 @@ export class SelectChartComponent implements OnInit {
 
   //(en) Receives the value 1 or 2 to display a specific group of columns
   columnNumber: number = 1;
-  
+
+  //(en) Receives the value 1 or 2 to display a specific group of filters
+  filterNumber: number = 1;
+
   //(en) Get the chart ID
   @Input() cardID!: string;
 
