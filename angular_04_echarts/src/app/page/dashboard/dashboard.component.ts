@@ -20,6 +20,18 @@ export class DashboardComponent {
 
   currentDate = this.getCurrentDate.toISOString().slice(0, 10);
 
+  //(pt-br) caso deseje passar o specificFilter, como algum dos 
+  // valores de 'Selecione o Tipo de Documento', 'Selecione o Segmento' 
+  // ou 'Selecione o Usuário', olhe o arquivo select-chart.component.ts, 
+  // e lembre-se de chamar essas funções e passar um valor 
+  // como: setSpecificFilter('lower(e.doc_type) = ' + this.removeItemStyle(doc))
+
+  //(en) If you want to pass the specificFilter as one of the values 
+  // from 'Select Document Type,' 'Select Segment,' or 'Select User,' 
+  // look at the select-chart.component.ts file, and remember to call 
+  // these functions and pass a value 
+  // like: setSpecificFilter('lower(e.doc_type) = ' + this.removeItemStyle(doc)).
+  
   dashboard01Data: UserOptions = {
     cardValueID: 'dashboard-01',
     chartType: 'uniqueValue',

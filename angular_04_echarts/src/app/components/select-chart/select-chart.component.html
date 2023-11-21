@@ -251,7 +251,7 @@
 
             <div
                 *ngIf="filterNumber === 2"
-                class="w-75 d-flex align-items-center justify-content-center flex-column">
+                class="h-300 w-75 d-flex align-items-center justify-content-center flex-column">
                 <h1 class="w-100 text-center block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o usuário</h1>
                 <div *ngFor="let user of usersFromDB" class="max-h-300 w-75 overflow-y-auto d-flex align-items-start justify-content-center flex-column">
                     <button (click)="setSpecificFilter('lower(u.name) = ' + removeItemStyle(user))"
@@ -264,7 +264,7 @@
 
             <div
                 *ngIf="filterNumber === 3"
-                class="w-75 d-flex align-items-center justify-content-center flex-column">
+                class="h-300 w-75 d-flex align-items-center justify-content-center flex-column">
                 <h1 class="w-100 text-center block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o Segmento</h1>
                 <div *ngFor="let segment of segmentsFromDB" class="max-h-300 w-75 overflow-y-auto d-flex align-items-start justify-content-center flex-column">
                     <button (click)="setSpecificFilter('lower(u.segment) = ' + removeItemStyle(segment))"
@@ -277,7 +277,7 @@
 
             <div
                 *ngIf="filterNumber === 4"
-                class="w-75 d-flex align-items-center justify-content-center flex-column">
+                class="h-300 w-75 d-flex align-items-center justify-content-center flex-column">
                 <h1 class="w-100 text-center block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o Tipo de Documento</h1>
                 <div class="w-100 h-200 overflow-y-auto d-flex align-items-center justify-content-top flex-column">
                     <div *ngFor="let doc of docTypesFromDB" class="w-75 d-flex align-items-start justify-content-center flex-column">
