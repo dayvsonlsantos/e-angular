@@ -8,6 +8,7 @@
                 <section class="d-flex justify-content-center align-items-start flex-column gap-2">
                     <div *ngFor="let column of usersColumnsOption" class="w-100">
                         <button (click)="setOption(column)"
+                            *ngIf="!userOptions.selectedOptions.includes('only_doc_count') && !userOptions.selectedOptions.includes('only_pages_process')"
                             class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
                             <ng-container *ngSwitchCase="'id'">ID</ng-container>
@@ -18,6 +19,7 @@
                     </div>
                     <div *ngFor="let column of extractsColumnsOption" class="w-100">
                         <button (click)="setOption(column)"
+                            *ngIf="!userOptions.selectedOptions.includes('only_doc_count') && !userOptions.selectedOptions.includes('only_pages_process')"
                             class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
                             <ng-container *ngSwitchCase="'id'">ID</ng-container>
@@ -29,12 +31,113 @@
                             <ng-container *ngSwitchDefault>{{column}}</ng-container>
                         </button>
                     </div>
-                    <div *ngFor="let column of readyQueries" class="w-100">
-                        <button (click)="setOption(column)"
-                            class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
-                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
-                            <ng-container *ngSwitchCase="'only_doc_count'">Quantidade Documentos Processados</ng-container>
-                            <ng-container *ngSwitchDefault>{{column}}</ng-container>
+                    <div class="w-100">
+                        <button *ngIf="
+                            !userOptions.selectedOptions.includes('only_pages_process') 
+                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages') 
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
+                            (click)="setOption('only_doc_count')"
+                            class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
+                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('only_doc_count') }">
+                            Quant. Documentos Processados
+                        </button>
+                        <button *ngIf="
+                            !userOptions.selectedOptions.includes('only_doc_count') 
+                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages') 
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
+                            (click)="setOption('only_pages_process')"
+                            class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
+                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('only_pages_process') }">
+                            Quant. Páginas Processadas
+                        </button>
+                        <button *ngIf="
+                            !userOptions.selectedOptions.includes('only_doc_count') 
+                            && !userOptions.selectedOptions.includes('only_pages_process') 
+                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages') 
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
+                            (click)="setOption('user_doc_analyzed')"
+                            class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
+                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('most_analyzed_doc') }">
+                            Documento Mais Analisado
+                        </button>
+                        <button *ngIf="
+                            !userOptions.selectedOptions.includes('only_doc_count') 
+                            && !userOptions.selectedOptions.includes('only_pages_process') 
+                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
+                            (click)="setOption('user_doc_analyzed')"
+                            class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
+                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('doc_most_analyzed_pages') }">
+                            Doc. Com + Páginas Analisadas
+                        </button>
+                        <button *ngIf="
+                            !userOptions.selectedOptions.includes('only_doc_count') 
+                            && !userOptions.selectedOptions.includes('only_pages_process') 
+                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
+                            (click)="setOption('user_doc_analyzed')"
+                            class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
+                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('user_most_analyzed_doc') }">
+                            Usuário + Analisou Doc.
+                        </button>
+                        <button
+                            *ngIf="
+                            !userOptions.selectedOptions.includes('only_doc_count') 
+                            && !userOptions.selectedOptions.includes('only_pages_process') 
+                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
+                            (click)="setOption('user_doc_analyzed')"
+                            class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
+                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('segment_most_analyzed_doc') }">
+                            Segmento + Analisou Doc.
+                        </button>
+                        <button
+                            *ngIf="
+                            !userOptions.selectedOptions.includes('only_doc_count') 
+                            && !userOptions.selectedOptions.includes('only_pages_process') 
+                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
+                            (click)="setOption('user_doc_analyzed')"
+                            class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
+                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('user_most_analyzed_pages') }">
+                            Usuário + Analisou Páginas de Doc.
+                        </button>
+                        <button
+                            *ngIf="
+                            !userOptions.selectedOptions.includes('only_doc_count') 
+                            && !userOptions.selectedOptions.includes('only_pages_process') 
+                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')"
+                            (click)="setOption('user_doc_analyzed')"
+                            class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
+                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('segment_most_analyzed_pages') }">
+                            Segmento + Analisou Páginas de Doc.
                         </button>
                     </div>
                 </section>
@@ -42,7 +145,8 @@
 
             <div class="w-50 max-w-200 mx-4 d-flex align-items-start justify-content-center flex-column gap-2">
 
-                <button class="w-100 btn text-14 rounded rounded-lg bg-pink text-white p-2" *ngIf="(selectedOptions >= 2 || (selectedOptions === 1 && readyQueries.includes(userOptions.selectedOptions[0])))"
+                <button class="w-100 btn text-14 rounded rounded-lg bg-pink text-white p-2 mt-2"
+                    *ngIf="(selectedOptions >= 2 || (selectedOptions === 1 && readyQueries.includes(userOptions.selectedOptions[0])))"
                     (click)="openChart()">
                     Proximo
                 </button>
@@ -58,8 +162,10 @@
                     <option value="scatter">Dispersão</option>
                 </select>
 
-                <select *ngIf="(showChartOptions) && (selectedOptions === 1) && readyQueries.includes(userOptions.selectedOptions[0])" (change)="setChart($event)" name="chart"
-                    id="chart" class="select rounded rounded-lg bg-pink text-white p-2 w-100 pointer">
+                <select
+                    *ngIf="(showChartOptions) && (selectedOptions === 1) && readyQueries.includes(userOptions.selectedOptions[0])"
+                    (change)="setChart($event)" name="chart" id="chart"
+                    class="select rounded rounded-lg bg-pink text-white p-2 w-100 pointer">
                     <option value="" disabled selected>Selecione um gráfico</option>
                     <option value="uniqueValue">Valor Único</option>
                 </select>
@@ -80,11 +186,12 @@
                         <mat-date-range-picker touchUi #picker></mat-date-range-picker>
                     </mat-form-field>
                 </div>
-                <div *ngIf="!userOptions.selectedOptions.includes('doc_count')"
+                <div *ngIf="(!userOptions.selectedOptions.includes('doc_count') && !userOptions.selectedOptions.includes('only_doc_count'))"
                     class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
                     <span class="my-2 text-white">Selecione uma Agregação</span>
                     <div class="d-flex flex-row align-items-center justify-content-center gap-2">
-                        <button *ngIf="isFilter && !userOptions.selectedOptions.includes('pages_process')"
+                        <button
+                            *ngIf="isFilter && (!userOptions.selectedOptions.includes('pages_process') && !userOptions.selectedOptions.includes('only_pages_process'))"
                             [ngClass]="{ 'bg-gray': userOptions.aggregate === '' }"
                             class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                             (click)="setAggregate('')">Contar</button>
@@ -145,8 +252,7 @@
     <article class="position-relative w-100 h-100">
         <div *ngIf="!setColumnOptions && !cardID.startsWith('dashboard')"
             class="z-1 position-absolute w-100 d-flex align-items-end justify-content-end p-2 gap-2 flex-column">
-            <button class="btn btn-save-to-db text-14 rounded rounded-lg p-2"
-                (click)="saveToDatabase()">Salvar</button>
+            <button class="btn btn-save-to-db text-14 rounded rounded-lg p-2" (click)="saveToDatabase()">Salvar</button>
             <button class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
                 (click)="showOptions()">Editar</button>
         </div>

@@ -18,13 +18,43 @@ export class DashboardComponent {
 
   getCurrentDate = new Date();
 
-  currentDate = this.getCurrentDate.toISOString();
+  currentDate = this.getCurrentDate.toISOString().slice(0, 10);
 
   dashboard01Data: UserOptions = {
     cardValueID: 'dashboard-01',
     chartType: 'uniqueValue',
     selectedOptions: ['only_doc_count'],
-    startDate: '2014-01-01T00:00:00.000Z',
+    startDate: '2014-01-01',
+    endDate: this.currentDate,
+    aggregate: '',
+    timeGrouping: 'month'
+  }
+
+  dashboard02Data: UserOptions = {
+    cardValueID: 'dashboard-02',
+    chartType: 'uniqueValue',
+    selectedOptions: ['only_pages_process'],
+    startDate: '2014-01-01',
+    endDate: this.currentDate,
+    aggregate: 'sum',
+    timeGrouping: 'month'
+  }
+
+  dashboard03Data: UserOptions = {
+    cardValueID: 'dashboard-03',
+    chartType: 'uniqueValue',
+    selectedOptions: ['segment_most_analyzed_pages'],
+    startDate: '2014-01-01',
+    endDate: this.currentDate,
+    aggregate: 'sum',
+    timeGrouping: 'month'
+  }
+
+  dashboard04Data: UserOptions = {
+    cardValueID: 'dashboard-04',
+    chartType: 'bar',
+    selectedOptions: ['doc_type', 'doc_count'],
+    startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: '',
     timeGrouping: 'month'
@@ -34,7 +64,7 @@ export class DashboardComponent {
     cardValueID: 'dashboard-05',
     chartType: 'bar',
     selectedOptions: ['doc_type', 'doc_count'],
-    startDate: '2014-01-01T00:00:00.000Z',
+    startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: '',
     timeGrouping: 'month'
@@ -44,7 +74,7 @@ export class DashboardComponent {
     cardValueID: 'dashboard-06',
     chartType: 'horizontal-bar',
     selectedOptions: ['doc_type', 'pages_process'],
-    startDate: '2014-01-01T00:00:00.000Z',
+    startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: 'sum',
     timeGrouping: 'month'
@@ -54,7 +84,7 @@ export class DashboardComponent {
     cardValueID: 'dashboard-07',
     chartType: 'pie',
     selectedOptions: ['segment', 'pages_process'],
-    startDate: '2014-01-01T00:00:00.000Z',
+    startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: 'sum',
     timeGrouping: 'month'

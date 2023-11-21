@@ -3,7 +3,9 @@
     id={{cardID}} 
     class="chart {{chartClass}}" 
     *ngIf="dataColumns != [] && isData === true && uniqueValue === ''"
-></div>
+>
+</div>
+<!-- <p class="h-55 w-100 d-flex justify-content-center align-items-center small p-2 position-absolute test">{{stringFiltersUsed}}</p> -->
 <app-loading *ngIf="dataColumns === []"></app-loading>
 <app-isEmpty *ngIf="isData === false" [title]="'Nenhum resultado!'" [text]="'Esta pode ser a resposta que você está procurando. Caso contrário, tente Remover ou alterar seus filtros para torná-los menos específicos.'"></app-isEmpty>
 <div 
@@ -12,4 +14,3 @@ class="chart {{chartClass}}"
 >
     <span class="w-100 h-100 pt-4 d-flex align-items-center justify-content-center text-center fs-3 text-pink">{{uniqueValue}}</span>
 </div>
-<span>{{stringFiltersUsed}}</span>

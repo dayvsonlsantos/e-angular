@@ -18,13 +18,13 @@ export class SelectChartComponent implements OnInit {
 
   getCurrentDate = new Date();
 
-  currentDate = this.getCurrentDate.toISOString();
+  currentDate = this.getCurrentDate.toISOString().slice(0, 10);
 
   userOptions: UserOptions = {
     cardValueID: '',
     chartType: 'empty', //(en) Receives the chart chosen by the user.
     selectedOptions: [], //(en)Receives the Options selected by the user
-    startDate: '2014-01-01T00:00:00.000Z', //(en) startDate receive the value of the initial date from the filter. 
+    startDate: '2014-01-01', //(en) startDate receive the value of the initial date from the filter. 
     endDate: this.currentDate, //(en) endDate receive the value of the final date from the filter. 
     aggregate: '', //(en) Receives the user's option, either count, sum, or avg.
     //(en) The count is already executed when necessary for those where the value of this aggregate is ''.
@@ -78,6 +78,7 @@ export class SelectChartComponent implements OnInit {
       this.showChartOptions = false;
 
     } else {
+
       //(en) Counts how many options are selected
       this.selectedOptions += 1;
 
@@ -113,6 +114,34 @@ export class SelectChartComponent implements OnInit {
           this.userOptions.aggregate = '';
           this.userOptions.selectedOptions.push(choice);
           break;
+        case 'only_pages_process':
+          this.userOptions.aggregate = 'sum';
+          this.userOptions.selectedOptions.push(choice);
+          break;
+        case 'most_analyzed_doc':
+          this.userOptions.aggregate = '';
+          this.userOptions.selectedOptions.push(choice);
+          break;
+        case 'doc_most_analyzed_pages':
+          this.userOptions.aggregate = 'sum';
+          this.userOptions.selectedOptions.push(choice);
+          break;
+        case 'user_most_analyzed_doc':
+          this.userOptions.aggregate = '';
+          this.userOptions.selectedOptions.push(choice);
+          break;
+        case 'segment_most_analyzed_doc':
+          this.userOptions.aggregate = '';
+          this.userOptions.selectedOptions.push(choice);
+          break;
+        case 'user_most_analyzed_pages':
+          this.userOptions.aggregate = 'sum';
+          this.userOptions.selectedOptions.push(choice);
+          break;
+        case 'segment_most_analyzed_pages':
+          this.userOptions.aggregate = 'sum';
+          this.userOptions.selectedOptions.push(choice);
+          break;
         default:
           this.userOptions.selectedOptions.push(choice)
           break;
@@ -134,9 +163,9 @@ export class SelectChartComponent implements OnInit {
 
   async addFilter(): Promise<void> {
 
-    //(en) changes Date from 'Fri Mar 10 2000 00:00:00 GMT-0300' to '2023-11-19T00:00:46.614Z'
-    this.userOptions.startDate = (new Date(this.userOptions.startDate).toISOString());
-    this.userOptions.endDate = (new Date(this.userOptions.endDate).toISOString());
+    //(en) changes Date from 'Fri Mar 10 2000 00:00:00 GMT-0300' to '2023-11-19'
+    this.userOptions.startDate = (new Date(this.userOptions.startDate).toISOString().slice(0, 10));
+    this.userOptions.endDate = (new Date(this.userOptions.endDate).toISOString().slice(0, 10));
 
     //(en) Created only to receive the value of chartOption during 
     //toggleFilter, allowing the updating of chart data.
@@ -157,13 +186,13 @@ export class SelectChartComponent implements OnInit {
 
 
   cleanDataFilter() {
-    this.userOptions.startDate = '2000-01-01T00:00:00.000Z';
+    this.userOptions.startDate = '2014-01-01';
     this.userOptions.endDate = this.currentDate;
   }
 
   cleanFilter() {
     this.cleanDataFilter();
-    if (this.userOptions.selectedOptions.includes('pages_process')) {
+    if (this.userOptions.selectedOptions.includes('pages_process') && this.userOptions.selectedOptions.includes('only_pages_process') && this.userOptions.selectedOptions.includes('doc_most_analyzed_pages') && this.userOptions.selectedOptions.includes('user_most_analyzed_pages') && this.userOptions.selectedOptions.includes('segment_most_analyzed_pages')) {
       this.userOptions.aggregate = 'sum';
     } else {
       this.userOptions.aggregate = '';
@@ -217,7 +246,7 @@ export class SelectChartComponent implements OnInit {
           .filter(item => item.column_name !== 'id')
           .map(item => item.column_name)
       });
-    this.readyQueries = ['only_doc_count']
+    this.readyQueries = ['only_doc_count', 'only_pages_process', 'most_analyzed_doc', 'doc_most_analyzed_pages', 'user_most_analyzed_doc', 'segment_most_analyzed_doc', 'user_most_analyzed_pages']
   }
 
   //(en) Clears all data selected by the user.
@@ -226,7 +255,7 @@ export class SelectChartComponent implements OnInit {
       cardValueID: this.cardID,
       chartType: 'empty',
       selectedOptions: [],
-      startDate: '2014-01-01T00:00:00.000Z',
+      startDate: '2014-01-01',
       endDate: this.currentDate,
       aggregate: '',
       timeGrouping: 'month'
@@ -259,6 +288,7 @@ export class SelectChartComponent implements OnInit {
     // Simulation: Retrieving user preferences from the database. 
 
     if ((this.chartValues.chartType != '') && (this.chartValues.selectedOptions.length != 0)) {
+      console.log(this.chartValues)
       if (this.cardID === this.chartValues.cardValueID) {
         this.userOptions.selectedOptions = this.chartValues.selectedOptions;
 
@@ -266,29 +296,11 @@ export class SelectChartComponent implements OnInit {
 
         this.selectedOptions = this.chartValues.selectedOptions.length;
 
-        if (this.chartValues.selectedOptions.includes('pages_process')) {
-          this.userOptions.aggregate = 'sum'
-        } else {
-          this.userOptions.aggregate = ''
-        }
+        this.userOptions.aggregate = this.chartValues.aggregate;
+
       }
     }
 
-    if (this.cardID === 'card01') {
-
-      this.userOptions.selectedOptions = ['pages_process', 'segment']
-
-      this.userOptions.chartType = 'bar';
-
-      this.selectedOptions = this.userOptions.selectedOptions.length;
-
-      if (this.userOptions.selectedOptions.includes('pages_process')) {
-        this.userOptions.aggregate = 'sum'
-      } else {
-        this.userOptions.aggregate = ''
-      }
-
-    }
   }
 
 
