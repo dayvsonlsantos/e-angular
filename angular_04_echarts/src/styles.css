@@ -127,12 +127,20 @@ svg {
 	height: 55px;
 }
 
+.h-39{
+	height: 39px
+}
+
 .h-90{
 	height: 90px;
 }
 
 .h-300{
 	height: 300px;
+}
+
+.max-h-300{
+	max-height: 300px;
 }
 
 .w-128{

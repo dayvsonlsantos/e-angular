@@ -51,6 +51,9 @@ export class SelectChartComponent implements OnInit {
   //(en) Receives the time grouping for some queries with the created_at column.
   timeGrouping: string = 'month'
 
+  //(en) Receives the value 1 or 2 to display a specific group of columns
+  columnNumber: number = 1;
+  
   //(en) Get the chart ID
   @Input() cardID!: string;
 

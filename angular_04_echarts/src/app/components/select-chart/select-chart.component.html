@@ -3,51 +3,46 @@
     <!-- (en) Columns options -->
     <article *ngIf="setColumnOptions" class="z-1 m-0 h-100 position-absolute w-100 row">
         <div *ngIf="!isFilter" class="col-9 backdrop w-75">
-            <h1 class="block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione as colunas</h1>
-            <div class="w-50 max-w-200 h-300 overflow-y-auto mx-4 py-2">
+            <h1 *ngIf="columnNumber === 1" class="w-50 max-w-200 text-center mx-4 block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione duas colunas</h1>
+            <h1 *ngIf="columnNumber === 2" class="w-50 max-w-200 text-center mx-4 block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione uma consulta</h1>
+            <div class="w-50 max-w-200 max-h-300 overflow-y-auto mx-4 py-2">
                 <section class="d-flex justify-content-center align-items-start flex-column gap-2">
-                    <div *ngFor="let column of usersColumnsOption" class="w-100">
-                        <button (click)="setOption(column)"
-                            *ngIf="
-                            !userOptions.selectedOptions.includes('only_doc_count') 
-                            && !userOptions.selectedOptions.includes('only_pages_process') 
-                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
-                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages') 
-                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc')
-                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
-                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
-                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
-                            class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
-                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
-                            <ng-container *ngSwitchCase="'id'">ID</ng-container>
-                            <ng-container *ngSwitchCase="'name'">Usuário</ng-container>
-                            <ng-container *ngSwitchCase="'segment'">Segmento</ng-container>
-                            <ng-container *ngSwitchDefault>{{column}}</ng-container>
-                        </button>
+                    <div *ngIf="
+                        columnNumber === 1 
+                        && !userOptions.selectedOptions.includes('only_doc_count') 
+                        && !userOptions.selectedOptions.includes('only_pages_process') 
+                        && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                        && !userOptions.selectedOptions.includes('doc_most_analyzed_pages') 
+                        && !userOptions.selectedOptions.includes('user_most_analyzed_doc')
+                        && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                        && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
+                        && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
+                        class="w-100 d-flex justify-content-center align-items-start flex-column gap-2">
+                        <div *ngFor="let column of usersColumnsOption" class="w-100">
+                            <button (click)="setOption(column)"
+                                class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
+                                [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
+                                <ng-container *ngSwitchCase="'id'">ID</ng-container>
+                                <ng-container *ngSwitchCase="'name'">Usuário</ng-container>
+                                <ng-container *ngSwitchCase="'segment'">Segmento</ng-container>
+                                <ng-container *ngSwitchDefault>{{column}}</ng-container>
+                            </button>
+                        </div>
+                        <div *ngFor="let column of extractsColumnsOption" class="w-100">
+                            <button (click)="setOption(column)"
+                                class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
+                                [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
+                                <ng-container *ngSwitchCase="'id'">ID</ng-container>
+                                <ng-container *ngSwitchCase="'created_at'">Data de Criação</ng-container>
+                                <ng-container *ngSwitchCase="'pages_process'">Páginas Processadas</ng-container>
+                                <ng-container *ngSwitchCase="'doc_type'">Tipo de Documento</ng-container>
+                                <ng-container *ngSwitchCase="'user_id'">ID do Usuário</ng-container>
+                                <ng-container *ngSwitchCase="'doc_count'">Documentos Processados</ng-container>
+                                <ng-container *ngSwitchDefault>{{column}}</ng-container>
+                            </button>
+                        </div>
                     </div>
-                    <div *ngFor="let column of extractsColumnsOption" class="w-100">
-                        <button (click)="setOption(column)"
-                            *ngIf="
-                            !userOptions.selectedOptions.includes('only_doc_count') 
-                            && !userOptions.selectedOptions.includes('only_pages_process') 
-                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
-                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages') 
-                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc')
-                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
-                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
-                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
-                            class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
-                            [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
-                            <ng-container *ngSwitchCase="'id'">ID</ng-container>
-                            <ng-container *ngSwitchCase="'created_at'">Data de Criação</ng-container>
-                            <ng-container *ngSwitchCase="'pages_process'">Páginas Processadas</ng-container>
-                            <ng-container *ngSwitchCase="'doc_type'">Tipo de Documento</ng-container>
-                            <ng-container *ngSwitchCase="'user_id'">ID do Usuário</ng-container>
-                            <ng-container *ngSwitchCase="'doc_count'">Documentos Processados</ng-container>
-                            <ng-container *ngSwitchDefault>{{column}}</ng-container>
-                        </button>
-                    </div>
-                    <div class="w-100">
+                    <div *ngIf="columnNumber === 2" class="w-100">
                         <button *ngIf="
                             !userOptions.selectedOptions.includes('only_pages_process') 
                             && !userOptions.selectedOptions.includes('most_analyzed_doc') 
@@ -113,8 +108,7 @@
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('user_most_analyzed_doc') }">
                             Usuário + Analisou Doc.
                         </button>
-                        <button
-                            *ngIf="
+                        <button *ngIf="
                             !userOptions.selectedOptions.includes('only_doc_count') 
                             && !userOptions.selectedOptions.includes('only_pages_process') 
                             && !userOptions.selectedOptions.includes('most_analyzed_doc') 
@@ -127,8 +121,7 @@
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('segment_most_analyzed_doc') }">
                             Segmento + Analisou Doc.
                         </button>
-                        <button
-                            *ngIf="
+                        <button *ngIf="
                             !userOptions.selectedOptions.includes('only_doc_count') 
                             && !userOptions.selectedOptions.includes('only_pages_process') 
                             && !userOptions.selectedOptions.includes('most_analyzed_doc') 
@@ -141,8 +134,7 @@
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('user_most_analyzed_pages') }">
                             Usuário + Analisou Páginas de Doc.
                         </button>
-                        <button
-                            *ngIf="
+                        <button *ngIf="
                             !userOptions.selectedOptions.includes('only_doc_count') 
                             && !userOptions.selectedOptions.includes('only_pages_process') 
                             && !userOptions.selectedOptions.includes('most_analyzed_doc') 
@@ -159,16 +151,37 @@
                 </section>
             </div>
 
-            <div class="w-50 max-w-200 mx-4 d-flex align-items-start justify-content-center flex-column gap-2">
+            <aside class="mt-2 w-100 max-w-200">
+                <ul class="p-0 w-100 max-w-200 d-flex align-items-start justify-content-center gap-2">
+                    <li 
+                        *ngIf="
+                        !userOptions.selectedOptions.includes('only_doc_count') 
+                        && !userOptions.selectedOptions.includes('only_pages_process') 
+                        && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                        && !userOptions.selectedOptions.includes('doc_most_analyzed_pages') 
+                        && !userOptions.selectedOptions.includes('user_most_analyzed_doc')
+                        && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                        && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
+                        && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
+                        class="btn bg-pink text-white" (click)="columnNumber = 1" [ngClass]="{ 'bg-gray': columnNumber === 1 }">
+                        <span>1</span>
+                    </li>
+                    <li *ngIf="userOptions.selectedOptions.length === 0" class="btn bg-pink text-white" (click)="columnNumber = 2" [ngClass]="{ 'bg-gray': columnNumber === 2 }">
+                        <span>2</span>
+                    </li>
+                </ul>
+            </aside>
 
-                <button class="w-100 btn text-14 rounded rounded-lg bg-pink text-white p-2 mt-2"
+            <div class="w-50 max-w-200 h-39 mx-4 d-flex align-items-start justify-content-center flex-row gap-2 mt-2">
+
+                <button class="w-100 h-100 btn text-14 rounded rounded-lg bg-pink text-white p-2"
                     *ngIf="(selectedOptions >= 2 || (selectedOptions === 1 && readyQueries.includes(userOptions.selectedOptions[0])))"
                     (click)="openChart()">
                     Proximo
                 </button>
 
                 <select *ngIf="(showChartOptions) && (selectedOptions >= 2)" (change)="setChart($event)" name="chart"
-                    id="chart" class="select rounded rounded-lg bg-pink text-white p-2 w-100 pointer">
+                    id="chart" class="select h-100 text-14 rounded rounded-lg bg-pink text-white p-2 w-100 pointer">
                     <option value="" disabled selected>Selecione um gráfico</option>
                     <option value="pie">Pizza</option>
                     <option value="bar">Barras</option>
@@ -181,7 +194,7 @@
                 <select
                     *ngIf="(showChartOptions) && (selectedOptions === 1) && readyQueries.includes(userOptions.selectedOptions[0])"
                     (change)="setChart($event)" name="chart" id="chart"
-                    class="select rounded rounded-lg bg-pink text-white p-2 w-100 pointer">
+                    class="select h-100 rounded rounded-lg bg-pink text-white p-2 w-100 pointer">
                     <option value="" disabled selected>Selecione um gráfico</option>
                     <option value="uniqueValue">Valor Único</option>
                 </select>
