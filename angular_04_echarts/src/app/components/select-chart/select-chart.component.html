@@ -8,7 +8,15 @@
                 <section class="d-flex justify-content-center align-items-start flex-column gap-2">
                     <div *ngFor="let column of usersColumnsOption" class="w-100">
                         <button (click)="setOption(column)"
-                            *ngIf="!userOptions.selectedOptions.includes('only_doc_count') && !userOptions.selectedOptions.includes('only_pages_process')"
+                            *ngIf="
+                            !userOptions.selectedOptions.includes('only_doc_count') 
+                            && !userOptions.selectedOptions.includes('only_pages_process') 
+                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages') 
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
                             class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
                             <ng-container *ngSwitchCase="'id'">ID</ng-container>
@@ -19,7 +27,15 @@
                     </div>
                     <div *ngFor="let column of extractsColumnsOption" class="w-100">
                         <button (click)="setOption(column)"
-                            *ngIf="!userOptions.selectedOptions.includes('only_doc_count') && !userOptions.selectedOptions.includes('only_pages_process')"
+                            *ngIf="
+                            !userOptions.selectedOptions.includes('only_doc_count') 
+                            && !userOptions.selectedOptions.includes('only_pages_process') 
+                            && !userOptions.selectedOptions.includes('most_analyzed_doc') 
+                            && !userOptions.selectedOptions.includes('doc_most_analyzed_pages') 
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
+                            && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
+                            && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
                             class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2" [ngSwitch]="column"
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes(column) }">
                             <ng-container *ngSwitchCase="'id'">ID</ng-container>
@@ -66,7 +82,7 @@
                             && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
                             && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
                             && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
-                            (click)="setOption('user_doc_analyzed')"
+                            (click)="setOption('most_analyzed_doc')"
                             class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('most_analyzed_doc') }">
                             Documento Mais Analisado
@@ -79,7 +95,7 @@
                             && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
                             && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
                             && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
-                            (click)="setOption('user_doc_analyzed')"
+                            (click)="setOption('doc_most_analyzed_pages')"
                             class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('doc_most_analyzed_pages') }">
                             Doc. Com + Páginas Analisadas
@@ -92,7 +108,7 @@
                             && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
                             && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
                             && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
-                            (click)="setOption('user_doc_analyzed')"
+                            (click)="setOption('user_most_analyzed_doc')"
                             class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('user_most_analyzed_doc') }">
                             Usuário + Analisou Doc.
@@ -106,7 +122,7 @@
                             && !userOptions.selectedOptions.includes('doc_most_analyzed_pages')
                             && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
                             && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
-                            (click)="setOption('user_doc_analyzed')"
+                            (click)="setOption('segment_most_analyzed_doc')"
                             class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('segment_most_analyzed_doc') }">
                             Segmento + Analisou Doc.
@@ -120,7 +136,7 @@
                             && !userOptions.selectedOptions.includes('doc_most_analyzed_pages')
                             && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
                             && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
-                            (click)="setOption('user_doc_analyzed')"
+                            (click)="setOption('user_most_analyzed_pages')"
                             class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('user_most_analyzed_pages') }">
                             Usuário + Analisou Páginas de Doc.
@@ -134,7 +150,7 @@
                             && !userOptions.selectedOptions.includes('doc_most_analyzed_pages')
                             && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
                             && !userOptions.selectedOptions.includes('user_most_analyzed_pages')"
-                            (click)="setOption('user_doc_analyzed')"
+                            (click)="setOption('segment_most_analyzed_pages')"
                             class="mb-2 w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2"
                             [ngClass]="{ 'bg-gray': userOptions.selectedOptions.includes('segment_most_analyzed_pages') }">
                             Segmento + Analisou Páginas de Doc.

@@ -246,7 +246,7 @@ export class SelectChartComponent implements OnInit {
           .filter(item => item.column_name !== 'id')
           .map(item => item.column_name)
       });
-    this.readyQueries = ['only_doc_count', 'only_pages_process', 'most_analyzed_doc', 'doc_most_analyzed_pages', 'user_most_analyzed_doc', 'segment_most_analyzed_doc', 'user_most_analyzed_pages']
+    this.readyQueries = ['only_doc_count', 'only_pages_process', 'most_analyzed_doc', 'doc_most_analyzed_pages', 'user_most_analyzed_doc', 'segment_most_analyzed_doc', 'user_most_analyzed_pages', 'segment_most_analyzed_pages']
   }
 
   //(en) Clears all data selected by the user.
