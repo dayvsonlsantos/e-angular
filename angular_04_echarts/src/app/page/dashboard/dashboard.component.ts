@@ -27,7 +27,8 @@ export class DashboardComponent {
     startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: '',
-    timeGrouping: 'month'
+    timeGrouping: 'month',
+    specificFilter: "u.name IS NOT NULL",
   }
 
   dashboard02Data: UserOptions = {
@@ -37,7 +38,8 @@ export class DashboardComponent {
     startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: 'sum',
-    timeGrouping: 'month'
+    timeGrouping: 'month',
+    specificFilter: "u.name IS NOT NULL",
   }
 
   dashboard03Data: UserOptions = {
@@ -47,7 +49,8 @@ export class DashboardComponent {
     startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: 'sum',
-    timeGrouping: 'month'
+    timeGrouping: 'month',
+    specificFilter: "u.name IS NOT NULL",
   }
 
   dashboard04Data: UserOptions = {
@@ -57,7 +60,8 @@ export class DashboardComponent {
     startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: '',
-    timeGrouping: 'month'
+    timeGrouping: 'month',
+    specificFilter: "u.name IS NOT NULL",
   }
 
   dashboard05Data: UserOptions = {
@@ -67,7 +71,8 @@ export class DashboardComponent {
     startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: '',
-    timeGrouping: 'month'
+    timeGrouping: 'month',
+    specificFilter: "u.name IS NOT NULL",
   }
 
   dashboard06Data: UserOptions = {
@@ -77,7 +82,8 @@ export class DashboardComponent {
     startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: 'sum',
-    timeGrouping: 'month'
+    timeGrouping: 'month',
+    specificFilter: "u.name IS NOT NULL",
   }
 
   dashboard07Data: UserOptions = {
@@ -87,6 +93,7 @@ export class DashboardComponent {
     startDate: '2014-01-01',
     endDate: this.currentDate,
     aggregate: 'sum',
-    timeGrouping: 'month'
+    timeGrouping: 'month',
+    specificFilter: "u.name IS NOT NULL",
   }
 }

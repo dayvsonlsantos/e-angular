@@ -28,7 +28,8 @@ export class SelectChartComponent implements OnInit {
     endDate: this.currentDate, //(en) endDate receive the value of the final date from the filter. 
     aggregate: '', //(en) Receives the user's option, either count, sum, or avg.
     //(en) The count is already executed when necessary for those where the value of this aggregate is ''.
-    timeGrouping: 'month'
+    timeGrouping: 'month',
+    specificFilter: "u.name 'IS NOT NULL'",
   };
 
   //(en) Number of options selected by the user
@@ -264,7 +265,8 @@ export class SelectChartComponent implements OnInit {
       startDate: '2014-01-01',
       endDate: this.currentDate,
       aggregate: '',
-      timeGrouping: 'month'
+      timeGrouping: 'month',
+      specificFilter: "u.name 'IS NOT NULL'",
     };
     this.selectedOptions = 0;
     this.showChartOptions = false;
@@ -303,6 +305,8 @@ export class SelectChartComponent implements OnInit {
         this.selectedOptions = this.chartValues.selectedOptions.length;
 
         this.userOptions.aggregate = this.chartValues.aggregate;
+
+        this.userOptions.specificFilter = this.chartValues.specificFilter;
 
       }
     }

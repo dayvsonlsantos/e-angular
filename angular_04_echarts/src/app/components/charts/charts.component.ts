@@ -406,6 +406,7 @@ export class ChartsComponent implements OnInit {
 
     this.dataService.getData(this.userOptions).subscribe((dataColumns: string[]) => {
       this.openChart(dataColumns);
+      console.log('aiaiai'+this.userOptions.specificFilter)
 
       // let filtersUsed: string[] = [];
       // console.log(this.userOptions.startDate)

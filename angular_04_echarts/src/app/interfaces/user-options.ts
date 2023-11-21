@@ -5,5 +5,6 @@ export interface UserOptions {
     startDate: string,
     endDate: string,
     aggregate: string,
-    timeGrouping: string
+    timeGrouping: string,
+    specificFilter: string
 }
