@@ -67,11 +67,11 @@ export class DashboardComponent {
 
   dashboard04Data: UserOptions = {
     cardValueID: 'dashboard-04',
-    chartType: 'bar',
-    selectedOptions: ['doc_type', 'doc_count'],
-    startDate: '2014-01-01',
+    chartType: 'line',
+    selectedOptions: ['created_at', 'pages_process'],
+    startDate: '2023-07-01',
     endDate: this.currentDate,
-    aggregate: '',
+    aggregate: 'sum',
     timeGrouping: 'month',
     specificFilter: "u.name IS NOT NULL",
   }

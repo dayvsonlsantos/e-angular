@@ -202,7 +202,7 @@ export class SelectChartComponent implements OnInit {
 
   cleanFilter() {
     this.cleanDataFilter();
-    if (this.userOptions.selectedOptions.includes('pages_process') && this.userOptions.selectedOptions.includes('only_pages_process') && this.userOptions.selectedOptions.includes('doc_most_analyzed_pages') && this.userOptions.selectedOptions.includes('user_most_analyzed_pages') && this.userOptions.selectedOptions.includes('segment_most_analyzed_pages')) {
+    if (this.userOptions.selectedOptions.includes('pages_process') || this.userOptions.selectedOptions.includes('only_pages_process') && this.userOptions.selectedOptions.includes('doc_most_analyzed_pages') && this.userOptions.selectedOptions.includes('user_most_analyzed_pages') && this.userOptions.selectedOptions.includes('segment_most_analyzed_pages')) {
       this.userOptions.aggregate = 'sum';
     } else {
       this.userOptions.aggregate = '';
@@ -372,6 +372,8 @@ export class SelectChartComponent implements OnInit {
         this.userOptions.aggregate = this.chartValues.aggregate;
 
         this.userOptions.specificFilter = this.chartValues.specificFilter;
+        
+        this.userOptions.timeGrouping = this.chartValues.timeGrouping;
 
       }
     }

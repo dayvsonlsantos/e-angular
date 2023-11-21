@@ -3,8 +3,12 @@
     <!-- (en) Columns options -->
     <article *ngIf="setColumnOptions" class="z-1 m-0 h-100 position-absolute w-100 row">
         <div *ngIf="!isFilter" class="col-9 backdrop w-75">
-            <h1 *ngIf="columnNumber === 1" class="w-50 max-w-200 text-center mx-4 block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione duas colunas</h1>
-            <h1 *ngIf="columnNumber === 2" class="w-50 max-w-200 text-center mx-4 block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione uma consulta</h1>
+            <h1 *ngIf="columnNumber === 1"
+                class="w-50 max-w-200 text-center mx-4 block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione duas
+                colunas</h1>
+            <h1 *ngIf="columnNumber === 2"
+                class="w-50 max-w-200 text-center mx-4 block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione uma
+                consulta</h1>
             <div class="w-50 max-w-200 max-h-300 overflow-y-auto mx-4 py-2">
                 <section class="d-flex justify-content-center align-items-start flex-column gap-2">
                     <div *ngIf="
@@ -153,8 +157,7 @@
 
             <aside class="mt-2 w-100 max-w-200">
                 <ul class="p-0 w-100 max-w-200 d-flex align-items-start justify-content-center gap-2">
-                    <li 
-                        *ngIf="
+                    <li *ngIf="
                         !userOptions.selectedOptions.includes('only_doc_count') 
                         && !userOptions.selectedOptions.includes('only_pages_process') 
                         && !userOptions.selectedOptions.includes('most_analyzed_doc') 
@@ -163,10 +166,12 @@
                         && !userOptions.selectedOptions.includes('segment_most_analyzed_doc')
                         && !userOptions.selectedOptions.includes('user_most_analyzed_pages')
                         && !userOptions.selectedOptions.includes('segment_most_analyzed_pages')"
-                        class="btn bg-pink text-white" (click)="columnNumber = 1" [ngClass]="{ 'bg-gray': columnNumber === 1 }">
+                        class="btn bg-pink text-white" (click)="columnNumber = 1"
+                        [ngClass]="{ 'bg-gray': columnNumber === 1 }">
                         <span>1</span>
                     </li>
-                    <li *ngIf="userOptions.selectedOptions.length === 0" class="btn bg-pink text-white" (click)="columnNumber = 2" [ngClass]="{ 'bg-gray': columnNumber === 2 }">
+                    <li *ngIf="userOptions.selectedOptions.length === 0" class="btn bg-pink text-white"
+                        (click)="columnNumber = 2" [ngClass]="{ 'bg-gray': columnNumber === 2 }">
                         <span>2</span>
                     </li>
                 </ul>
@@ -201,9 +206,8 @@
             </div>
         </div>
         <div *ngIf="isFilter" class="col-9 backdrop w-75">
-            <div 
-                *ngIf="filterNumber === 1"
-                class="h-300 w-100 py-2 d-flex align-items-start justify-content-center flex-column">
+            <div *ngIf="filterNumber === 1"
+                class="h-340 w-100 py-2 d-flex align-items-start justify-content-center flex-column">
                 <div class="w-75 d-flex flex-column filterContent">
                     <h1 class="w-100 block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o período</h1>
                     <mat-form-field class="w-100">
@@ -218,7 +222,7 @@
                     </mat-form-field>
                 </div>
                 <div *ngIf="(!userOptions.selectedOptions.includes('doc_count') && !userOptions.selectedOptions.includes('only_doc_count'))"
-                    class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
+                    class="w-75 h-340 py-2 d-flex flex-column align-items-center justify-content-center gap-2">
                     <span class="my-2 text-white">Selecione uma Agregação</span>
                     <div class="d-flex flex-row align-items-center justify-content-center gap-2">
                         <button
@@ -234,56 +238,60 @@
                             (click)="setAggregate('avg')">Média</button>
                     </div>
                 </div>
-                <div class="w-75 h-300 py-2 d-flex flex-column align-items-center justify-content-center gap-2"
+                <div class="w-75 h-340 py-2 d-flex flex-column align-items-center justify-content-center gap-2"
                     *ngIf="isFilter && userOptions.selectedOptions.includes('created_at') && (userOptions.selectedOptions.includes('doc_count') || userOptions.selectedOptions.includes('pages_process'))">
                     <span class="my-2 text-white">Selecione uma opção</span>
                     <div class="d-flex flex-row align-items-center justify-content-center gap-2">
-                        <button [ngClass]="{ 'bg-gray': timeGrouping === 'month' }"
+                        <button *ngIf="userOptions.selectedOptions.includes('created_at')" [ngClass]="{ 'bg-gray': userOptions.timeGrouping === 'day' }"
                             class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
-                            (click)="timeGrouping = 'month'">Mês</button>
-                        <button *ngIf="isFilter" [ngClass]="{ 'bg-gray': timeGrouping === 'year' }"
+                            (click)="userOptions.timeGrouping = 'day'">Dia</button>
+                        <button [ngClass]="{ 'bg-gray': userOptions.timeGrouping === 'month' }"
                             class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
-                            (click)="timeGrouping = 'year'">Ano
+                            (click)="userOptions.timeGrouping = 'month'">Mês</button>
+                        <button *ngIf="isFilter" [ngClass]="{ 'bg-gray': userOptions.timeGrouping === 'year' }"
+                            class="btn text-14 rounded rounded-lg bg-pink text-white p-2"
+                            (click)="userOptions.timeGrouping = 'year'">Ano
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div
-                *ngIf="filterNumber === 2"
-                class="h-300 w-75 d-flex align-items-center justify-content-center flex-column">
+            <div *ngIf="filterNumber === 2"
+                class="h-340 w-75 d-flex align-items-center justify-content-center flex-column">
                 <h1 class="w-100 text-center block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o usuário</h1>
-                <div *ngFor="let user of usersFromDB" class="max-h-300 w-75 overflow-y-auto d-flex align-items-start justify-content-center flex-column">
+                <div *ngFor="let user of usersFromDB"
+                    class="max-h-300 w-75 overflow-y-auto d-flex align-items-start justify-content-center flex-column">
                     <button (click)="setSpecificFilter('lower(u.name) = ' + removeItemStyle(user))"
-                            class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2 mb-2"
-                            [ngSwitch]="user" [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'lower(u.name) = ' + removeItemStyle(user)}">
+                        class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2 mb-2" [ngSwitch]="user"
+                        [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'lower(u.name) = ' + removeItemStyle(user)}">
                         <ng-container *ngSwitchDefault>{{user}}</ng-container>
                     </button>
                 </div>
             </div>
 
-            <div
-                *ngIf="filterNumber === 3"
-                class="h-300 w-75 d-flex align-items-center justify-content-center flex-column">
+            <div *ngIf="filterNumber === 3"
+                class="h-340 w-75 d-flex align-items-center justify-content-center flex-column">
                 <h1 class="w-100 text-center block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o Segmento</h1>
-                <div *ngFor="let segment of segmentsFromDB" class="max-h-300 w-75 overflow-y-auto d-flex align-items-start justify-content-center flex-column">
+                <div *ngFor="let segment of segmentsFromDB"
+                    class="max-h-300 w-75 overflow-y-auto d-flex align-items-start justify-content-center flex-column">
                     <button (click)="setSpecificFilter('lower(u.segment) = ' + removeItemStyle(segment))"
-                            class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2 mb-2"
-                            [ngSwitch]="segment" [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'lower(u.segment) = ' + removeItemStyle(segment)}">
+                        class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2 mb-2" [ngSwitch]="segment"
+                        [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'lower(u.segment) = ' + removeItemStyle(segment)}">
                         <ng-container *ngSwitchDefault>{{segment}}</ng-container>
                     </button>
                 </div>
             </div>
 
-            <div
-                *ngIf="filterNumber === 4"
-                class="h-300 w-75 d-flex align-items-center justify-content-center flex-column">
-                <h1 class="w-100 text-center block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o Tipo de Documento</h1>
+            <div *ngIf="filterNumber === 4"
+                class="h-340 w-75 d-flex align-items-center justify-content-center flex-column">
+                <h1 class="w-100 text-center block m-2 fs-6 normal px-4 pt-3 pb-2 text-white">Selecione o Tipo de
+                    Documento</h1>
                 <div class="w-100 h-200 overflow-y-auto d-flex align-items-center justify-content-top flex-column">
-                    <div *ngFor="let doc of docTypesFromDB" class="w-75 d-flex align-items-start justify-content-center flex-column">
+                    <div *ngFor="let doc of docTypesFromDB"
+                        class="w-75 d-flex align-items-start justify-content-center flex-column">
                         <button (click)="setSpecificFilter('lower(e.doc_type) = ' + this.removeItemStyle(doc))"
-                                class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2 mb-2"
-                                [ngSwitch]="doc" [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'lower(e.doc_type) = ' + removeItemStyle(doc)}">
+                            class="w-100 btn text-12 rounded rounded-lg bg-pink text-white p-2 mb-2" [ngSwitch]="doc"
+                            [ngClass]="{ 'bg-gray': userOptions.specificFilter === 'lower(e.doc_type) = ' + removeItemStyle(doc)}">
                             <ng-container *ngSwitchDefault>{{doc}}</ng-container>
                         </button>
                     </div>
@@ -292,17 +300,20 @@
 
             <aside class="mt-2 w-75">
                 <ul class="p-0 w-100 d-flex align-items-start justify-content-center gap-2">
-                    <li 
-                        class="btn bg-pink text-white" (click)="filterNumber = 1" [ngClass]="{ 'bg-gray': filterNumber === 1 }">
+                    <li class="btn bg-pink text-white" (click)="filterNumber = 1"
+                        [ngClass]="{ 'bg-gray': filterNumber === 1 }">
                         <span>1</span>
                     </li>
-                    <li class="btn bg-pink text-white" (click)="filterNumber = 2" [ngClass]="{ 'bg-gray': filterNumber === 2 }">
+                    <li class="btn bg-pink text-white" (click)="filterNumber = 2"
+                        [ngClass]="{ 'bg-gray': filterNumber === 2 }">
                         <span>2</span>
                     </li>
-                    <li class="btn bg-pink text-white" (click)="filterNumber = 3" [ngClass]="{ 'bg-gray': filterNumber === 3 }">
+                    <li class="btn bg-pink text-white" (click)="filterNumber = 3"
+                        [ngClass]="{ 'bg-gray': filterNumber === 3 }">
                         <span>3</span>
                     </li>
-                    <li class="btn bg-pink text-white" (click)="filterNumber = 4" [ngClass]="{ 'bg-gray': filterNumber === 4 }">
+                    <li class="btn bg-pink text-white" (click)="filterNumber = 4"
+                        [ngClass]="{ 'bg-gray': filterNumber === 4 }">
                         <span>4</span>
                     </li>
                 </ul>

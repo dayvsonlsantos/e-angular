@@ -63,7 +63,7 @@ export class ChartsComponent implements OnInit {
       // Itera sobre as chaves do objeto.
       Object.keys(item).forEach(key => {
 
-        if (key === 'Documentos processados' || key === 'Páginas Processadas') {
+        if (key === 'Documentos processados' || key === 'Páginas Processadas' || key === 'Páginas Acumulativas') {
           this.chartData.value = key;
         } else {
           this.chartData.name = key;
@@ -261,6 +261,8 @@ export class ChartsComponent implements OnInit {
         };
         break;
       case 'line':
+        console.log(mappedData.map(item => item.name))
+        console.log(mappedData.map(item => item.value))
         option = {
           xAxis: {
             type: 'category',
