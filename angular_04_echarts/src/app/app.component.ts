@@ -14,6 +14,12 @@ export class AppComponent {
     this.menuOptionValue = value;
   }
 
+  toggleMobileSidebarOption: boolean = false;
+
+  receivesToggleMobileNavbar(value: boolean){
+    this.toggleMobileSidebarOption = value;
+  }
+
   profile_picture = '../assets/profilePicture.png';
   username = 'Fulano';
   profileType = 'Admin';

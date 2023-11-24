@@ -223,7 +223,7 @@ export class ChartsComponent implements OnInit {
             trigger: 'item'
           },
           legend: {
-            top: '8%',
+            top: '9%',
             left: 'center'
           },
           series: [
@@ -261,8 +261,6 @@ export class ChartsComponent implements OnInit {
         };
         break;
       case 'line':
-        console.log(mappedData.map(item => item.name))
-        console.log(mappedData.map(item => item.value))
         option = {
           xAxis: {
             type: 'category',

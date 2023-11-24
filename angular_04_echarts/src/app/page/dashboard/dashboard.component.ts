@@ -108,4 +108,15 @@ export class DashboardComponent {
     timeGrouping: 'month',
     specificFilter: "u.name IS NOT NULL",
   }
+
+  dashboard08Data: UserOptions = {
+    cardValueID: 'dashboard-08',
+    chartType: 'pie',
+    selectedOptions: ['name', 'doc_count'],
+    startDate: '2014-01-01',
+    endDate: this.currentDate,
+    aggregate: '',
+    timeGrouping: 'month',
+    specificFilter: "u.name IS NOT NULL",
+  }
 }

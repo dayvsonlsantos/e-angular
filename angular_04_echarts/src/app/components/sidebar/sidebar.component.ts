@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,4 +13,10 @@ export class SidebarComponent {
     this.menuOption.emit(value);
     this.menuOptionValue = value;
   }
+
+  @Input() toggleMobileSidebarOption: boolean = false;
+  @Input() profile_picture!:string;
+  @Input() profileType!:string;
+  @Input() username!:string;
+
 }

@@ -18,6 +18,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { EmptyChartComponent } from './components/empty-chart/isEmpty.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ChartsComponent } from './components/charts/charts.component';
+import { MobileBarComponent } from './components/mobile-bar/mobile-bar.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ChartsComponent } from './components/charts/charts.component';
     FavoriteComponent,
     EmptyChartComponent,
     LoadingComponent,
-    ChartsComponent
+    ChartsComponent,
+    MobileBarComponent
   ],
   imports: [
     BrowserModule,

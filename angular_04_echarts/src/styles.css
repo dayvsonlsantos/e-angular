@@ -131,6 +131,14 @@ svg {
 	height: 39px
 }
 
+.h-40{
+	height: 40px;
+}
+
+.h-60{
+	height: 60px;
+}
+
 .h-90{
 	height: 90px;
 }
@@ -161,6 +169,10 @@ svg {
 
 .max-w-200{
 	max-width: 200px;
+}
+
+.w-40{
+	width: 40px;
 }
 
 .w-60{
@@ -224,3 +236,92 @@ svg {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.showDesktopSidebar{
+	display: none;
+}
+
+.showMobileSidebar{
+	height: 0px;
+	width: 100%;
+	transition: height .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	overflow: hidden;
+}
+
+.open{
+	/* display: block; */
+	height: 100%;
+	position: absolute;
+	overflow: auto;
+
+}
+
+.mainContainer{
+	margin-left: 0;
+}
+
+.mainSection{
+	padding: 0 0rem;
+}
+
+.desktop-navbar {
+	visibility: hidden;
+}
+.desktop-mobile {
+	visibility: visible;
+}
+
+.text-size-responsive{
+	font-size: 12px;
+}
+
+.uniqueValue{
+	margin-top: 2.4rem;
+}
+
+@media screen and (min-width: 450px){
+	.showMobileSidebar{
+		width: 50%;
+	}
+}
+
+@media screen and (min-width: 771px){
+
+	.showDesktopSidebar{
+		display: flex;
+	}
+
+	.showMobileSidebar{
+		visibility: hidden;
+	}
+
+	.mainContainer{
+		margin-left: 17rem;
+	}
+	
+	.mainSection{
+		padding: 0 1rem;
+	}
+
+	.desktop-navbar {
+		visibility: visible;
+	}
+	
+	.mobile-navbar {
+		visibility: hidden;
+	}
+
+	.text-size-responsive{
+		font-size: 13px;
+	}
+	
+}
+
+@media screen and (min-width: 1300px){
+
+	.text-size-responsive{
+		font-size: 14px;
+	}
+	
+}
